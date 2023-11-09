@@ -2,15 +2,17 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [master]
-    tags:
-      - 'v*.*.*'
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
-  ci-build:
-    uses: CoinmapTrading/workflows/.github/workflows/share-build.yaml@master
-    with:
-      service: algo-trading-market
-      build_type: docker
-    secrets:
-      envPAT: ${{ secrets.GH_PAT }}
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
