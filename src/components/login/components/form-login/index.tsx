@@ -188,7 +188,7 @@ const FormLogin = ({ formLogin }: LoginProps) => {
             </div>
           </div>
           <Button
-            // loading={loginUser.isLoading}
+            loading={loginUser.isLoading}
             className={style.btnLogin}
             htmlType="submit"
             style={{ width: '100%', marginTop: '15px' }}
