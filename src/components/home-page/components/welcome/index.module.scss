@@ -1,0 +1,28 @@
+@import '@/styles/_base.scss';
+
+.wrapper {
+  background: $BG_SECONDARY;
+  color: $WHITE;
+  
+  .heroCover {
+    aspect-ratio: 1920 / 560;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/bg.png') center center no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (min-width: 1170px) {
+  .wrapper {
+    .heroCover {
+      aspect-ratio: 1920 / 560;
+      width: 100%;
+      height: auto; 
+      overflow: hidden;
+      background-position: center top;
+
+  
+    }
+  }
+}

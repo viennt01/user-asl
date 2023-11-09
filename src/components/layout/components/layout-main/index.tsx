@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout } from 'antd';
 import style from './index.module.scss';
 import AppHeader from '@/components/layout/components/app-header';
+import AppFooter from '../app-footer';
 
 const { Content } = Layout;
 
@@ -18,6 +19,7 @@ const LayoutMain = ({ children }: Props) => {
           <Content className={style.contentContainer}>{children}</Content>
         </Layout>
       </Layout>
+      <AppFooter />
     </Layout>
   );
 };

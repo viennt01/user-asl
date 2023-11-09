@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from './index.module.scss';
 import { SvgLogout, SvgMenu, SvgUserProfile } from '@/assets/images/svg';
 import { appLocalStorage } from '@/utils/localstorage';
@@ -66,14 +66,14 @@ const userMenuItems = [
 
 const AppHeader = () => {
   const router = useRouter();
+  const routerPath = router.pathname as ROUTERS;
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [activeItemMenu, setActiveItemMenu] = useState(ROUTERS.HOME);
 
   const isUserLogged = 'V';
 
   const handleLogout = () => {
-    // if (setUserInfo) setUserInfo({});
     appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-    // headers.setToken(null);
     router.push(ROUTERS.LOGIN);
   };
 
@@ -104,6 +104,9 @@ const AppHeader = () => {
     setShowMobileMenu(false);
     router.push(ROUTERS.PROFILE);
   };
+  useEffect(() => {
+    setActiveItemMenu(routerPath);
+  }, [router.pathname]);
 
   return (
     <ConfigProvider
@@ -129,7 +132,7 @@ const AppHeader = () => {
         <Menu
           className={style.menu}
           mode="horizontal"
-          selectedKeys={[ROUTERS.HOME]}
+          selectedKeys={[activeItemMenu]}
           items={menuItems}
           onClick={handleClickMenu}
         />
@@ -216,7 +219,7 @@ const AppHeader = () => {
               <Menu
                 className={style.mobileMenu}
                 mode="vertical"
-                selectedKeys={['']}
+                selectedKeys={[activeItemMenu]}
                 items={
                   isUserLogged
                     ? [
