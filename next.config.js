@@ -1,5 +1,6 @@
+/** @type {import('next').NextConfig} */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const { NextFederationPlugin } = require('@module-federation/nextjs-mf');
+const { i18n } = require('./next-i18next.config');
 
 const appEnv = process.env.APP_ENV || 'dev';
 const version = process.env.VERSION || '1.0.0';
@@ -10,47 +11,21 @@ const API_MAIN_GW = {
   production: 'https://asl.softek.com.vn',
 };
 
-const API_USER_GW = {
-  dev: 'https://asl.softek.com.vn',
-  staging: 'https://asl.softek.com.vn',
-  production: 'https://asl.softek.com.vn',
-};
-
-const WSS_URL = {
-  dev: 'wss://gw-dev.cextrading.io/cm-user-roles',
-  staging: 'wss://gw-staging.cextrading.io/cm-user-roles',
-  production: 'wss://gw.cextrading.io/cm-user-roles',
-};
-
-const DOMAIN = {
-  dev: 'https://dev.cextrading.io',
-  staging: 'https://staging.cextrading.io',
-  production: 'https://cextrading.io',
-};
-
-const MAIN_SERVICES_DOMAIN = {
-  dev: 'https://algopremium-dev.8xtrading.com',
-  staging: 'https://algopremium-staging.8xtrading.com',
-  production: 'https://algopremium.8xtrading.com',
-};
-
 const env = {
   VERSION: version,
   APP_ENV: appEnv,
   API_MAIN_GW: API_MAIN_GW[appEnv],
-  WSS_URL: WSS_URL[appEnv],
-  DOMAIN: DOMAIN[appEnv],
-  API_USER_GW: API_USER_GW[appEnv],
 };
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
+  i18n,
   env,
   images: {
     domains: ['static-dev.cextrading.io'],
   },
-  webpack(config, options) {
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
       // issuer section restricts svg as component only to
@@ -71,18 +46,6 @@ const nextConfig = {
       ],
     });
     config.experiments = { ...config.experiments, topLevelAwait: true };
-    config.plugins.push(
-      new NextFederationPlugin({
-        name: 'atmServices',
-        filename: 'static/chunks/remoteEntry.js',
-        remotes: {
-          mainServices: `mainServices@${
-            MAIN_SERVICES_DOMAIN[appEnv]
-          }/_next/static/${options.isServer ? 'ssr' : 'chunks'}/remoteEntry.js`,
-        },
-        shared: [],
-      })
-    );
     return config;
   },
 };
