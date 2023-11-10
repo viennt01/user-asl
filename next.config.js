@@ -5,15 +5,15 @@ const appEnv = process.env.APP_ENV || 'dev';
 const version = process.env.VERSION || '1.0.0';
 
 const API_MAIN_GW = {
-  dev: 'https://gw-dev.cextrading.io/cm-user-roles/api/v1',
-  staging: 'https://gw-staging.cextrading.io/cm-user-roles/api/v1',
-  production: 'https://gw.cextrading.io/cm-user-roles/api/v1',
+  dev: 'https://asl.softek.com.vn',
+  staging: 'https://asl.softek.com.vn',
+  production: 'https://asl.softek.com.vn',
 };
 
 const API_USER_GW = {
-  dev: 'https://gw-dev.cextrading.io/cm-user-roles',
-  staging: 'https://gw-staging.cextrading.io/cm-user-roles',
-  production: 'https://gw.cextrading.io/cm-user-roles',
+  dev: 'https://asl.softek.com.vn',
+  staging: 'https://asl.softek.com.vn',
+  production: 'https://asl.softek.com.vn',
 };
 
 const WSS_URL = {
