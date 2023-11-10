@@ -42,7 +42,6 @@
         &::after {
           border: 0;
         }
-  
       }
       .ant-menu-item.ant-menu-item-active:active,
       .ant-menu-item-selected {
@@ -60,12 +59,13 @@
     color: $WHITE;
     cursor: pointer;
     .loginButton {
+      color: $WHITE;
       font-weight: 400;
       width: 101px;
       background-color: $PRIMARY_DARK;
-
     }
     .userEmail {
+      color: $WHITE;
       max-width: 200px;
       text-overflow: ellipsis;
       overflow: hidden;
@@ -127,7 +127,9 @@
       align-items: center;
       gap: 8px;
       .userEmail {
+        color: $WHITE;
         max-width: 200px;
+        font-size: 20px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -159,17 +161,23 @@
     }
   }
   .loginButton {
-    background: $WHITE;
-    color: $PRIMARY_DARK;
+    background: $PRIMARY_DARK;
+    color: $WHITE;
     font-weight: 700;
     margin-bottom: 8px;
     &:hover {
-      background: $WHITE;
-      color: $PRIMARY_DARK;
+      background: $GREY_COLOR_HOVER;
+      color: $WHITE;
     }
   }
   .registerButton {
     font-weight: 700;
+    color: $WHITE;
+    background: $BLUE_BELL;
+    &:hover {
+      background: $GREY_COLOR_HOVER;
+      color: $WHITE;
+    }
   }
   .logoutButton {
     width: 100%;
@@ -179,15 +187,6 @@
     }
     &:active {
       box-shadow: 16px -20px 40px rgba($color: $SUNSET_ORANGE, $alpha: 0.5);
-    }
-  }
-  .btnDashboard {
-    background: $WHITE;
-    color: $PRIMARY_DARK;
-    font-weight: 700;
-    &:hover {
-      background: $WHITE;
-      color: $PRIMARY_DARK;
     }
   }
 }

@@ -26,7 +26,7 @@ export interface UserInfo {
   createdDate: string;
   updatedDate: string;
   newUser: boolean;
-  listRole: number[];
+  listRole?: number[];
 }
 
 export const getUserInfo = () => {

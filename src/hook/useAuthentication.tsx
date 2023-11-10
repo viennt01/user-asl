@@ -1,5 +1,5 @@
 import { appLocalStorage } from '@/utils/localstorage';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { apiClient } from '@/fetcherAxios';
 import ROUTERS from '@/constants/router';
@@ -7,9 +7,11 @@ import { LOCAL_STORAGE_KEYS } from '@/constants/localstorage';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from './fetcher';
 import { API_USER } from '@/fetcherAxios/endpoint';
+import { AppContext } from '@/app-context';
 
 export default function withAuthentication(ChildComponent: () => JSX.Element) {
   const Container = () => {
+    const { setUserInfo } = useContext(AppContext);
     const router = useRouter();
     const [loading, setLoading] = useState(true);
 
@@ -21,6 +23,8 @@ export default function withAuthentication(ChildComponent: () => JSX.Element) {
           // remove token and redirect to home
           appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
           router.replace(ROUTERS.LOGIN);
+        } else {
+          if (setUserInfo) setUserInfo(data.data);
         }
         // setInformationUser(data.data);
       },

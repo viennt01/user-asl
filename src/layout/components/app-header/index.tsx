@@ -10,12 +10,10 @@ import {
   Dropdown,
   ConfigProvider,
   Avatar,
-  Modal,
-  Typography,
 } from 'antd';
 import type { MenuProps } from 'antd';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import style from './index.module.scss';
 import { SvgLogout, SvgMenu, SvgUserProfile } from '@/assets/images/svg';
 import { appLocalStorage } from '@/utils/localstorage';
@@ -23,11 +21,12 @@ import { LOCAL_STORAGE_KEYS } from '@/constants/localstorage';
 import SvgClose from './assets/close.svg';
 import CustomButton from '@/components/common/custom-button';
 import COLORS from '@/constants/color';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { LogoutData, logout } from './fetcher';
-import { LogoutOutlined } from '@ant-design/icons';
+import { AppContext, INITIAL_VALUE_USER_INFO } from '@/app-context';
+import { API_USER } from '@/fetcherAxios/endpoint';
+import { getUserInfo } from '@/hook/fetcher';
 const { Header } = Layout;
-const { Text } = Typography;
 
 const menuItems = [
   {
@@ -72,12 +71,14 @@ const userMenuItems = [
 const AppHeader = () => {
   const router = useRouter();
   const routerPath = router.pathname as ROUTERS;
-  const [modal, contextHolder] = Modal.useModal();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [activeItemMenu, setActiveItemMenu] = useState(ROUTERS.HOME);
   const [ipAddress, setIpAddress] = useState<string>('');
   const [deviceName, setDeviceName] = useState<string>('');
-  const isUserLogged = 'V';
+  const [tokenHeader, setTokenHeader] = useState<string>('');
+  const { userInfo, setUserInfo } = useContext(AppContext);
+  const isUserLogged = !!userInfo?.fullName;
+  console.log(userInfo);
 
   const logoutUser = useMutation({
     mutationFn: (body: LogoutData) => {
@@ -85,7 +86,8 @@ const AppHeader = () => {
     },
     onSuccess: async () => {
       appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
-      await router.push(ROUTERS.LOGIN);
+      if (setUserInfo) setUserInfo(INITIAL_VALUE_USER_INFO);
+      await router.push(ROUTERS.HOME);
     },
   });
 
@@ -95,14 +97,7 @@ const AppHeader = () => {
       ipAddress: ipAddress,
       deviceName: deviceName,
     };
-    modal.confirm({
-      centered: true,
-      icon: <LogoutOutlined />,
-      content: <Text>Do you want to sign out of your account?</Text>,
-      onOk() {
-        logoutUser.mutate(data);
-      },
-    });
+    logoutUser.mutate(data);
   };
 
   const handleClickMenu: MenuProps['onClick'] = (e) => {
@@ -132,6 +127,31 @@ const AppHeader = () => {
     setShowMobileMenu(false);
     router.push(ROUTERS.PROFILE);
   };
+
+  const checkUser = useQuery({
+    queryKey: [API_USER.CHECK_USER],
+    queryFn: () => getUserInfo(),
+    enabled: tokenHeader !== '',
+    onSuccess: (data) => {
+      if (!data.status) {
+        appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+        router.replace(ROUTERS.LOGIN);
+      } else {
+        if (setUserInfo) setUserInfo(data.data);
+      }
+    },
+    onError: () => {
+      appLocalStorage.remove(LOCAL_STORAGE_KEYS.TOKEN);
+      router.replace(ROUTERS.LOGIN);
+    },
+    retry: 0,
+  });
+  useEffect(() => {
+    setTokenHeader(appLocalStorage.get(LOCAL_STORAGE_KEYS.TOKEN));
+    if (tokenHeader) {
+      checkUser.isFetched;
+    }
+  }, [router.pathname]);
   useEffect(() => {
     setActiveItemMenu(routerPath);
   }, [router.pathname]);
@@ -141,7 +161,6 @@ const AppHeader = () => {
   }, []);
   return (
     <>
-      {contextHolder}
       <ConfigProvider
         theme={{
           token: {
@@ -176,7 +195,7 @@ const AppHeader = () => {
                   type="text"
                   className={style.loginButton}
                   size="large"
-                  onClick={handleClickRegister}
+                  onClick={handleClickLogin}
                 >
                   Login
                 </Button>
@@ -191,11 +210,14 @@ const AppHeader = () => {
                 >
                   <div className={style.user}>
                     <Avatar
+                      size={40}
                       style={{
+                        backgroundColor: userInfo?.colorAvatar || '#c6c6c6',
                         verticalAlign: 'middle',
                       }}
+                      src={userInfo?.avatar}
                     >
-                      V
+                      {isUserLogged ? userInfo.defaultAvatar : ''}
                     </Avatar>
                   </div>
                 </Dropdown>
@@ -219,14 +241,16 @@ const AppHeader = () => {
                   <Avatar
                     size={40}
                     style={{
-                      backgroundColor: '#c6c6c6',
+                      backgroundColor: userInfo?.colorAvatar || '#c6c6c6',
                       verticalAlign: 'middle',
+                      display: isUserLogged ? '' : 'none',
                     }}
+                    src={userInfo?.avatar}
                   >
-                    V
+                    {isUserLogged ? userInfo.defaultAvatar : ''}
                   </Avatar>
                   <span className={style.userEmail}>
-                    {isUserLogged ? 'userInfo.email' : 'SIGN IN'}
+                    {isUserLogged ? userInfo.email : 'SIGN IN'}
                   </span>
                 </div>
                 <Button

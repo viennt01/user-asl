@@ -1,7 +1,7 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import { ConfigProvider } from 'antd';
-
+import AppContextProvider from '@/app-context';
 import { NextPage } from 'next';
 
 import 'antd/dist/reset.css';
@@ -43,12 +43,14 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <link rel="favicon" href={'/images/asl-logo.png'} />
           <link rel="shortcut icon" href={'/images/asl-logo.png'} />
         </Head>
-        <QueryClientProvider client={queryClient}>
-          <AppLayout>
-            <Component {...pageProps} />
-          </AppLayout>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
+        <AppContextProvider>
+          <QueryClientProvider client={queryClient}>
+            <AppLayout>
+              <Component {...pageProps} />
+            </AppLayout>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </AppContextProvider>
       </ConfigProvider>
     </>
   );
