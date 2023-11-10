@@ -36,6 +36,24 @@ const menuItems = [
   {
     key: ROUTERS.BOOKING,
     label: 'Booking',
+    children: [
+      {
+        label: 'Ocean Freight',
+        key: ROUTERS.OCEAN_FREIGHT,
+      },
+      {
+        label: 'Air Freight',
+        key: ROUTERS.AIR_FREIGHT,
+      },
+      {
+        label: 'Trucking Freight',
+        key: ROUTERS.TRUCK_FREIGHT,
+      },
+      {
+        label: 'Custom Service',
+        key: ROUTERS.CUSTOMS_SERVICE,
+      },
+    ],
   },
   {
     key: ROUTERS.TRACK_TRACE,
@@ -78,7 +96,6 @@ const AppHeader = () => {
   const [tokenHeader, setTokenHeader] = useState<string>('');
   const { userInfo, setUserInfo } = useContext(AppContext);
   const isUserLogged = !!userInfo?.fullName;
-  console.log(userInfo);
 
   const logoutUser = useMutation({
     mutationFn: (body: LogoutData) => {
@@ -101,6 +118,10 @@ const AppHeader = () => {
   };
 
   const handleClickMenu: MenuProps['onClick'] = (e) => {
+    const menuItem = menuItems.find((item) => item.key === e.key);
+    console.log(menuItem);
+    console.log(e);
+
     setShowMobileMenu(false);
     router.push(e.key);
   };
@@ -187,6 +208,7 @@ const AppHeader = () => {
             selectedKeys={[activeItemMenu]}
             items={menuItems}
             onClick={handleClickMenu}
+            subMenuCloseDelay={0.3}
           />
           <div className={style.user}>
             {!isUserLogged ? (
@@ -277,19 +299,9 @@ const AppHeader = () => {
               <Col flex={1}>
                 <Menu
                   className={style.mobileMenu}
-                  mode="vertical"
+                  mode="inline"
                   selectedKeys={[activeItemMenu]}
-                  items={
-                    isUserLogged
-                      ? [
-                          ...menuItems,
-                          // {
-                          //   key: ROUTERS.DASHBOARD,
-                          //   label: 'Bot dashboard',
-                          // },
-                        ]
-                      : menuItems
-                  }
+                  items={menuItems}
                   onClick={handleClickMenu}
                 />
               </Col>
