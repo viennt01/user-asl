@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import getAppLayout from '@/components/layout';
-import { APP_NAME } from '@/constants/common';
-import { PageWithNoLayout } from '@/components/layout/no-layout';
+import { APP_NAME, LAYOUT_TYPES } from '@/constants/common';
 import ConfirmOtp from '@/components/cofirm-otp';
+import getAppLayout from '@/layout';
 
 function ConfirmPage() {
   return (
@@ -15,6 +14,5 @@ function ConfirmPage() {
   );
 }
 
-ConfirmPage.Layout = getAppLayout();
-ConfirmPage.Layout = PageWithNoLayout;
+ConfirmPage.Layout = getAppLayout(LAYOUT_TYPES.NO_LAYOUT);
 export default ConfirmPage;

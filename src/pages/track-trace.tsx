@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import getAppLayout from '@/components/layout';
+import getAppLayout from '@/layout';
 import { APP_NAME } from '@/constants/common';
 import TraceTrace from '@/components/track-trace';
 

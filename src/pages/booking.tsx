@@ -1,7 +1,8 @@
 import Head from 'next/head';
-import getAppLayout from '@/components/layout';
-import { APP_NAME } from '@/constants/common';
+import getAppLayout from '@/layout';
+import { APP_NAME, LAYOUT_TYPES } from '@/constants/common';
 import Booking from '@/components/booking';
+import withAuthentication from '@/hook/useAuthentication';
 
 function BookingPage() {
   return (
@@ -13,7 +14,9 @@ function BookingPage() {
     </>
   );
 }
+const Page = withAuthentication(BookingPage);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+Page.Layout = getAppLayout(LAYOUT_TYPES.MAIN);
 
-BookingPage.Layout = getAppLayout();
-
-export default BookingPage;
+export default Page;

@@ -1,8 +1,7 @@
 import Head from 'next/head';
-import getAppLayout from '@/components/layout';
-import { APP_NAME } from '@/constants/common';
-import { PageWithNoLayout } from '@/components/layout/no-layout';
+import { APP_NAME, LAYOUT_TYPES } from '@/constants/common';
 import Register from '@/components/register';
+import getAppLayout from '@/layout';
 
 function RegisterPage() {
   return (
@@ -15,6 +14,5 @@ function RegisterPage() {
   );
 }
 
-RegisterPage.Layout = getAppLayout();
-RegisterPage.Layout = PageWithNoLayout;
+RegisterPage.Layout = getAppLayout(LAYOUT_TYPES.NO_LAYOUT);
 export default RegisterPage;

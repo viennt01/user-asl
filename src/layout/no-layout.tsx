@@ -4,11 +4,11 @@ const { Content } = Layout;
 interface Props {
   children: React.ReactNode;
 }
-export function PageWithNoLayout(props: Props) {
+export function PageWithNoLayout({ children }: Props) {
   return (
     <Layout className="app-layout">
       <Layout>
-        <Content>{props.children}</Content>
+        <Content>{children}</Content>
       </Layout>
     </Layout>
   );

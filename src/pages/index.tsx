@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Home from '@/components/home-page';
-import getAppLayout from '@/components/layout';
+import getAppLayout from '@/layout';
 import { APP_NAME } from '@/constants/common';
 
 function HomePage() {

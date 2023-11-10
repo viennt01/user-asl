@@ -1,8 +1,8 @@
 import React from 'react';
 import { Layout } from 'antd';
 import style from './index.module.scss';
-import AppHeader from '@/components/layout/components/app-header';
-import AppFooter from '@/components/layout/components/app-footer';
+import AppHeader from '@/layout/components/app-header';
+import AppFooter from '../app-footer';
 
 const { Content } = Layout;
 
@@ -10,7 +10,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const LayoutProfile = ({ children }: Props) => {
+const LayoutMain = ({ children }: Props) => {
   return (
     <Layout className="app-layout">
       <AppHeader />
@@ -24,4 +24,4 @@ const LayoutProfile = ({ children }: Props) => {
   );
 };
 
-export default LayoutProfile;
+export default LayoutMain;

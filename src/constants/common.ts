@@ -7,7 +7,7 @@ export const FALLBACK_IMG =
 
 export enum LAYOUT_TYPES {
   MAIN = 'MAIN',
-  PROFILE = 'PROFILE',
+  NO_LAYOUT = 'NO_LAYOUT',
 }
 
 export enum APP_SETTINGS {
