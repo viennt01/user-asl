@@ -1,0 +1,75 @@
+@import '@/styles/_base.scss';
+
+.wrapper {
+  background: $WHITE;
+  color: $WHITE;
+
+  .oceanFreight {
+    aspect-ratio: 1920 / 530;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/OceanFreight.png') center center no-repeat;
+    background-size: cover;
+    margin-bottom: 4px;
+  }
+  .airFreight {
+    aspect-ratio: 1920 / 530;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/Air.png') center center no-repeat;
+    background-size: cover;
+    margin-bottom: 4px;
+  }
+  .truckFreight {
+    aspect-ratio: 1920 / 530;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/Truck.png') center center no-repeat;
+    background-size: cover;
+    margin-bottom: 4px;
+  }
+  .customsService {
+    aspect-ratio: 1920 / 530;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/Customs.png') center center no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (min-width: 1170px) {
+  .wrapper {
+    .oceanFreight {
+      aspect-ratio: 1920 / 530;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center top;
+      margin-bottom: 8px;
+    }
+    .airFreight {
+      aspect-ratio: 1920 / 530;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center top;
+      margin-bottom: 8px;
+    }
+    .truckFreight {
+      aspect-ratio: 1920 / 530;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center top;
+      margin-bottom: 8px;
+    }
+    .customsService {
+      aspect-ratio: 1920 / 530;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center top;
+      margin-bottom: 8px;
+    }
+  }
+}

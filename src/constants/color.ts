@@ -1,6 +1,7 @@
 const COLORS = {
   WHITE: '#FFFFFF',
   BLACK: '#000000',
+  RED: '#E60023',
   BG_PRIMARY: '#17192D',
   BG_SECONDARY: '#0A1629',
   PRIMARY: '#0300A6',

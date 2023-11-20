@@ -3,7 +3,7 @@
 const { i18n } = require('./next-i18next.config');
 
 const appEnv = process.env.APP_ENV || 'dev';
-const version = process.env.VERSION || '1.0.0';
+const version = process.env.VERSION || '0.1.0';
 
 const API_MAIN_GW = {
   dev: 'https://asl.softek.com.vn',
@@ -17,22 +17,16 @@ const env = {
   API_MAIN_GW: API_MAIN_GW[appEnv],
 };
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: false,
   i18n,
   env,
-  images: {
-    domains: ['static-dev.cextrading.io'],
+  experimental: {
+    appDir: true,
   },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
-      // issuer section restricts svg as component only to
-      // svgs imported from js / ts files.
-      //
-      // This allows configuring other behavior for
-      // svgs imported from other file types (such as .css)
       issuer: { and: [/\.(js|ts|md)x?$/] },
       use: [
         {
@@ -45,7 +39,6 @@ const nextConfig = {
         },
       ],
     });
-    config.experiments = { ...config.experiments, topLevelAwait: true };
     return config;
   },
 };
