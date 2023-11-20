@@ -1,0 +1,136 @@
+@import '@/styles/_base.scss';
+
+.wrapper {
+  background: $WHITE;
+  color: $WHITE;
+
+  .oceanFreight {
+    aspect-ratio: 1920 / 488;
+    height: auto;
+    width: 100%;
+    background: #fff url('./assets/Ocean.png') center center no-repeat;
+    background-size: cover;
+    margin: 0px !important;
+  }
+  .checkPrice {
+    background: #0c529e url('./assets/bg.jpg') center center;
+    height: 550px;
+    padding: -4px 16px;
+    .content {
+      width: 100%;
+      .header {
+        height: 70px;
+        width: 90%;
+        position: relative;
+        background: $WHITE;
+        z-index: 2;
+        top: 35px;
+        padding: 8px 4px;
+        border-radius: 4px;
+
+        .contentHeader {
+          height: 56px;
+          background: $BG_OUTSIDE_BTN;
+          z-index: 3;
+          border-radius: 4px;
+          .stepActive {
+            background: $WHITE;
+            width: 100%;
+            margin: 0 8px;
+            height: 40px;
+            border-radius: 4px;
+            .no {
+              width: 30px;
+              height: 30px;
+              background: $GREY_COLOR_HOVER;
+              border-radius: 50%;
+            }
+            .contentStep {
+              width: 60%;
+              color: $GREY_COLOR_HOVER;
+              text-align: center;
+              font-weight: 600;
+            }
+          }
+          .step {
+            width: 100%;
+            margin: 0 8px;
+            height: 40px;
+            border-radius: 4px;
+            .no {
+              width: 30px;
+              height: 30px;
+              background: $DISABLED;
+              border-radius: 50%;
+            }
+            .contentStep {
+              width: 60%;
+              color: $DISABLED;
+              text-align: center;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+      .inputSearch {
+        position: absolute;
+        left: 16px;
+        width: calc(100% - 32px);
+        background: $WHITE;
+        padding-top: 56px;
+        border-radius: 4px;
+
+        .input {
+          padding: 8px;
+          .headerInput {
+            .titleInput {
+              margin-right: 12px;
+              margin-left: 12px;
+              width: 170px;
+              font-weight: 700;
+              font-size: 18px;
+            }
+          }
+          .contentInput {
+            width: 100%;
+            :global {
+              .ant-form-item {
+                margin: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1170px) {
+  .wrapper {
+    .oceanFreight {
+      aspect-ratio: 1920 / 488;
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      background-position: center top;
+      margin-bottom: 8px;
+    }
+    .checkPrice {
+      height: 450px;
+      padding: 2px 16px;
+
+      .content {
+        width: 100%;
+        .header {
+          width: 70%;
+        }
+        .inputSearch {
+          position: absolute;
+          left: 16px;
+          width: calc(100% - 32px);
+          background: $WHITE;
+        }
+      }
+    }
+  }
+}

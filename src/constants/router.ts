@@ -11,6 +11,8 @@ enum ROUTERS {
   BOOKINGS_HISTORY = '/bookings-history',
   BOOKING = '/booking',
   OCEAN_FREIGHT = '/ocean-freight',
+  FCL_OCEAN_FREIGHT = '/fcl-ocean-freight',
+  LCL_OCEAN_FREIGHT = '/lcl-ocean-freight',
   AIR_FREIGHT = '/air-freight',
   TRUCK_FREIGHT = '/truck-freight',
   CUSTOMS_SERVICE = '/customs-service',

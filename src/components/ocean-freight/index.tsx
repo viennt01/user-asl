@@ -11,7 +11,7 @@ export default function OceanFreight() {
   return (
     <div className={style.wrapper}>
       <div className={style.oceanFreight} />
-      <Flex className={style.title} justify={'center'} align={'center'}>
+      <Flex className={style.option} justify={'center'} align={'center'}>
         <Row>
           <Col className={style.header} span={24}>
             TYPES OF SERVICES OF SEA FREIGHT
@@ -43,7 +43,9 @@ export default function OceanFreight() {
                 justify={'center'}
                 align={'center'}
               >
-                <Button className={style.btn}>Request Quote</Button>
+                <Button className={style.btn}
+                  onClick={() => router.push(ROUTERS.FCL_OCEAN_FREIGHT)}
+                >Request Quote</Button>
               </Flex>
             </Card>
           </Col>
@@ -76,7 +78,7 @@ export default function OceanFreight() {
               >
                 <Button
                   className={style.btn}
-                  onClick={() => router.push(ROUTERS.BOOKING)}
+                  onClick={() => router.push(ROUTERS.LCL_OCEAN_FREIGHT)}
                 >
                   Request Quote
                 </Button>
