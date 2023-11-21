@@ -14,7 +14,7 @@ export default function FclOceanFreight() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [dataTableResearch, setDataTableResearch] = useState<DataType[]>([])
-  const [displayStep, setDisplayStep] = useState<number>(2.1);
+  const [displayStep, setDisplayStep] = useState<number>(2.2);
 
   const onFinish = (formValues: any) => {
     setDataTableResearch([

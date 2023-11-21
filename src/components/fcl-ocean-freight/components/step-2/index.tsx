@@ -14,12 +14,13 @@ import {
 import { useRouter } from 'next/router';
 import Information from './information';
 import Description from './description';
+import EditDescription from './editDescription';
 
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
   displayStep: number;
-  setDisplayStep: React.Dispatch<React.SetStateAction<number>>
+  setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Step2({ displayStep, setDisplayStep }: Props) {
@@ -40,7 +41,20 @@ export default function Step2({ displayStep, setDisplayStep }: Props) {
       }}
     >
       <Information />
-      <Description setDisplayStep={setDisplayStep} />
+      <div
+        style={{
+          display: displayStep === 2.1 ? '' : 'none',
+        }}
+      >
+        <Description setDisplayStep={setDisplayStep} />
+      </div>
+      <div
+        style={{
+          display: displayStep === 2.2 ? '' : 'none',
+        }}
+      >
+        <EditDescription setDisplayStep={setDisplayStep} />
+      </div>
     </div>
   );
 }
