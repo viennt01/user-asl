@@ -26,27 +26,32 @@ export interface ITypeDTOs {
 }
 
 interface Props {
+  displayStep: number;
+  setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
   data: DataType[];
 }
 
-export default function TableReturn({ data }: Props) {
- 
-
+export default function TableReturn({
+  displayStep,
+  setDisplayStep,
+  data,
+}: Props) {
   const containerReturn = useMemo(() => {
     const result = [{}];
     if (data) {
       for (const key in data[0]?.container) {
-        if (
-          data[0].container.hasOwnProperty(
-            key
-          )
-        ) {
+        if (data[0].container.hasOwnProperty(key)) {
           const obj = {
             title: <div className={style.title}>{key}</div>,
             // width: 200,
             dataIndex: 'container',
             render: (value: ITypeDTOs) => {
-              return (<Tag color='#F2F48E' style={{ color: "#000", fontWeight: '450' }}>{`${value[key]}`}</Tag>)
+              return (
+                <Tag
+                  color="#F2F48E"
+                  style={{ color: '#000', fontWeight: '450' }}
+                >{`${value[key]}`}</Tag>
+              );
             },
           };
           result.push(obj);
@@ -60,17 +65,18 @@ export default function TableReturn({ data }: Props) {
     const result = [{}];
     if (data) {
       for (const key in data[0]?.commodity) {
-        if (
-          data[0].commodity.hasOwnProperty(
-            key
-          )
-        ) {
+        if (data[0].commodity.hasOwnProperty(key)) {
           const obj = {
             title: <div className={style.title}>{key}</div>,
             // width: 200,
             dataIndex: 'commodity',
             render: (value: ITypeDTOs) => {
-              return (<Tag color='#F2F48E' style={{ color: "#000", fontWeight: '450' }}>{`${value[key]}`}</Tag>)
+              return (
+                <Tag
+                  color="#F2F48E"
+                  style={{ color: '#000', fontWeight: '450' }}
+                >{`${value[key]}`}</Tag>
+              );
             },
           };
           result.push(obj);
@@ -105,15 +111,29 @@ export default function TableReturn({ data }: Props) {
       fixed: 'right',
       render: (_, record) => (
         <Space size="middle">
-          <Button style={{ width: '120px' }}>View Details </Button>
-          <Button type="primary" style={{ width: '120px' }}>Booking</Button>
+          <Button
+            style={{ width: '120px' }}
+            onClick={() => setDisplayStep(2.1)}
+          >
+            View Details
+          </Button>
+          <Button
+            type="primary"
+            style={{ width: '120px' }}
+            onClick={() => setDisplayStep(2.2)}
+          >
+            Booking
+          </Button>
         </Space>
       ),
     },
   ];
 
   return (
-    <div className={style.tableReturn} style={{ display: data?.length !== 0  ? '' : 'none' }}>
+    <div
+      className={style.tableReturn}
+      style={{ display: data?.length !== 0 && displayStep === 1 ? '' : 'none' }}
+    >
       <Row>
         <Col span={24}>
           <ConfigProvider

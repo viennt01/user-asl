@@ -102,14 +102,21 @@
           }
         }
       }
+      .tableReturn {
+        // z-index: 3;
+        padding-top: 490px;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        .table {
+          .title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
     }
 
-    .tableReturn {
-      z-index: 3;
-      padding-top: 490px;
-      border-radius: 12px;
-      margin-bottom: 16px;
-    }
   }
 }
 
@@ -138,18 +145,12 @@
           width: calc(100% - 32px);
           background: $WHITE;
         }
-      }
-      .tableReturn {
-        z-index: 3;
-        padding-top: 380px;
-        margin-bottom: 16px;
-        border-radius: 12px;
-        .table {
-          .title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
+        .tableReturn {
+          // z-index: 3;
+          padding-top: 380px;
+          margin-bottom: 16px;
+          border-radius: 12px;
+       
         }
       }
     }

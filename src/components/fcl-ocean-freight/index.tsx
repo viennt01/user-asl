@@ -7,12 +7,14 @@ import Service from '../home-page/components/service';
 import HeaderFclOceanFreight from './components/header';
 import InputFclOceanFreight from './components/inputSearch';
 import TableReturn, { DataType } from './components/tableReturn';
+import Step2 from './components/step-2';
 const dateFormat = 'YYYY/MM/DD';
 
 export default function FclOceanFreight() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [dataTableResearch, setDataTableResearch] = useState<DataType[]>([])
+  const [displayStep, setDisplayStep] = useState<number>(1);
 
   const onFinish = (formValues: any) => {
     setDataTableResearch([
@@ -51,9 +53,10 @@ export default function FclOceanFreight() {
       <Flex className={style.checkPrice} vertical>
         <div className={style.content}>
           <HeaderFclOceanFreight />
-          <InputFclOceanFreight form={form} onFinish={onFinish} onReset={onReset} />
+          <InputFclOceanFreight displayStep={displayStep} form={form} onFinish={onFinish} onReset={onReset} />
+          <TableReturn displayStep={displayStep} setDisplayStep={setDisplayStep} data={dataTableResearch} />
+          <Step2 displayStep={displayStep}/>
         </div>
-        <TableReturn data={dataTableResearch}/>
       </Flex>
       <Service />
     </div>

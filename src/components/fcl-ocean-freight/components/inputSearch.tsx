@@ -1,17 +1,36 @@
 import React from 'react';
 import style from '../index.module.scss';
-import { Col, Flex, Form, Row, Image, Select, Button, DatePicker, FormInstance } from 'antd';
+import {
+  Col,
+  Flex,
+  Form,
+  Row,
+  Image,
+  Select,
+  Button,
+  DatePicker,
+  FormInstance,
+} from 'antd';
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
+  displayStep: number;
   form: FormInstance<any>;
-  onFinish: ( formValues: any) => void;
+  onFinish: (formValues: any) => void;
   onReset: () => void;
 }
 
-export default function InputFclOceanFreight({ form, onFinish, onReset }: Props) {
+export default function InputFclOceanFreight({
+  displayStep,
+  form,
+  onFinish,
+  onReset,
+}: Props) {
   return (
-    <div className={style.inputSearch}>
+    <div
+      style={{ display: displayStep === 1 ? '' : 'none' }}
+      className={style.inputSearch}
+    >
       <Form
         form={form}
         onFinish={onFinish}
@@ -20,13 +39,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
       >
         <Row>
           <Col className={style.input} lg={12} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/anchor.png'}
                   alt="logo"
@@ -34,9 +48,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  POL
-                </div>
+                <div className={style.titleInput}>POL</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -59,9 +71,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                     filterSort={(optionA, optionB) =>
                       (optionA?.label ?? '')
                         .toLowerCase()
-                        .localeCompare(
-                          (optionB?.label ?? '').toLowerCase()
-                        )
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
                     options={[
@@ -76,13 +86,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
             </Flex>
           </Col>
           <Col className={style.input} lg={12} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/anchor.png'}
                   alt="logo"
@@ -90,9 +95,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  POD
-                </div>
+                <div className={style.titleInput}>POD</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -115,9 +118,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                     filterSort={(optionA, optionB) =>
                       (optionA?.label ?? '')
                         .toLowerCase()
-                        .localeCompare(
-                          (optionB?.label ?? '').toLowerCase()
-                        )
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
                     options={[
@@ -132,13 +133,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
             </Flex>
           </Col>
           <Col className={style.input} lg={12} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/date.png'}
                   alt="logo"
@@ -146,9 +142,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  Date
-                </div>
+                <div className={style.titleInput}>Date</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -161,7 +155,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   ]}
                 >
                   <DatePicker
-                    size='large'
+                    size="large"
                     format={dateFormat}
                     style={{ width: '100%' }}
                   />
@@ -170,13 +164,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
             </Flex>
           </Col>
           <Col className={style.input} lg={12} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/date.png'}
                   alt="logo"
@@ -184,9 +173,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  To
-                </div>
+                <div className={style.titleInput}>To</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -199,7 +186,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   ]}
                 >
                   <DatePicker
-                    size='large'
+                    size="large"
                     format={dateFormat}
                     style={{ width: '100%' }}
                   />
@@ -208,13 +195,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
             </Flex>
           </Col>
           <Col className={style.input} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/container.png'}
                   alt="logo"
@@ -222,9 +204,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  Type of container
-                </div>
+                <div className={style.titleInput}>Type of container</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -247,9 +227,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                     filterSort={(optionA, optionB) =>
                       (optionA?.label ?? '')
                         .toLowerCase()
-                        .localeCompare(
-                          (optionB?.label ?? '').toLowerCase()
-                        )
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
                     mode="multiple"
@@ -265,13 +243,8 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
             </Flex>
           </Col>
           <Col className={style.input} span={24}>
-            <Flex
-              align={'center'}
-            >
-              <Flex
-                align={'center'}
-                className={style.headerInput}
-              >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
                 <Image
                   src={'/images/oceanFreight/commodity.png'}
                   alt="logo"
@@ -279,9 +252,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput} >
-                  Commodity
-                </div>
+                <div className={style.titleInput}>Commodity</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -304,9 +275,7 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
                     filterSort={(optionA, optionB) =>
                       (optionA?.label ?? '')
                         .toLowerCase()
-                        .localeCompare(
-                          (optionB?.label ?? '').toLowerCase()
-                        )
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
                     mode="multiple"
@@ -323,13 +292,28 @@ export default function InputFclOceanFreight({ form, onFinish, onReset }: Props)
           </Col>
           <Col span={24} style={{ margin: '24px 0' }}>
             <Flex justify={'center'} align={'center'}>
-              <Button style={{ marginRight: '8px', color: 'red', width: '120px', height:'40px' }} onClick={onReset}>Clear</Button>
-              <Button style={{ width: '120px',  height:'40px' }} type="primary" htmlType="submit">Search</Button>
+              <Button
+                style={{
+                  marginRight: '8px',
+                  color: 'red',
+                  width: '120px',
+                  height: '40px',
+                }}
+                onClick={onReset}
+              >
+                Clear
+              </Button>
+              <Button
+                style={{ width: '120px', height: '40px' }}
+                type="primary"
+                htmlType="submit"
+              >
+                Search
+              </Button>
             </Flex>
           </Col>
         </Row>
       </Form>
     </div>
-
   );
 }
