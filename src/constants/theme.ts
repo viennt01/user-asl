@@ -14,8 +14,8 @@ export const THEME_FORM = {
   algorithm: theme.darkAlgorithm,
   token: {
     screenLGMax: 1169,
-    screenXL: 1170,
-    screenXLMin: 1170,
+    screenXL: 992,
+    screenXLMin: 992,
     borderRadius: 2,
     fontSize: 16,
     colorBorder: 'transparent',
