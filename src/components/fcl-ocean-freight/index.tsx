@@ -52,7 +52,7 @@ export default function FclOceanFreight() {
       <div className={style.oceanFreight} />
       <Flex className={style.checkPrice} vertical>
         <div className={style.content}>
-          <HeaderFclOceanFreight />
+          <HeaderFclOceanFreight displayStep={displayStep}/>
           <InputFclOceanFreight displayStep={displayStep} form={form} onFinish={onFinish} onReset={onReset} />
           <TableReturn displayStep={displayStep} setDisplayStep={setDisplayStep} data={dataTableResearch} />
           <Step2 displayStep={displayStep}/>

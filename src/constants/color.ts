@@ -9,6 +9,7 @@ const COLORS = {
   BRIGHT: '#cad7ee',
   GREY_COLOR: '#858585',
   GREY_COLOR_HOVER: '#1D4486',
+  DISABLED: '#8E8E8E',
 
   BLUE_BELL: '#7090B0',
   JET_GREY: '#616887',
