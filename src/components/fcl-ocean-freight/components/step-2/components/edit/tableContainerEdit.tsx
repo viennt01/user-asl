@@ -103,7 +103,6 @@ export default function TableContainerEdit() {
       })
     );
   }, [data]);
-  console.log(dataQuantity);
 
   return (
     <div>

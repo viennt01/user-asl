@@ -1,0 +1,23 @@
+@import '@/styles/_base.scss';
+
+.step4 {
+  // background: $WHITE;
+  // color: $WHITE;
+  // width: 100%;
+  // border-radius: 12px;
+
+  .cardMain {
+    padding: 56px 16px 16px;
+    .cardCustomer {
+      :global {
+        .ant-card-body {
+          padding: 0px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 992px) {
+  .step4 {
+  }
+}

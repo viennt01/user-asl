@@ -9,13 +9,14 @@ import InputFclOceanFreight from './components/inputSearch';
 import TableReturn, { DataType } from './components/tableReturn';
 import Step2 from './components/step-2';
 import Step3 from './components/step-3';
+import Step4 from './components/step-4';
 const dateFormat = 'YYYY/MM/DD';
 
 export default function FclOceanFreight() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [dataTableResearch, setDataTableResearch] = useState<DataType[]>([])
-  const [displayStep, setDisplayStep] = useState<number>(3);
+  const [displayStep, setDisplayStep] = useState<number>(4);
 
   const onFinish = (formValues: any) => {
     setDataTableResearch([
@@ -58,6 +59,7 @@ export default function FclOceanFreight() {
           <TableReturn displayStep={displayStep} setDisplayStep={setDisplayStep} data={dataTableResearch} />
           <Step2 displayStep={displayStep} setDisplayStep={setDisplayStep}/>
           <Step3 displayStep={displayStep} setDisplayStep={setDisplayStep}/>
+          <Step4 displayStep={displayStep} setDisplayStep={setDisplayStep}/>
         </div>
       </Flex>
       <Service />
