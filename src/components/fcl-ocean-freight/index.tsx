@@ -14,7 +14,7 @@ export default function FclOceanFreight() {
   const [form] = Form.useForm();
   const router = useRouter();
   const [dataTableResearch, setDataTableResearch] = useState<DataType[]>([])
-  const [displayStep, setDisplayStep] = useState<number>(1);
+  const [displayStep, setDisplayStep] = useState<number>(2.1);
 
   const onFinish = (formValues: any) => {
     setDataTableResearch([
@@ -55,7 +55,7 @@ export default function FclOceanFreight() {
           <HeaderFclOceanFreight displayStep={displayStep}/>
           <InputFclOceanFreight displayStep={displayStep} form={form} onFinish={onFinish} onReset={onReset} />
           <TableReturn displayStep={displayStep} setDisplayStep={setDisplayStep} data={dataTableResearch} />
-          <Step2 displayStep={displayStep}/>
+          <Step2 displayStep={displayStep} setDisplayStep={setDisplayStep}/>
         </div>
       </Flex>
       <Service />
