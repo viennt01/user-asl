@@ -13,17 +13,23 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 
-export default function CustomerInformation() {
+export default function ShipmentDetail() {
   interface DataType {
     key: string;
     right: string;
     left: string;
-    Customer?: string;
-    Email?: string;
-    Address?: string;
-    Contact?: string;
-    Mobile?: string;
-    Tel?: string;
+    'Mode of transportation'?: string;
+    'Port of loading'?: string;
+    'Place of pick up'?: string;
+    'Commodity'?: string;
+    'Customs declaration form'?: string;
+    'HS code'?: string;
+    'Quotation no'?: string;
+    'Date'?: string;
+    'Validity to'?: string;
+    'Gross weight'?: string;
+    'Mearsurement'?: string;
+    'Quantity'?: string;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -38,7 +44,7 @@ export default function CustomerInformation() {
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '100px',
+                width: '270px',
               }}
             >
               {text}:
@@ -67,7 +73,7 @@ export default function CustomerInformation() {
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '100px',
+                width: '270px',
               }}
             >
               {text}:
@@ -90,24 +96,45 @@ export default function CustomerInformation() {
   const data: DataType[] = [
     {
       key: '1',
-      right: 'Customer',
-      Customer: 'Nguyen Thanh Vien',
-      left: 'Email',
-      Email: 'thanhviennguyen01@gmail.com',
+      right: 'Mode of transportation',
+      'Mode of transportation': 'Nguyen Thanh Vien',
+      left: 'Quotation no',
+      'Quotation no': 'thanhviennguyen01@gmail.com',
     },
     {
       key: '2',
-      right: 'Address',
-      Address: 'Nguyen Thanh Vien',
-      left: 'Mobile',
-      Mobile: 'Nguyen Thanh Vien',
+      right: 'Port of loading',
+      'Port of loading': 'Nguyen Thanh Vien',
+      left: 'Date',
+      Date: 'Nguyen Thanh Vien',
     },
     {
       key: '3',
-      right: 'Contact',
-      Contact: 'Nguyen Thanh Vien',
-      left: 'Tel',
-      Tel: 'Nguyen Thanh Vien',
+      right: 'Place of pick up',
+      'Place of pick up': 'Nguyen Thanh Vien',
+      left: 'Validity to',
+      'Validity to': 'Nguyen Thanh Vien',
+    },
+    {
+      key: '4',
+      right: 'Commodity',
+      'Commodity': 'Nguyen Thanh Vien',
+      left: 'Gross weight',
+      'Gross weight': 'thanhviennguyen01@gmail.com',
+    },
+    {
+      key: '5',
+      right: 'Customs declaration form',
+      'Customs declaration form': 'Nguyen Thanh Vien',
+      left: 'Mearsurement',
+      Mearsurement: 'Nguyen Thanh Vien',
+    },
+    {
+      key: '6',
+      right: 'HS code',
+      'HS code': 'Nguyen Thanh Vien',
+      left: 'Quantity',
+      'Quantity': 'Nguyen Thanh Vien',
     },
   ];
 
@@ -129,7 +156,7 @@ export default function CustomerInformation() {
       }}
     >
       <Card
-        title="Customer information"
+        title="Shipment details"
         style={{ width: '100%' }}
         className={style.cardCustomer}
       >
