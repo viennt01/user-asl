@@ -1,18 +1,18 @@
 $xs: '0';
 $sm: '576px';
 $md: '768px';
-$lg: '1024px';
-$xl: '1170px';
-$xxl: '1400px';
+$lg: '992px';
+$xl: '1200px';
+$xxl: '1600px';
 
 @mixin mobile-device {
-  @media screen and (max-width: $xl) {
+  @media screen and (max-width: $lg) {
     @content;
   }
 }
 
 @mixin desktop-device {
-  @media screen and (min-width: $xl) {
+  @media screen and (min-width: $lg) {
     @content;
   }
 }
