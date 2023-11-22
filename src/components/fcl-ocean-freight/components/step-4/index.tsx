@@ -6,6 +6,8 @@ import CustomerInformation from './components/customer-information';
 import ShipmentDetail from './components/shipment-details';
 import QuotationDetail from './components/quotation-detail';
 import TermsConditions from './components/terms-conditions';
+import OtherServiceCharges from './components/other-service-charges';
+import Finish from './components/finish';
 
 interface Props {
   displayStep: number;
@@ -37,6 +39,30 @@ export default function Step4({ displayStep, setDisplayStep }: Props) {
           <ShipmentDetail />
           <QuotationDetail />
           <TermsConditions />
+          <OtherServiceCharges />
+          <Finish />
+          <Col span={24} style={{marginTop: '16px'}}>
+            <Flex justify="space-between">
+              <Button
+                style={{
+                  marginRight: '8px',
+                  color: COLORS.GREY_COLOR_HOVER,
+                  width: '120px',
+                  height: '40px',
+                }}
+                onClick={() => setDisplayStep(3)}
+              >
+                Pervious
+              </Button>
+              <Button
+                style={{ width: '120px', height: '40px' }}
+                type="primary"
+                onClick={() => setDisplayStep(5)}
+              >
+                Next
+              </Button>
+            </Flex>
+          </Col>
         </Row>
       </Card>
     </div>
