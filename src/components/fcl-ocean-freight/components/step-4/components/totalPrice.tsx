@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Descriptions, Flex, Table } from 'antd';
+import { Descriptions, Flex, Table } from 'antd';
 import type { DescriptionsProps } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';

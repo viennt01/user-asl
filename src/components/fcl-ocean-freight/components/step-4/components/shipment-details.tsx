@@ -21,15 +21,15 @@ export default function ShipmentDetail() {
     'Mode of transportation'?: string;
     'Port of loading'?: string;
     'Place of pick up'?: string;
-    'Commodity'?: string;
+    Commodity?: string;
     'Customs declaration form'?: string;
     'HS code'?: string;
     'Quotation no'?: string;
-    'Date'?: string;
+    Date?: string;
     'Validity to'?: string;
     'Gross weight'?: string;
-    'Mearsurement'?: string;
-    'Quantity'?: string;
+    Mearsurement?: string;
+    Quantity?: string;
   }
 
   const columns: ColumnsType<DataType> = [
@@ -39,12 +39,12 @@ export default function ShipmentDetail() {
       width: '50%',
       render: (text, record) => {
         return (
-          <Flex>
+          <Flex style={{ flex: 1 }}>
             <div
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '270px',
+                width: '220px',
               }}
             >
               {text}:
@@ -53,7 +53,7 @@ export default function ShipmentDetail() {
               style={{
                 fontSize: '12px',
                 fontWeight: '400',
-                width: '80%',
+                // width: '80%',
               }}
             >
               {record[text as keyof DataType]}
@@ -68,12 +68,12 @@ export default function ShipmentDetail() {
       width: '50%',
       render: (text, record) => {
         return (
-          <Flex>
+          <Flex style={{ flex: 1 }}>
             <div
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '270px',
+                width: '130px',
               }}
             >
               {text}:
@@ -82,7 +82,7 @@ export default function ShipmentDetail() {
               style={{
                 fontSize: '12px',
                 fontWeight: '400',
-                width: '80%',
+                // width: '80%',
               }}
             >
               {record[text as keyof DataType]}
@@ -99,7 +99,7 @@ export default function ShipmentDetail() {
       right: 'Mode of transportation',
       'Mode of transportation': 'Nguyen Thanh Vien',
       left: 'Quotation no',
-      'Quotation no': 'thanhviennguyen01@gmail.com',
+      'Quotation no': 'Nguyen Thanh Vien',
     },
     {
       key: '2',
@@ -118,9 +118,9 @@ export default function ShipmentDetail() {
     {
       key: '4',
       right: 'Commodity',
-      'Commodity': 'Nguyen Thanh Vien',
+      Commodity: 'Nguyen Thanh Vien',
       left: 'Gross weight',
-      'Gross weight': 'thanhviennguyen01@gmail.com',
+      'Gross weight': 'Nguyen Thanh Vien',
     },
     {
       key: '5',
@@ -134,7 +134,7 @@ export default function ShipmentDetail() {
       right: 'HS code',
       'HS code': 'Nguyen Thanh Vien',
       left: 'Quantity',
-      'Quantity': 'Nguyen Thanh Vien',
+      Quantity: 'Nguyen Thanh Vien',
     },
   ];
 

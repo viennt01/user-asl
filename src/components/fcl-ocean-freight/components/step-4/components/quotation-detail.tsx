@@ -150,6 +150,9 @@ export default function QuotationDetail() {
           dataSource={data}
           pagination={false}
           bordered
+          scroll={{
+            x: 'max-content',
+          }}
         />
         <TotalPrice />
       </Card>

@@ -5,6 +5,7 @@ import COLORS from '@/constants/color';
 import CustomerInformation from './components/customer-information';
 import ShipmentDetail from './components/shipment-details';
 import QuotationDetail from './components/quotation-detail';
+import TermsConditions from './components/terms-conditions';
 
 interface Props {
   displayStep: number;
@@ -35,6 +36,7 @@ export default function Step4({ displayStep, setDisplayStep }: Props) {
           <CustomerInformation />
           <ShipmentDetail />
           <QuotationDetail />
+          <TermsConditions />
         </Row>
       </Card>
     </div>
