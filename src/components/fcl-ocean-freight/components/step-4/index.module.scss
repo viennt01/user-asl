@@ -23,7 +23,7 @@
       :global {
         .ant-card-head {
           background-color: $GREY_COLOR_HOVER;
-          border: 0px solid;
+          border: 1px solid #000;
           .ant-card-head-title {
             color: $WHITE;
             font-size: 18px;
@@ -34,6 +34,38 @@
           padding: 0px;
           border: 0px solid;
           box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        }
+      }
+      .table {
+        .titleTable {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: 720;
+        }
+      }
+      .description {
+        color: #000;
+        :global {
+          .ant-descriptions-row {
+            .ant-descriptions-item-label {
+              font-size: 24px;
+              font-weight: 750;
+            }
+            .ant-descriptions-item-content {
+              padding: 0;
+            }
+          }
+        }
+        .descriptionTable {
+          :global {
+            tr:last-child {
+              td:last-child {
+                border: 0px;
+              }
+            }
+          }
         }
       }
     }

@@ -4,6 +4,7 @@ import { Button, Card, Col, Flex, Row, Image, ConfigProvider } from 'antd';
 import COLORS from '@/constants/color';
 import CustomerInformation from './components/customer-information';
 import ShipmentDetail from './components/shipment-details';
+import QuotationDetail from './components/quotation-detail';
 
 interface Props {
   displayStep: number;
@@ -33,6 +34,7 @@ export default function Step4({ displayStep, setDisplayStep }: Props) {
           </Col>
           <CustomerInformation />
           <ShipmentDetail />
+          <QuotationDetail />
         </Row>
       </Card>
     </div>
