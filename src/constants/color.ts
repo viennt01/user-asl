@@ -38,6 +38,13 @@ const COLORS = {
 
   BLACK_PEARL: '#111024',
   JAGUAR: '#050206',
+
+  STATUS_CODE: {
+    PENDING: '#3CB0CA',
+    PROCESSING: '#26D938',
+    COMPLETED: '#3444D2',
+    CANCELLED: '#E94848',
+  },
 };
 
 // update color => remember update COLORS in constants

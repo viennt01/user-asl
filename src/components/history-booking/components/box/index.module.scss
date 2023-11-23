@@ -1,0 +1,39 @@
+@import '@/styles/_base.scss';
+
+.box {
+  margin-top: 24px;
+  color: #000;
+  border-radius: 12px;
+  // background: #eee;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  .idBox {
+    background-color: #e7eeff;
+    color: $GREY_COLOR_HOVER;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px;
+  }
+  .statusBox {
+    margin-bottom: 16px;
+    border: 16px;
+    .titleStatus {
+      padding: 12px;
+      color: $WHITE;
+      border-radius: 20px;
+    }
+  }
+  .nameFrom {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 6px 0;
+  }
+  .lineFromTo {
+    width: 330px;
+    height: 1px;
+    background-color: #1fa538;
+  }
+  .bottomBox {
+    border-top: 1px solid #000;
+    padding: 8px;
+  }
+}

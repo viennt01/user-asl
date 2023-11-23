@@ -1,0 +1,72 @@
+@import '@/styles/_base.scss';
+
+.wrapper {
+  background: $WHITE;
+  color: $WHITE;
+  width: 100%;
+  .welcome {
+    min-height: 250px;
+    background-size: 100% 100%;
+    background-image: url('/images/booking/history-booking.jpg');
+    .container {
+      background-color: rgba(0, 0, 0, 0.4);
+      max-height: 250px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .textCol {
+        padding: 92px 16px;
+        h1 {
+          font-weight: 800;
+          font-size: 48px;
+          line-height: 30px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          margin: 0;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .desc {
+          margin-top: 16px;
+          font-size: 22px;
+          line-height: 22px;
+          letter-spacing: 0.02em;
+        }
+      }
+    }
+  }
+  .historyBooking {
+    padding: 24px;
+    max-width: 1200px;
+    width: 100%;
+    .search {
+      margin: 24px 0;
+    }
+    .result {
+      width: 100%;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    .welcome {
+      min-height: 350px;
+      .container {
+        min-height: 350px;
+        .textCol {
+          padding: 150px 16px;
+          h1 {
+            font-weight: 900;
+            font-size: 52px;
+          }
+          .desc {
+            margin-top: 22px;
+            font-size: 26px;
+            line-height: 26px;
+          }
+        }
+      }
+    }
+  }
+}
