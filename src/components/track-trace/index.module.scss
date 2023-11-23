@@ -90,6 +90,13 @@
             }
           }
         }
+        .description {
+          padding: 16px;
+          .titleDescription{
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
       }
     }
   }
