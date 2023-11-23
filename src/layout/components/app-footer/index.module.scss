@@ -1,46 +1,47 @@
 @import '@/styles/_base.scss';
 
 .appFooterWrapper {
-  background: #020509;
   padding: 0;
+  width: 100%;
+  .wrapper {
+    max-width: 1200px;
 
-  .appFooter {
-    aspect-ratio: 1920 / 378;
-    height: auto;
     width: 100%;
-    background: #fff url('./assets/bg.png') center center no-repeat;
-    background-size: cover;
-  }
-  .moreInfo {
-    background: $PRIMARY_DARK;
-
-    .container {
-      aspect-ratio: 1920 / 61;
-      height: auto;
+    .appFooter {
+      padding: 24px;
+      max-width: 1200px;
       width: 100%;
-      background: #fff url('./assets/bg-copy-right.png') center center no-repeat;
-      background-size: cover;
+
+      .headerItem {
+        color: $GREY_COLOR_HOVER;
+        font-size: 26px;
+        font-weight: 700;
+        font-family: Inika;
+        margin-bottom: 8px;
+      }
+      .item {
+        color: $GREY_COLOR_HOVER;
+        font-size: 18px;
+        font-weight: 400;
+        font-family: Inika;
+        margin: 0 0 8px 8px;
+        cursor: pointer;
+      }
     }
+  }
+  .copyRight {
+    background-color: $GREY_COLOR_HOVER;
+    text-align: center;
+    line-height: 26px;
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: 600;
+    color: $WHITE;
   }
 }
 
 @include desktop-device {
   .appFooterWrapper {
-    .appFooter {
-      aspect-ratio: 1920 / 378;
-      width: 100%;
-      height: auto; 
-      overflow: hidden;
-      background-position: center top;
-    }
-    .moreInfo {
-      .container {
-        aspect-ratio: 1920 / 61;
-        width: 100%;
-        height: auto; 
-        overflow: hidden;
-        background-position: center top;
-      }
-    }
   }
 }
