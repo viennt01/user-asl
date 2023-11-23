@@ -10,9 +10,19 @@ export default function OceanFreight() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.oceanFreight} />
+      <div className={style.welcome}>
+        <div className={style.container}>
+          <div className={style.textCol}>
+            <h1>Ocean Freight</h1>
+            <div className={style.desc}>
+              Find the right route for your goods with guaranteed container
+              allocation by ocean freight.
+            </div>
+          </div>
+        </div>
+      </div>
       <Flex className={style.option} justify={'center'} align={'center'}>
-        <Row>
+        <Row style={{maxWidth: '1200px'}}>
           <Col className={style.header} span={24}>
             TYPES OF SERVICES OF SEA FREIGHT
           </Col>
@@ -43,9 +53,12 @@ export default function OceanFreight() {
                 justify={'center'}
                 align={'center'}
               >
-                <Button className={style.btn}
+                <Button
+                  className={style.btn}
                   onClick={() => router.push(ROUTERS.FCL_OCEAN_FREIGHT)}
-                >Request Quote</Button>
+                >
+                  Request Quote
+                </Button>
               </Flex>
             </Card>
           </Col>

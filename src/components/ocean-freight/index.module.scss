@@ -4,16 +4,41 @@
   background: $WHITE;
   color: $WHITE;
 
-  .oceanFreight {
-    aspect-ratio: 1920 / 488;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/Ocean.png') center center no-repeat;
-    background-size: cover;
-    margin: 0px !important;
+  .welcome {
+    min-height: 250px;
+    background-size: 100% 100%;
+    background-image: url('/images/oceanFreight/bgOcean.jpg');
+    .container {
+      background-color: rgba(0, 0, 0, 0.4);
+      max-height: 250px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .textCol {
+        padding: 92px 16px;
+
+        h1 {
+          font-weight: 800;
+          font-size: 48px;
+          line-height: 30px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          margin: 0;
+          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        .desc {
+          margin-top: 16px;
+          font-size: 22px;
+          line-height: 22px;
+          letter-spacing: 0.02em;
+        }
+      }
+    }
   }
   .option {
-    background: #0c529e url('./assets/bg.jpg') center center ;
+    background: #0c529e url('./assets/bg.jpg') center center;
     .header {
       color: $WHITE;
       text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -65,13 +90,23 @@
 
 @media (min-width: 992px) {
   .wrapper {
-    .oceanFreight {
-      aspect-ratio: 1920 / 488;
-      width: 100%;
-      height: auto;
-      overflow: hidden;
-      background-position: center top;
-      margin-bottom: 8px;
+    .welcome {
+      min-height: 350px;
+      .container {
+        min-height: 350px;
+        .textCol {
+          padding: 150px 16px;
+          h1 {
+            font-weight: 900;
+            font-size: 52px;
+          }
+          .desc {
+            margin-top: 22px;
+            font-size: 26px;
+            line-height: 26px;
+          }
+        }
+      }
     }
     .option {
       .header {

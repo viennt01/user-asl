@@ -50,8 +50,18 @@ export default function FclOceanFreight() {
   };
   return (
     <div className={style.wrapper}>
-      <div className={style.oceanFreight} />
-      <Flex className={style.checkPrice} vertical>
+      <div className={style.welcome}>
+        <div className={style.container}>
+          <div className={style.textCol}>
+            <h1>Ocean Freight</h1>
+            <div className={style.desc}>
+              Find the right route for your goods with guaranteed container
+              allocation by ocean freight.
+            </div>
+          </div>
+        </div>
+      </div>
+      <Flex  className={style.checkPrice} vertical>
         <div className={style.content}>
           <HeaderFclOceanFreight displayStep={displayStep} />
           <InputFclOceanFreight
