@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { useRouter } from 'next/router';
 import Information from './information';
-import Service from './description';
+import ServiceStep3 from './description';
 
 const dateFormat = 'YYYY/MM/DD';
 
@@ -41,7 +41,7 @@ export default function Step3({ displayStep, setDisplayStep }: Props) {
     >
       <Information />
       <div>
-        <Service setDisplayStep={setDisplayStep} />
+        <ServiceStep3 setDisplayStep={setDisplayStep} />
       </div>
     </div>
   );

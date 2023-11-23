@@ -1,28 +1,79 @@
 @import '@/styles/_base.scss';
 
 .wrapper {
-  background: $BG_SECONDARY;
+  background: $WHITE;
   color: $WHITE;
-  
-  .heroCover {
-    aspect-ratio: 1920 / 1285;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/bg.png') center center no-repeat;
-    background-size: cover;
+  .wrapperContainer {
+    min-height: 250px;
+    background-size: 100% 100%;
+    background-image: url('/images/service/bgService.jpg');
+    .container {
+      background-color: rgba(0, 0, 0, 0.4);
+      min-height: 250px;
+      height: 100%;
+      .title {
+        margin: 24px 0;
+        font-size: 28px;
+        font-weight: 700;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      }
+      .listService {
+        padding: 16px;
+        width: 100%;
+        .card {
+          width: 100%;
+          padding: 24px;
+          margin-bottom: 24px;
+          background-color: rgba(254, 254, 254, 0.75);
+          box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+          border-radius: 16px;
+          width: 230px;
+          .titleCard {
+            color: $BLACK;
+            font-size: 22px;
+            font-weight: 700;
+          }
+          .image {
+            padding: 0px 28px;
+            margin: 16px 0px;
+            height: 220px;
+            width: 220px;
+          }
+          .btnCard {
+            height: 40px;
+            width: 150px;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (min-width: 992px) {
   .wrapper {
-    .heroCover {
-      aspect-ratio: 1920 / 1285;
-      width: 100%;
-      height: auto; 
-      overflow: hidden;
-      background-position: center top;
-
-  
+    .wrapperContainer {
+      min-height: 350px;
+      .container {
+        min-height: 350px;
+        .title {
+          margin: 32px 0;
+          font-size: 36px;
+          font-weight: 800;
+        }
+        .listService {
+          max-width: 1200px;
+          .card {
+            .titleCard {
+            }
+            .image {
+              padding: 0px 28px;
+              margin: 16px 0px;
+              height: 220px;
+              width: 220px;
+            }
+          }
+        }
+      }
     }
   }
 }

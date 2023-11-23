@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import style from './index.module.scss';
 import { Flex, Form } from 'antd';
 import { useRouter } from 'next/router';
-import Service from '../home-page/components/service';
 import HeaderFclOceanFreight from './components/header';
 import InputFclOceanFreight from './components/inputSearch';
 import TableReturn, { DataType } from './components/tableReturn';
@@ -10,6 +9,7 @@ import Step2 from './components/step-2';
 import Step3 from './components/step-3';
 import Step4 from './components/step-4';
 import Step5 from './components/step-5';
+import Service from '../home-page/components/service';
 
 export default function FclOceanFreight() {
   const [form] = Form.useForm();

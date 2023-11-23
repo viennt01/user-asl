@@ -9,7 +9,7 @@ interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export default function Service({ setDisplayStep }: Props) {
+export default function ServiceStep3({ setDisplayStep }: Props) {
   return (
     <div className={style.service}>
       <Row gutter={16}>

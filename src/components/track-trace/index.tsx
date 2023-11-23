@@ -48,7 +48,6 @@ export default function TraceTrace() {
       },
     });
   };
-  console.log(dataTrackTrade);
 
   return (
     <div className={style.wrapper}>
@@ -63,94 +62,99 @@ export default function TraceTrace() {
           </div>
         </div>
       </div>
-      <div className={style.search}>
-        <div className={style.searchBox}>
-          <Form
-            form={form}
-            onFinish={onSubmit}
-            initialValues={initialValues}
-            layout="horizontal"
-          >
-            <Row gutter={24}>
-              <Col span={12}>
-                <div className={style.title}>Track your shipment</div>{' '}
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Radio: {
-                        fontSizeLG: 24,
-                        dotSize: 8,
-                        marginXS: 32,
-                        paddingXS: 16,
-                        lineWidth: 2,
-                        lineHeight: 3,
+      <Flex justify='center' style={{width: '100%'}}>
+        <div className={style.search}>
+          <div className={style.searchBox}>
+            <Form
+              form={form}
+              onFinish={onSubmit}
+              initialValues={initialValues}
+              layout="horizontal"
+            >
+              <Row gutter={24}>
+                <Col span={12}>
+                  <div className={style.title}>Track your shipment</div>{' '}
+                  <ConfigProvider
+                    theme={{
+                      components: {
+                        Radio: {
+                          fontSizeLG: 24,
+                          dotSize: 8,
+                          marginXS: 32,
+                          paddingXS: 16,
+                          lineWidth: 2,
+                          lineHeight: 3,
+                        },
                       },
-                    },
-                  }}
-                >
+                    }}
+                  >
+                    <Form.Item
+                      name="hblNo"
+                      rules={[
+                        {
+                          required: true,
+                          message: 'Please choose a type',
+                        },
+                      ]}
+                    >
+                      <Radio.Group>
+                        <Radio
+                          value="hblNo"
+                          style={{ fontSize: '16px', fontWeight: '600' }}
+                        >
+                          {' '}
+                          HBL{' '}
+                        </Radio>
+                        <Radio
+                          value="containerNo"
+                          style={{ fontSize: '16px', fontWeight: '600' }}
+                        >
+                          {' '}
+                          Container{' '}
+                        </Radio>
+                      </Radio.Group>
+                    </Form.Item>
+                  </ConfigProvider>
+                </Col>
+                <Col span={12}>
+                  <div className={style.title}>Number no</div>
                   <Form.Item
-                    name="hblNo"
+                    name="containerNo"
                     rules={[
                       {
                         required: true,
-                        message: 'Please choose a type',
+                        message: 'Please enter a number no',
                       },
                     ]}
                   >
-                    <Radio.Group>
-                      <Radio
-                        value="hblNo"
-                        style={{ fontSize: '16px', fontWeight: '600' }}
-                      >
-                        {' '}
-                        HBL{' '}
-                      </Radio>
-                      <Radio
-                        value="containerNo"
-                        style={{ fontSize: '16px', fontWeight: '600' }}
-                      >
-                        {' '}
-                        Container{' '}
-                      </Radio>
-                    </Radio.Group>
+                    <Input
+                      size="large"
+                      placeholder="Please enter a number no"
+                    />
                   </Form.Item>
-                </ConfigProvider>
-              </Col>
-              <Col span={12}>
-                <div className={style.title}>Number no</div>
-                <Form.Item
-                  name="containerNo"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter a number no',
-                    },
-                  ]}
-                >
-                  <Input size="large" placeholder="Please enter a number no" />
-                </Form.Item>
-              </Col>
-              <Col span={24}>
-                <Flex justify="center">
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    size="large"
-                    style={{ width: '30%', height: '40px' }}
-                    loading={searchTrackTradeMutation.isLoading}
-                  >
-                    Search
-                  </Button>
-                </Flex>
-              </Col>
-            </Row>
-          </Form>
+                </Col>
+                <Col span={24}>
+                  <Flex justify="center">
+                    <Button
+                      type="primary"
+                      htmlType="submit"
+                      size="large"
+                      style={{ width: '30%', height: '40px' }}
+                      loading={searchTrackTradeMutation.isLoading}
+                    >
+                      Search
+                    </Button>
+                  </Flex>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+          <div className={style.returnData}>
+            <Result data={dataTrackTrade} />
+          </div>
         </div>
-        <div className={style.returnData}>
-          <Result data={dataTrackTrade} />
-        </div>
-      </div>
-        <Service />
+      </Flex>
+      <Service />
     </div>
   );
 }

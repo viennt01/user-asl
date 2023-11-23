@@ -1,7 +1,7 @@
 import style from './index.module.scss';
 import Welcome from './components/welcome';
-import Service from './components/service';
 import Information from './components/information';
+import Service from './components/service';
 
 export default function Home() {
   return (
