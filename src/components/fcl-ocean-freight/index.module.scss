@@ -4,35 +4,36 @@
   background: $WHITE;
   color: $WHITE;
 
-  .welcome {
-    min-height: 250px;
-    background-size: 100% 100%;
+  .bg {
     background-image: url('/images/oceanFreight/bgOcean.jpg');
-    .container {
-      background-color: rgba(0, 0, 0, 0.4);
-      max-height: 250px;
+    background-size: 100% 100%;
+    width: 100%;
+    .welcome {
+      width: 100%;
+      min-height: 300px;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .textCol {
-        padding: 92px 16px;
-
-        h1 {
-          font-weight: 700;
-          font-size: 38px;
-          line-height: 38px;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
-          margin: 0;
-          text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        }
-        .desc {
-          margin-top: 8px;
-          font-size: 22px;
-          line-height: 22px;
-          letter-spacing: 0.02em;
+      background-color: rgba(0, 0, 0, 0.4);
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        max-height: 300px;
+        padding: 92px 32px;
+        .textCol {
+          width: 100%;
+          h1 {
+            font-weight: 800;
+            font-size: 64px;
+            line-height: 60px;
+            letter-spacing: 0.05em;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          }
+          .desc {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 22px;
+            letter-spacing: 0.02em;
+            margin-bottom: 32px;
+          }
         }
       }
     }
@@ -146,24 +147,6 @@
 
 @media (min-width: 992px) {
   .wrapper {
-    .welcome {
-      min-height: 350px;
-      .container {
-        min-height: 350px;
-        .textCol {
-          padding: 150px 16px;
-          h1 {
-            font-weight: 900;
-            font-size: 52px;
-          }
-          .desc {
-            margin-top: 22px;
-            font-size: 26px;
-            line-height: 26px;
-          }
-        }
-      }
-    }
     .checkPrice {
       min-height: 550px;
       padding: 2px 16px;

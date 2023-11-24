@@ -10,16 +10,22 @@ export default function OceanFreight() {
 
   return (
     <div className={style.wrapper}>
-      <div className={style.welcome}>
-        <div className={style.container}>
-          <div className={style.textCol}>
-            <h1>Ocean Freight</h1>
-            <div className={style.desc}>
-              Find the right route for your goods with guaranteed container
-              allocation by ocean freight.
-            </div>
-          </div>
-        </div>
+       <div className={style.bg}>
+        <Flex justify="center" className={style.welcome}>
+          <Flex align="center" justify="center" className={style.container}>
+            <Flex vertical align="flex-start" className={style.textCol}>
+              <Flex>
+                <h1>Ocean Freight</h1>
+              </Flex>
+              <Flex>
+                <div className={style.desc}>
+                  Find the right route for your goods with guaranteed container
+                  allocation by ocean freight.
+                </div>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Flex>
       </div>
       <Flex className={style.option} justify={'center'} align={'center'}>
         <Row style={{maxWidth: '1200px'}}>

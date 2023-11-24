@@ -3,6 +3,50 @@
 .wrapper {
   background: $WHITE;
   color: $WHITE;
+  .bg {
+    background-size: 100% 100%;
+    margin-bottom: 16px;
+    width: 100%;
+    .welcome {
+      width: 100%;
+      min-height: 350px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        max-height: 350px;
+        padding: 92px 32px;
+        .textCol {
+          width: 100%;
+          h1 {
+            font-weight: 800;
+            font-size: 64px;
+            line-height: 60px;
+            letter-spacing: 0.05em;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          }
+          .desc {
+            display: none;
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 22px;
+            letter-spacing: 0.02em;
+            margin-bottom: 32px;
+          }
+          .btn {
+            background-color: #e60023;
+            border: #e60023;
+            color: $WHITE;
+            font-weight: 600;
+            font-size: 18px;
+            width: 200px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
 
   .oceanFreight {
     aspect-ratio: 1920 / 530;
@@ -39,6 +83,17 @@
 
 @media (min-width: 992px) {
   .wrapper {
+    .bg {
+      .welcome {
+        .container {
+          .textCol {
+            .desc {
+              display: block;
+            }
+          }
+        }
+      }
+    }
     .oceanFreight {
       aspect-ratio: 1920 / 530;
       width: 100%;
