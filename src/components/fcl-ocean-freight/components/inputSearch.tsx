@@ -11,6 +11,19 @@ import {
   DatePicker,
   FormInstance,
 } from 'antd';
+import { useQuery } from '@tanstack/react-query';
+import {
+  API_COMMODITY,
+  API_CONTAINER_TYPE,
+  API_LOCATION,
+} from '@/fetcherAxios/endpoint';
+import {
+  getAllCommodity,
+  getAllContainerType,
+  getAllLocation,
+} from '../fetcher';
+import { TYPE_LOCATION } from '../interface';
+import { useRouter } from 'next/router';
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
@@ -26,6 +39,47 @@ export default function InputFclOceanFreight({
   onFinish,
   onReset,
 }: Props) {
+  const router = useRouter();
+
+  const getLocation = useQuery({
+    queryKey: [API_LOCATION.GET_ALL],
+    queryFn: () => getAllLocation({ type: TYPE_LOCATION.SEA }),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+      }
+    },
+    onError: () => {
+      router.back();
+    },
+  });
+
+  const getContainerType = useQuery({
+    queryKey: [API_CONTAINER_TYPE.GET_ALL],
+    queryFn: () => getAllContainerType(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+      }
+    },
+    onError: () => {
+      router.back();
+    },
+  });
+
+  const getCommodity = useQuery({
+    queryKey: [API_COMMODITY.GET_ALL],
+    queryFn: () => getAllCommodity(),
+    onSuccess: (data) => {
+      if (!data.status) {
+        router.back();
+      }
+    },
+    onError: () => {
+      router.back();
+    },
+  });
+
   return (
     <div
       style={{ display: displayStep === 1 ? '' : 'none' }}
@@ -74,12 +128,14 @@ export default function InputFclOceanFreight({
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
-                    options={[
-                      {
-                        value: 'item.locationID',
-                        label: 'item.locationName',
-                      },
-                    ]}
+                    options={
+                      getLocation.data?.data?.map((item) => {
+                        return {
+                          value: item.locationID,
+                          label: item.locationName,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>
@@ -121,12 +177,14 @@ export default function InputFclOceanFreight({
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
-                    options={[
-                      {
-                        value: 'item.locationID',
-                        label: 'item.locationName',
-                      },
-                    ]}
+                    options={
+                      getLocation.data?.data?.map((item) => {
+                        return {
+                          value: item.locationID,
+                          label: item.locationName,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>
@@ -231,17 +289,20 @@ export default function InputFclOceanFreight({
                     }
                     size="large"
                     mode="multiple"
-                    options={[
-                      {
-                        value: 'item.locationID',
-                        label: 'item.locationName',
-                      },
-                    ]}
+                    options={
+                      getContainerType.data?.data?.map((item) => {
+                        return {
+                          value: item.containerTypeID,
+                          label: item.code,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>
             </Flex>
           </Col>
+          
           <Col className={style.input} span={24}>
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>
@@ -279,12 +340,14 @@ export default function InputFclOceanFreight({
                     }
                     size="large"
                     mode="multiple"
-                    options={[
-                      {
-                        value: 'item.locationID',
-                        label: 'item.locationName',
-                      },
-                    ]}
+                    options={
+                      getCommodity.data?.data?.map((item) => {
+                        return {
+                          value: item.commodityID,
+                          label: item.commodityName,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>

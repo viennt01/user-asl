@@ -18,3 +18,14 @@ export const API_TRACK_TRADE = {
   SEARCH: '/track-and-trace',
 };
 
+export const API_LOCATION = {
+  GET_ALL: '/get-all-location',
+};
+
+export const API_CONTAINER_TYPE = {
+  GET_ALL: '/get-all-container-type',
+};
+
+export const API_COMMODITY = {
+  GET_ALL: '/get-all-commodity',
+};
