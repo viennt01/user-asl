@@ -3,26 +3,75 @@
 .wrapper {
   background: $BG_SECONDARY;
   color: $WHITE;
-  
-  .heroCover {
-    aspect-ratio: 1920 / 560;
-    height: auto;
+  .bg {
+    background-image: url('/images/bgWelcome.jpeg');
+    background-size: 100% 100%;
     width: 100%;
-    background: #fff url('./assets/bg.png') center center no-repeat;
-    background-size: cover;
+    .welcome {
+      width: 100%;
+      min-height: 300px;
+      height: 100%;
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        max-height: 300px;
+        padding: 92px 32px;
+        .textCol {
+          width: 100%;
+          h1 {
+            font-weight: 700;
+            font-size: 30px;
+            line-height: 36px;
+            letter-spacing: 0.05em;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.4);
+            color: #0066ff;
+          }
+          .desc {
+            background-image: url('/images/bgText.png');
+            color: $BLACK;
+            width: 380px;
+            height: 30px;
+            font-size: 14px;
+            line-height: 22px;
+            letter-spacing: 0.02em;
+            background-size: 100% 100%;
+            margin-left: -25px;
+          }
+        }
+      }
+    }
   }
 }
 
 @media (min-width: 992px) {
   .wrapper {
-    .heroCover {
-      aspect-ratio: 1920 / 560;
-      width: 100%;
-      height: auto; 
-      overflow: hidden;
-      background-position: center top;
-
-  
+    .bg {
+      .welcome {
+        min-height: 400px;
+        .container {
+          max-height: 400px;
+          padding: 92px 32px;
+          .textCol {
+            h1 {
+              font-weight: 800;
+              font-size: 52px;
+              line-height: 40px;
+              letter-spacing: 0.05em;
+              color: #0066ff;
+            }
+            .desc {
+              width: 500px;
+              height: 40px;
+              font-size: 16px;
+              font-weight: 350;
+              line-height: 22px;
+              letter-spacing: 0.02em;
+              background-size: 100% 100%;
+              margin-left: -25px;
+            }
+          }
+        }
+      }
     }
   }
 }
