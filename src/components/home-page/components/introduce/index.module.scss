@@ -1,28 +1,86 @@
 @import '@/styles/_base.scss';
 
 .wrapper {
-  background: $BG_SECONDARY;
+  background: $WHITE;
   color: $WHITE;
-  
-  .heroCover {
-    aspect-ratio: 1920 / 851;
-    height: auto;
+  width: 100%;
+
+  .bg {
+    background-image: url('/images/introduce/bgIntroduce.png');
+    background-size: 100% 100%;
     width: 100%;
-    background: #fff url('./assets/bg.png') center center no-repeat;
-    background-size: cover;
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      padding: 32px 16px;
+      .containerImage {
+        margin-bottom: 32px;
+      }
+      .containerText {
+        margin-bottom: 32px;
+        .containerTextFirst {
+          color: $PRIMARY_DARK;
+          font-size: 42px;
+        }
+        .containerTextSecond {
+          color: #ec3024;
+          font-size: 42px;
+        }
+        .separate {
+          width: 100px;
+          height: 2px;
+          background-color: $PRIMARY_DARK;
+          margin-bottom: 21px;
+        }
+        .description {
+          margin-top: 45px;
+          font-size: 18px;
+          color: #383838;
+          .descriptionStrong {
+            margin-top: 45px;
+            font-size: 18px;
+            color: #0033cc;
+          }
+        }
+      }
+      .menuIcon {
+        .containerIcon {
+          border-right: 1px solid $BLACK;
+          margin-bottom: 42px;
+          .icon {
+            height: 100px;
+            color: $PRIMARY_DARK;
+            font-size: 18px;
+            font-weight: 600;
+          }
+        }
+        .containerIcon:last-child {
+          border-right: none;
+        }
+        .containerIcon:nth-child(2) {
+          border-right: none;
+        }
+      }
+    }
   }
 }
 
 @media (min-width: 992px) {
   .wrapper {
-    .heroCover {
-      aspect-ratio: 1920 / 851;
-      width: 100%;
-      height: auto; 
-      overflow: hidden;
-      background-position: center top;
-
-  
+    .bg {
+      .container {
+        .menuIcon {
+          .containerIcon {
+            border-right: 1px solid $BLACK;
+          }
+          .containerIcon:nth-child(2) {
+            border-right: 1px solid $BLACK;
+          }
+          .containerIcon:last-child {
+            border-right: none;
+          }
+        }
+      }
     }
   }
 }
