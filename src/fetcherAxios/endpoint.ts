@@ -29,3 +29,7 @@ export const API_CONTAINER_TYPE = {
 export const API_COMMODITY = {
   GET_ALL: '/get-all-commodity',
 };
+
+export const API_BOOKING = {
+  SEARCH_SEA: '/search-sea-quotation-for-booking',
+};

@@ -11,15 +11,8 @@ import {
   Tag,
 } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-
-export interface DataType {
-  key: string;
-  liner: string;
-  pol: string;
-  pod: string;
-  container: { [key: string]: string };
-  commodity: { [key: string]: string };
-}
+import { IPaginationOfAntd, IQuotationTable } from '../interface';
+import { IDataBookingProps } from '..';
 
 export interface ITypeDTOs {
   [key: string]: string;
@@ -28,23 +21,29 @@ export interface ITypeDTOs {
 interface Props {
   displayStep: number;
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
-  data: DataType[];
+  data: IQuotationTable[];
+  setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
+  pagination: IPaginationOfAntd;
+  handlePaginationChange: (page: number, pageSize: number) => void;
 }
 
 export default function TableReturn({
   displayStep,
   setDisplayStep,
   data,
+  setDataPropsBooking,
+  pagination,
+  handlePaginationChange,
 }: Props) {
   const containerReturn = useMemo(() => {
     const result = [{}];
     if (data) {
-      for (const key in data[0]?.container) {
-        if (data[0].container.hasOwnProperty(key)) {
+      for (const key in data[0]?.seaQuotationDetailDTOs) {
+        if (data[0].seaQuotationDetailDTOs.hasOwnProperty(key)) {
           const obj = {
             title: <div className={style.title}>{key}</div>,
             // width: 200,
-            dataIndex: 'container',
+            dataIndex: 'seaQuotationDetailDTOs',
             render: (value: ITypeDTOs) => {
               return (
                 <Tag
@@ -61,48 +60,22 @@ export default function TableReturn({
     return result;
   }, [data]);
 
-  const commodityReturn = useMemo(() => {
-    const result = [{}];
-    if (data) {
-      for (const key in data[0]?.commodity) {
-        if (data[0].commodity.hasOwnProperty(key)) {
-          const obj = {
-            title: <div className={style.title}>{key}</div>,
-            // width: 200,
-            dataIndex: 'commodity',
-            render: (value: ITypeDTOs) => {
-              return (
-                <Tag
-                  color="#F2F48E"
-                  style={{ color: '#000', fontWeight: '450' }}
-                >{`${value[key]}`}</Tag>
-              );
-            },
-          };
-          result.push(obj);
-        }
-      }
-    }
-    return result;
-  }, [data]);
-
-  const columns: ColumnsType<DataType> = [
+  const columns: ColumnsType<IQuotationTable> = [
     {
       title: <div className={style.title}>Liner</div>,
       dataIndex: 'liner',
       key: 'liner',
     },
     ...containerReturn,
-    ...commodityReturn,
     {
       title: <div className={style.title}>POL</div>,
-      dataIndex: 'pol',
-      key: 'pol',
+      dataIndex: 'polName',
+      key: 'polName',
     },
     {
       title: <div className={style.title}>POD</div>,
-      dataIndex: 'pod',
-      key: 'pod',
+      dataIndex: 'podName',
+      key: 'podName',
     },
     {
       title: <div className={style.title}>Action</div>,
@@ -113,14 +86,26 @@ export default function TableReturn({
         <Space size="middle">
           <Button
             style={{ width: '120px' }}
-            onClick={() => setDisplayStep(2.1)}
+            onClick={() => (
+              setDisplayStep(2.1),
+              setDataPropsBooking((pre) => ({
+                ...pre,
+                idQuotation: record.key,
+              }))
+            )}
           >
             View Details
           </Button>
           <Button
             type="primary"
             style={{ width: '120px' }}
-            onClick={() => setDisplayStep(2.2)}
+            onClick={() => (
+              setDisplayStep(2.2),
+              setDataPropsBooking((pre) => ({
+                ...pre,
+                idQuotation: record.key,
+              }))
+            )}
           >
             Booking
           </Button>
@@ -154,7 +139,14 @@ export default function TableReturn({
                 }}
                 columns={columns}
                 dataSource={data}
-                pagination={false}
+                pagination={{
+                  position: ['bottomCenter'],
+                  showTotal: (total, range) =>
+                    `${range[0]}-${range[1]} of ${total} items`,
+                  showSizeChanger: true,
+                  ...pagination,
+                  onChange: handlePaginationChange,
+                }}
               />
             </Card>
           </ConfigProvider>

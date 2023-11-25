@@ -22,14 +22,14 @@ import {
   getAllContainerType,
   getAllLocation,
 } from '../fetcher';
-import { TYPE_LOCATION } from '../interface';
+import { IRequireSearchQuotation, TYPE_LOCATION } from '../interface';
 import { useRouter } from 'next/router';
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
   displayStep: number;
   form: FormInstance<any>;
-  onFinish: (formValues: any) => void;
+  onFinish: (formValues: IRequireSearchQuotation) => void;
   onReset: () => void;
 }
 
@@ -204,7 +204,7 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="effectDated"
+                  name="cargoReady"
                   rules={[
                     {
                       required: true,
@@ -302,7 +302,7 @@ export default function InputFclOceanFreight({
               </div>
             </Flex>
           </Col>
-          
+
           <Col className={style.input} span={24}>
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>

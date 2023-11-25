@@ -1,6 +1,6 @@
 import { ResponseWithPayload, get, post } from '@/fetcherAxios';
-import { IDataLocation, IRequireLocation, RequireCommodity, RequireTypeContainer } from './interface';
-import { API_COMMODITY, API_CONTAINER_TYPE, API_LOCATION } from '@/fetcherAxios/endpoint';
+import { IDataLocation, IRequireLocation, IRequireSearchQuotation, RequireCommodity, RequireTypeContainer, IQuotationRequire } from './interface';
+import { API_BOOKING, API_COMMODITY, API_CONTAINER_TYPE, API_LOCATION } from '@/fetcherAxios/endpoint';
 
 // Get all location
 export const getAllLocation = (data: IRequireLocation) => {
@@ -20,5 +20,12 @@ export const getAllContainerType = () => {
 export const getAllCommodity = () => {
   return get<ResponseWithPayload<RequireCommodity[]>>({})(
     API_COMMODITY.GET_ALL
+  );
+};
+
+// Search quotation
+export const searchQuotation = (data: IRequireSearchQuotation) => {
+  return post<IRequireSearchQuotation, ResponseWithPayload<IQuotationRequire>>({ data })(
+    API_BOOKING.SEARCH_SEA
   );
 };
