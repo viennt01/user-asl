@@ -12,7 +12,6 @@ import {
   Form,
   Select,
   SelectProps,
-  Input,
   Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
@@ -22,14 +21,11 @@ import QuotationDetail from './components/quotation-detail';
 import TermsConditions from './components/terms-conditions';
 import OtherServiceCharges from './components/other-service-charges';
 import Finish from './components/finish';
-import {
-  MailOutlined,
-  PrinterOutlined,
-  FilePdfOutlined,
-} from '@ant-design/icons';
+import { MailOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import ROUTERS from '@/constants/router';
-
+// @ts-ignore
+import html2pdf from 'html2pdf.js';
 interface Props {
   displayStep: number;
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
@@ -60,6 +56,24 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
     setIsChecked(!isChecked);
   };
 
+  const handlePrint = () => {
+    // Get the HTML element to print
+    var element = document.getElementById('content-to-print');
+
+    if (!element) {
+      console.error('Element not found.');
+      return;
+    }
+
+    // Specify the parameters for html2pdf
+    var parameters = {
+      filename: 'Booking.pdf',
+    };
+
+    const pdf1 = html2pdf(element, parameters);
+    pdf1.output('datauristring').then((pdf: any) => console.log(pdf));
+  };
+
   return (
     <div
       className={style.step5}
@@ -76,41 +90,46 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
           >
             Send Email
           </Button>
-          <div>
-            <Button
-              type="primary"
-              icon={<PrinterOutlined />}
-              style={{ marginRight: '16px' }}
-            >
-              Print
-            </Button>
-            <Button
-              icon={<FilePdfOutlined />}
-              style={{ background: '#DE231B', color: COLORS.WHITE }}
-            >
-              Download PDF
-            </Button>
-          </div>
+
+          <Button
+            icon={<FilePdfOutlined />}
+            onClick={handlePrint}
+            style={{ background: '#DE231B', color: COLORS.WHITE }}
+          >
+            Download PDF
+          </Button>
         </Flex>
         <Card className={style.cardMain} title="Review Booking">
           <Row gutter={26}>
-            <Col
-              span={24}
+            <div
+              id="content-to-print"
               style={{
-                marginBottom: '24px',
+                width: '100%',
+                padding: '0 16px',
               }}
             >
-              <Image
-                src={'/images/oceanFreight/contactAsl.png'}
-                preview={false}
-              />
-            </Col>
-            <CustomerInformation />
-            <ShipmentDetail />
-            <QuotationDetail />
-            <TermsConditions />
-            <OtherServiceCharges />
-            <Finish />
+              <Col
+                span={24}
+                style={{
+                  marginBottom: '24px',
+                }}
+              >
+                <Image
+                  src={'/images/oceanFreight/contactAsl.png'}
+                  preview={false}
+                  style={{
+                    width: '100%',
+                  }}
+                />
+              </Col>
+              <CustomerInformation />
+              <ShipmentDetail />
+              <QuotationDetail />
+              <TermsConditions />
+              <OtherServiceCharges />
+              <Finish />
+            </div>
+
             <Col span={24} style={{ marginTop: '16px' }}>
               <ConfigProvider
                 theme={{

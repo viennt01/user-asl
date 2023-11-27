@@ -1,7 +1,6 @@
 import React from 'react';
-import { Descriptions, Flex, Table } from 'antd';
+import { ConfigProvider, Descriptions, Flex } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 
 interface DataType {
@@ -9,7 +8,7 @@ interface DataType {
   price?: string;
 }
 
-const data: DataType[] = [
+const dataList = [
   {
     key: '1',
     price: 'VND 100,000',
@@ -20,45 +19,61 @@ const data: DataType[] = [
   },
 ];
 
-const columns: ColumnsType<DataType> = [
-  {
-    title: <div>No.</div>,
-    dataIndex: 'price',
-    key: 'price',
-    align: 'center',
-    render: (value) => {
-      return <div style={{ fontSize: '16px', fontWeight: '700' }}>{value}</div>;
-    },
-  },
-];
-
 const items: DescriptionsProps['items'] = [
   {
     key: '10',
-    label: <Flex justify="center">Total charges</Flex>,
+    label: (
+      <Flex
+        justify="center"
+        style={{
+          fontSize: '18px',
+          fontWeight: '600',
+        }}
+      >
+        Total charges
+      </Flex>
+    ),
     children: (
       <div>
-        <Table
-          className={style.descriptionTable}
-          style={{ width: '100%' }}
-          columns={columns}
-          dataSource={data}
-          showHeader={false}
-          pagination={false}
-        />
+        {dataList.map((data, index) => (
+          <div
+            style={{
+              width: '100%',
+              fontSize: '16px',
+              fontWeight: '700',
+              height: '50px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              borderBottom: index === dataList.length - 1 ? 'none' : '1px solid',
+            }}
+          >
+            {data.price}
+          </div>
+        ))}
       </div>
     ),
   },
 ];
 
 const TotalPrice: React.FC = () => (
-  <Descriptions
-    className={style.description}
-    style={{ width: '100%' }}
-    bordered
-    size="small"
-    items={items}
-  />
+  <ConfigProvider
+    theme={{
+      components: {
+        Descriptions: {
+          padding: 0,
+        },
+      },
+    }}
+  >
+    <Descriptions
+      className={style.description}
+      style={{ width: '100%', padding: '0px', margin: '0px' }}
+      bordered
+      size="small"
+      items={items}
+    />
+  </ConfigProvider>
 );
 
 export default TotalPrice;

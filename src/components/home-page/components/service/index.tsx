@@ -23,7 +23,7 @@ export default function Service() {
                     <Flex justify="center">
                       <Flex vertical justify="center" className={style.card}>
                         <Flex justify="center" className={style.titleCard}>
-                          Ocean Fright
+                          Ocean Freight
                         </Flex>
                         <Flex justify="center">
                           <Image

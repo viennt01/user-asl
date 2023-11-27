@@ -26,7 +26,20 @@ export default function QuotationDetail() {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: <div className={style.titleTable}>No.</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          No.
+        </div>
+      ),
       dataIndex: 'index',
       width: 50,
       align: 'center',
@@ -36,33 +49,110 @@ export default function QuotationDetail() {
       },
     },
     {
-      title: <div className={style.titleTable}>Description of charges</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Description of charges
+        </div>
+      ),
       dataIndex: 'description',
       key: 'description',
     },
     {
-      title: <div className={style.titleTable}>Quantity</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Quantity
+        </div>
+      ),
       dataIndex: 'quantity',
       key: 'quantity',
-      // onCell: sharedOnCell,
     },
     {
-      title: <div className={style.titleTable}>Price</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Price
+        </div>
+      ),
       dataIndex: 'price',
       key: 'price',
     },
     {
-      title: <div className={style.titleTable}>Currency</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Currency
+        </div>
+      ),
       dataIndex: 'currency',
       key: 'currency',
     },
     {
-      title: <div className={style.titleTable}>Total Amount</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Amount
+        </div>
+      ),
       dataIndex: 'total',
       key: 'total',
     },
     {
-      title: <div className={style.titleTable}>Remark</div>,
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Remark
+        </div>
+      ),
       dataIndex: 'remark',
       key: 'remark',
     },
@@ -117,11 +207,6 @@ export default function QuotationDetail() {
     <ConfigProvider
       theme={{
         components: {
-          Card: {
-            colorBorderSecondary: 'rgba(0, 0, 0, 0.1)',
-            borderRadiusLG: 0,
-            borderRadius: 0,
-          },
           Table: {
             headerBg: '#e7eeff',
             headerColor: COLORS.GREY_COLOR_HOVER,
@@ -138,24 +223,40 @@ export default function QuotationDetail() {
         },
       }}
     >
-      <Card
-        title="Quotation details"
-        style={{ width: '100%' }}
+      <div
         className={style.cardCustomer}
+        style={{
+          marginBottom: '16px',
+        }}
       >
+        <div
+          style={{
+            paddingLeft: '16px',
+            backgroundColor: COLORS.GREY_COLOR_HOVER,
+            border: '1px solid #1D4486',
+            width: '100%',
+            color: COLORS.WHITE,
+            fontSize: '18px',
+            fontWeight: 600,
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          Quotation details
+        </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
         <TotalPrice />
-      </Card>
+      </div>
     </ConfigProvider>
   );
 }

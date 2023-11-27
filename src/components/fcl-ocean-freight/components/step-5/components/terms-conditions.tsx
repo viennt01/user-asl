@@ -4,9 +4,27 @@ import { Image } from 'antd';
 
 export default function TermsConditions() {
   return (
-    <div className={style.termsConditions}>
-      <div className={style.title}>Terms and conditions:</div>
-      <div className={style.content}>
+    <div
+      style={{
+        marginBottom: '16px',
+      }}
+    >
+      <div
+        style={{
+          fontSize: '18px',
+          fontWeight: '650',
+        }}
+      >
+        Terms and conditions:
+      </div>
+      <div
+        style={{
+          fontFamily: 'Inter',
+          fontSize: '16px',
+          fontStyle: 'italic',
+          fontWeight: '300',
+        }}
+      >
         <div>
           <Image
             src={'/images/oceanFreight/checkTitle.svg'}
