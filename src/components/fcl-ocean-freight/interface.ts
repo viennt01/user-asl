@@ -1,10 +1,10 @@
+import { Dayjs } from 'dayjs';
+
 export enum TYPE_LOCATION {
-  'SEA' = 'Sea',
-  'TRUCKING' = 'Truck',
-  'AIR' = 'Air',
-  'CUSTOM' = 'Custom',
-  'ALL' = 'All',
-  'TOTAL' = '',
+  'PORT' = 'Port',
+  'INDUSTRIAL_ZONE' = 'Industrial Zone',
+  'DEPOT' = 'Depot',
+  'AIR_PORT' = 'Airport',
 }
 
 export enum TYPE_SERVICE {
@@ -35,7 +35,7 @@ export interface IDataLocation {
 }
 
 export interface IRequireLocation {
-  type: TYPE_LOCATION;
+  type: TYPE_LOCATION[];
 }
 
 // get all type container
@@ -62,7 +62,7 @@ export interface IQuotation {
   commodityName: string;
   seaQuotationDetailDTOs: { [key: string]: string };
 }
-export interface IRequireSearchQuotation {
+export interface IRequireSearchQuotation extends IStep1 {
   polid: string;
   podid: string;
   typeService: string;
@@ -76,4 +76,93 @@ export interface IQuotationRequire extends IPagination {
 }
 export interface IQuotationTable extends Omit<IQuotation, 'seaQuotationID'> {
   key: string;
+}
+
+export interface IStep1 {
+  trafficPol?: string;
+  trafficPod?: string;
+  receipt?: string;
+  delivery?: string;
+}
+
+export interface ISeaQuotationDetailDataBody {
+  id: string;
+}
+
+export interface ISeaPricingDetail {
+  seaQuotationID: string;
+  podid: string;
+  polid: string;
+  podName: string;
+  polName: string;
+  commodityID: string;
+  note: string;
+  dateEffect: Dayjs;
+  validityDate: Dayjs;
+  vendor: string;
+  freqDate: string;
+  demSeaQuotation: string;
+  detSeaQuotation: string;
+  stoSeaQuotation: string;
+  lclMinSeaQuotation: string;
+  lclSeaQuotation: string;
+  currencyID: string;
+  public: boolean;
+  statusSeaQuotation: string;
+  dateInserted: string;
+  insertedByUser: string;
+  dateUpdated: string;
+  updatedByUser: string;
+  confirmDated: string;
+  confirmByUser: string;
+  seaQuotationDetailDTOs: ISeaQuotationDetailDTOs[];
+  seaQuotaionFeeGroupDTOs: ISeaQuotationFee[];
+  salesLeadsSeaQuotationDTOs: ISalesLeadsSeaQuotationDTOs[];
+  seaQuotaionGroupPartnerDTOs: ISeaQuotaionGroupPartnerDTOs[];
+}
+
+export interface ISeaQuotationDetailDTOs {
+  seaQuotationDetailID: string;
+  containerTypeID: string;
+  containerTypeCode: string;
+  containerTypeName: string;
+  currencyID: string;
+  currencyName: string;
+  price: string;
+}
+
+export interface ISeaQuotationFee {
+  feeGroupID: string;
+  feeGroupName: string;
+}
+
+export interface ISalesLeadsSeaQuotationDTOs {
+  salesLeadsSeaQuotationID?: string;
+  partnerID: string;
+}
+
+export interface ISeaQuotaionGroupPartnerDTOs {
+  seaQuotationGroupPartnerID: string;
+  groupPartnerID: string;
+}
+
+
+//table fee
+export interface Fee {
+  feeID: string;
+  priceFeeGroup: string;
+  vatFeeGroup: string;
+  unitID: string;
+  currencyID: string;
+}
+export interface FeeTable extends Fee {
+  key: React.Key;
+  currencyName: string;
+  unitInternationalCode: string;
+  feeNo: string;
+  feeName: string;
+  typeFeeName?: string;
+}
+export interface RequestFee {
+  id: string[];
 }

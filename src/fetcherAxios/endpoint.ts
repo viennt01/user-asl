@@ -33,3 +33,11 @@ export const API_COMMODITY = {
 export const API_BOOKING = {
   SEARCH_SEA: '/search-sea-quotation-for-booking',
 };
+
+export const API_SEA_QUOTATION = {
+  GET_DETAIL: '/get-sea-quotation-by-id',
+};
+
+export const API_FEE_GROUP = {
+  GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
+};

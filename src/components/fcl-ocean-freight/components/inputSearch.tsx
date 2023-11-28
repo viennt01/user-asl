@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import style from '../index.module.scss';
 import {
   Col,
@@ -10,8 +10,9 @@ import {
   Button,
   DatePicker,
   FormInstance,
+  Input,
 } from 'antd';
-import { useQuery } from '@tanstack/react-query';
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import {
   API_COMMODITY,
   API_CONTAINER_TYPE,
@@ -22,8 +23,14 @@ import {
   getAllContainerType,
   getAllLocation,
 } from '../fetcher';
-import { IRequireSearchQuotation, TYPE_LOCATION } from '../interface';
+import {
+  IRequireSearchQuotation,
+  RequireTypeContainer,
+  TYPE_LOCATION,
+} from '../interface';
 import { useRouter } from 'next/router';
+import { ResponseWithPayload } from '@/fetcherAxios';
+import { IDataBookingProps } from '..';
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
@@ -31,6 +38,11 @@ interface Props {
   form: FormInstance<any>;
   onFinish: (formValues: IRequireSearchQuotation) => void;
   onReset: () => void;
+  loading: boolean;
+  getContainerType: UseQueryResult<
+    ResponseWithPayload<RequireTypeContainer[]>,
+    unknown
+  >;
 }
 
 export default function InputFclOceanFreight({
@@ -38,25 +50,16 @@ export default function InputFclOceanFreight({
   form,
   onFinish,
   onReset,
+  loading,
+  getContainerType,
 }: Props) {
   const router = useRouter();
+  const trafficPol = Form.useWatch('trafficPol', form);
+  const trafficPod = Form.useWatch('trafficPod', form);
 
   const getLocation = useQuery({
     queryKey: [API_LOCATION.GET_ALL],
-    queryFn: () => getAllLocation({ type: TYPE_LOCATION.SEA }),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-      }
-    },
-    onError: () => {
-      router.back();
-    },
-  });
-
-  const getContainerType = useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_ALL],
-    queryFn: () => getAllContainerType(),
+    queryFn: () => getAllLocation({ type: [TYPE_LOCATION.PORT] }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();
@@ -106,18 +109,18 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="pol"
+                  name="polid"
                   rules={[
                     {
                       required: true,
-                      message: 'Please Select Port of Loading',
+                      message: 'Please select port of loading',
                     },
                   ]}
                 >
                   <Select
                     style={{ margin: '0px' }}
                     showSearch
-                    placeholder={'Please Select Port of Loading'}
+                    placeholder={'Please select port of loading'}
                     optionFilterProp="children"
                     filterOption={(input, option) =>
                       (option?.label ?? '').includes(input)
@@ -155,18 +158,18 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="pod"
+                  name="podid"
                   rules={[
                     {
                       required: true,
-                      message: 'Please Select Port of Discharge',
+                      message: 'Please select port of discharge',
                     },
                   ]}
                 >
                   <Select
                     style={{ margin: '0px' }}
                     showSearch
-                    placeholder={'Please Select Port of Discharge'}
+                    placeholder={'Please select port of discharge'}
                     optionFilterProp="children"
                     filterOption={(input, option) =>
                       (option?.label ?? '').includes(input)
@@ -190,6 +193,185 @@ export default function InputFclOceanFreight({
               </div>
             </Flex>
           </Col>
+
+          <Col className={style.input} lg={12} span={24}>
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
+                <Image
+                  src={'/images/oceanFreight/traffic.svg'}
+                  alt="logo"
+                  preview={false}
+                  className={style.iconInput}
+                  width={25}
+                />
+                <div className={style.titleInput}>Traffic mode (POL)</div>
+              </Flex>
+              <div className={style.contentInput}>
+                <Form.Item
+                  name="trafficPol"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select traffic mode',
+                    },
+                  ]}
+                >
+                  <Select
+                    style={{ margin: '0px' }}
+                    showSearch
+                    placeholder={'Please select traffic mode'}
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').includes(input)
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? '')
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
+                    }
+                    size="large"
+                    options={[
+                      {
+                        value: 'CY',
+                        label: 'CY',
+                      },
+                      {
+                        value: 'DOOR',
+                        label: 'DOOR',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </div>
+            </Flex>
+          </Col>
+          <Col className={style.input} lg={12} span={24}>
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
+                <Image
+                  src={'/images/oceanFreight/traffic.svg'}
+                  alt="logo"
+                  preview={false}
+                  className={style.iconInput}
+                  width={25}
+                />
+                <div className={style.titleInput}>Traffic mode (POD)</div>
+              </Flex>
+              <div className={style.contentInput}>
+                <Form.Item
+                  name="trafficPod"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please select traffic mode',
+                    },
+                  ]}
+                >
+                  <Select
+                    style={{ margin: '0px' }}
+                    showSearch
+                    placeholder={'Please select traffic mode'}
+                    optionFilterProp="children"
+                    filterOption={(input, option) =>
+                      (option?.label ?? '').includes(input)
+                    }
+                    filterSort={(optionA, optionB) =>
+                      (optionA?.label ?? '')
+                        .toLowerCase()
+                        .localeCompare((optionB?.label ?? '').toLowerCase())
+                    }
+                    size="large"
+                    options={[
+                      {
+                        value: 'CY',
+                        label: 'CY',
+                      },
+                      {
+                        value: 'DOOR',
+                        label: 'DOOR',
+                      },
+                    ]}
+                  />
+                </Form.Item>
+              </div>
+            </Flex>
+          </Col>
+
+          <Col span={trafficPol !== 'DOOR' ? 12 : 0}></Col>
+
+          <Col
+            className={style.input}
+            lg={trafficPol === 'DOOR' ? 12 : 0}
+            span={trafficPol === 'DOOR' ? 24 : 0}
+          >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
+                <Image
+                  src={'/images/oceanFreight/location.svg'}
+                  alt="logo"
+                  preview={false}
+                  className={style.iconInput}
+                  width={25}
+                />
+                <div className={style.titleInput}>Place of Receipt</div>
+              </Flex>
+              <div className={style.contentInput}>
+                <Form.Item
+                  name="receipt"
+                  rules={[
+                    {
+                      required: trafficPol === 'DOOR',
+                      message: 'Please ent delivery (POL)',
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    style={{ margin: '0px' }}
+                    placeholder={'Please enter place of receipt'}
+                  />
+                </Form.Item>
+              </div>
+            </Flex>
+          </Col>
+          <Col
+            className={style.input}
+            lg={trafficPod === 'DOOR' ? 12 : 0}
+            span={trafficPod === 'DOOR' ? 24 : 0}
+          >
+            <Flex align={'center'}>
+              <Flex align={'center'} className={style.headerInput}>
+                <Image
+                  src={'/images/oceanFreight/location.svg'}
+                  alt="logo"
+                  preview={false}
+                  className={style.iconInput}
+                  width={25}
+                />
+                <div className={style.titleInput}>Place of Delivery</div>
+              </Flex>
+              <div className={style.contentInput}>
+                <Form.Item
+                  name="delivery"
+                  rules={[
+                    {
+                      required: trafficPod === 'DOOR',
+                      message: 'Please enter place of delivery',
+                    },
+                  ]}
+                >
+                  <Input
+                    size="large"
+                    style={{ margin: '0px' }}
+                    placeholder={'Please enter place of delivery'}
+                  />
+                </Form.Item>
+              </div>
+            </Flex>
+          </Col>
+
+          <Col span={trafficPod !== 'DOOR' ? 12 : 0}></Col>
+
           <Col className={style.input} lg={12} span={24}>
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>
@@ -200,7 +382,7 @@ export default function InputFclOceanFreight({
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput}>Date</div>
+                <div className={style.titleInput}>Cargo Ready</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
@@ -208,7 +390,7 @@ export default function InputFclOceanFreight({
                   rules={[
                     {
                       required: true,
-                      message: 'Please select a effect date',
+                      message: 'Please select a cargo ready',
                     },
                   ]}
                 >
@@ -231,15 +413,15 @@ export default function InputFclOceanFreight({
                   className={style.iconInput}
                   width={25}
                 />
-                <div className={style.titleInput}>To</div>
+                <div className={style.titleInput}>Cargo Cutoff To</div>
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="validityDate"
+                  name="cargoCutoffTo"
                   rules={[
                     {
                       required: true,
-                      message: 'Please select a validity date',
+                      message: 'Please select a cargo cutoff to',
                     },
                   ]}
                 >
@@ -252,6 +434,7 @@ export default function InputFclOceanFreight({
               </div>
             </Flex>
           </Col>
+
           <Col className={style.input} span={24}>
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>
@@ -266,7 +449,7 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="container"
+                  name="containers"
                   rules={[
                     {
                       required: true,
@@ -290,7 +473,7 @@ export default function InputFclOceanFreight({
                     size="large"
                     mode="multiple"
                     options={
-                      getContainerType.data?.data?.map((item) => {
+                      getContainerType?.data?.data?.map((item) => {
                         return {
                           value: item.containerTypeID,
                           label: item.code,
@@ -317,7 +500,7 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="commodity"
+                  name="commodities"
                   rules={[
                     {
                       required: true,
@@ -353,6 +536,7 @@ export default function InputFclOceanFreight({
               </div>
             </Flex>
           </Col>
+
           <Col span={24} style={{ margin: '24px 0' }}>
             <Flex justify={'center'} align={'center'}>
               <Button
@@ -370,6 +554,7 @@ export default function InputFclOceanFreight({
                 style={{ width: '120px', height: '40px' }}
                 type="primary"
                 htmlType="submit"
+                loading={loading}
               >
                 Search
               </Button>

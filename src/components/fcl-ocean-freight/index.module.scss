@@ -40,7 +40,7 @@
   }
   .checkPrice {
     background: #0c529e url('./assets/bg.jpg') center center;
-    min-height: 700px;
+    min-height: 780px;
     padding: 0px 16px;
     .content {
       width: 100%;
@@ -129,8 +129,7 @@
         }
       }
       .tableReturn {
-        // z-index: 3;
-        padding-top: 490px;
+        padding-top: 650px;
         border-radius: 12px;
         margin-bottom: 16px;
         .table {
@@ -148,7 +147,7 @@
 @media (min-width: 992px) {
   .wrapper {
     .checkPrice {
-      min-height: 550px;
+      min-height: 600px;
       padding: 2px 16px;
 
       .content {
@@ -164,7 +163,7 @@
         }
         .tableReturn {
           // z-index: 3;
-          padding-top: 380px;
+          padding-top: 490px;
           margin-bottom: 16px;
           border-radius: 12px;
         }

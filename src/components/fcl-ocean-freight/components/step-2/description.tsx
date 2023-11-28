@@ -4,22 +4,33 @@ import { Button, Col, Flex, Row } from 'antd';
 import TableContainerView from './components/view/tableContainerView';
 import LocalChargesView from './components/view/localChargesView';
 import CardTotal from './components/view/cardTotal';
+import { IDataBookingProps } from '../..';
+import { FeeTable, ISeaPricingDetail } from '../../interface';
 
 interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
+  setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
+  dataPropsBooking: IDataBookingProps;
+  dataQuotation: ISeaPricingDetail | undefined;
+  dataFeeTable: FeeTable[];
 }
 
-export default function Description({ setDisplayStep }: Props) {
+export default function Description({
+  setDisplayStep,
+  setDataPropsBooking,
+  dataPropsBooking,
+  dataFeeTable,
+}: Props) {
   return (
     <div className={style.description}>
       <Row gutter={16}>
         <Col span={24} lg={16}>
           <Row>
             <Col span={24}>
-              <TableContainerView />
+              <TableContainerView dataPropsBooking={dataPropsBooking} />
             </Col>
             <Col span={24}>
-              <LocalChargesView />
+              <LocalChargesView dataFeeTable={dataFeeTable} />
             </Col>
           </Row>
         </Col>
@@ -35,7 +46,9 @@ export default function Description({ setDisplayStep }: Props) {
                 width: '120px',
                 height: '40px',
               }}
-              onClick={() => setDisplayStep(1)}
+              onClick={() => (
+                setDisplayStep(1), setDataPropsBooking({ idQuotation: '' })
+              )}
             >
               Close
             </Button>

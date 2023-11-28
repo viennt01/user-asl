@@ -9,11 +9,9 @@ export function formatCurrency(amount: number) {
   }).format(amount);
 }
 
-export function formatNumber(value: number, precision = 0) {
-  return new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: precision,
-  }).format(value);
-}
+export const formatNumber = (value: number | string) => {
+  return new Intl.NumberFormat().format(Number(value));
+};
 
 export function formatNumberNormal(amount: number) {
   if (!amount && amount !== 0) return '--';

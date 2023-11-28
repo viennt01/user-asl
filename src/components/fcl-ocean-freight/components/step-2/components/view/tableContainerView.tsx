@@ -2,6 +2,12 @@ import React, { useMemo } from 'react';
 import { Table, ConfigProvider } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
+import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { ISeaPricingDetail } from '@/components/fcl-ocean-freight/interface';
+
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+}
 
 export interface DataType {
   key: string;
@@ -14,28 +20,17 @@ export interface ITypeDTOs {
   [key: string]: string;
 }
 
-const data = [
-  {
-    key: '1',
-    containerType: `20'DC`,
-    oceanFreight: '$500,000,000',
-    quantity: '1',
-  },
-  {
-    key: '2',
-    containerType: `20'OT`,
-    oceanFreight: '$500,000,000',
-    quantity: '1',
-  },
-  {
-    key: '3',
-    containerType: `20'HC`,
-    oceanFreight: '$500,000,000',
-    quantity: '1',
-  },
-];
+export default function TableContainerView({ dataPropsBooking }: Props) {
+  const data =
+    Object.entries(
+      dataPropsBooking?.dataColTableStep1?.seaQuotationDetailDTOs || {}
+    )?.map(([containerType, oceanFreight], index) => ({
+      containerType,
+      oceanFreight,
+      quantity: '1',
+      key: (index + 1).toString(),
+    })) || [];
 
-export default function TableContainerView() {
   const columns: ColumnsType<DataType> = [
     {
       title: 'Container Type',
@@ -65,7 +60,7 @@ export default function TableContainerView() {
             Table: {
               headerBg: COLORS.GREY_COLOR_HOVER,
               headerColor: COLORS.WHITE,
-              borderColor: COLORS.BLACK
+              borderColor: COLORS.BLACK,
             },
           },
         }}
@@ -78,7 +73,7 @@ export default function TableContainerView() {
           dataSource={data}
           bordered
           pagination={false}
-          style={{marginBottom: '24px'}}
+          style={{ marginBottom: '24px' }}
         />
       </ConfigProvider>
     </div>

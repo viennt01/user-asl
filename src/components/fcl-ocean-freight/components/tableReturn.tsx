@@ -36,7 +36,7 @@ export default function TableReturn({
   handlePaginationChange,
 }: Props) {
   const containerReturn = useMemo(() => {
-    const result = [{}];
+    const result = [];
     if (data) {
       for (const key in data[0]?.seaQuotationDetailDTOs) {
         if (data[0].seaQuotationDetailDTOs.hasOwnProperty(key)) {
@@ -62,9 +62,15 @@ export default function TableReturn({
 
   const columns: ColumnsType<IQuotationTable> = [
     {
-      title: <div className={style.title}>Liner</div>,
-      dataIndex: 'liner',
-      key: 'liner',
+      title: <div className={style.title}>NO.</div>,
+      dataIndex: 'index',
+      width: 50,
+      align: 'right',
+      fixed: 'left',
+      render: (_, record, index) => {
+        const { pageSize = 0, current = 0 } = pagination ?? {};
+        return index + pageSize * (current - 1) + 1;
+      },
     },
     ...containerReturn,
     {
@@ -91,6 +97,7 @@ export default function TableReturn({
               setDataPropsBooking((pre) => ({
                 ...pre,
                 idQuotation: record.key,
+                dataColTableStep1: record,
               }))
             )}
           >
@@ -104,6 +111,7 @@ export default function TableReturn({
               setDataPropsBooking((pre) => ({
                 ...pre,
                 idQuotation: record.key,
+                dataColTableStep1: record,
               }))
             )}
           >

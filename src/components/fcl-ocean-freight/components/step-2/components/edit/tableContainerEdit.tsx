@@ -6,60 +6,67 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Table, ConfigProvider, Input, InputNumber } from 'antd';
+import { Table, ConfigProvider, InputNumber } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
+import {
+  IDataBookingProps,
+  IDataStep2Props,
+} from '@/components/fcl-ocean-freight';
+
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+  setDataStep2PropsBooking: React.Dispatch<
+    React.SetStateAction<IDataStep2Props | undefined>
+  >;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
+}
 
 export interface DataType {
   key: string;
   containerType: string;
   oceanFreight: string;
-  quantity: number;
+  quantity: string;
 }
 
 export interface ITypeDTOs {
   [key: string]: string;
 }
 
-export interface IQuantity {
-  key: string;
-  quantity: number;
-}
-
-const data = [
-  {
-    key: '1',
-    containerType: `20'DC`,
-    oceanFreight: '$500,000,000',
-    quantity: 1,
-  },
-  {
-    key: '2',
-    containerType: `20'OT`,
-    oceanFreight: '$500,000,000',
-    quantity: 1,
-  },
-  {
-    key: '3',
-    containerType: `20'HC`,
-    oceanFreight: '$500,000,000',
-    quantity: 1,
-  },
-];
-
-export default function TableContainerEdit() {
+export default function TableContainerEdit({
+  dataPropsBooking,
+  setDataStep2PropsBooking,
+  dataStep2PropsBooking,
+}: Props) {
   const inputRef = useRef();
   const [dataTable, setDataTable] = useState<DataType[]>([]);
-  const [dataQuantity, setDataQuantity] = useState<IQuantity[]>([]);
+  const [dataTableS, setDataTableS] = useState<DataType[]>([]);
+
+  const data =
+    Object.entries(
+      dataPropsBooking?.dataColTableStep1?.seaQuotationDetailDTOs || {}
+    )?.map(([containerType, oceanFreight], index) => ({
+      containerType,
+      oceanFreight,
+      quantity: '1',
+      key: (index + 1).toString(),
+    })) || [];
+
   const save = (value: DataType, inputRef: React.MutableRefObject<any>) => {
-    const filteredArray = dataQuantity.filter((item) => item.key !== value.key);
+    const filteredArray =
+      dataStep2PropsBooking?.listQuantityType?.filter(
+        (item) => item.key !== value.key
+      ) || [];
     const newData = [
       {
         key: value.key,
         quantity: inputRef?.current?.value || 1,
       },
     ];
-    setDataQuantity([...filteredArray, ...newData]);
+    setDataStep2PropsBooking((pre) => ({
+      ...pre,
+      listQuantityType: [...filteredArray, ...newData],
+    }));
   };
   const columns: ColumnsType<DataType> = [
     {
@@ -93,16 +100,37 @@ export default function TableContainerEdit() {
   ];
 
   useEffect(() => {
-    setDataTable(data);
-    setDataQuantity(
-      data.map((value) => {
+    setDataTableS(
+      data.map((itemC) => {
+        const matchedContainer = dataPropsBooking?.listContainerType?.find(
+          (itemB) => itemB.label === itemC.containerType
+        );
         return {
-          key: value.key,
-          quantity: value.quantity,
+          ...itemC,
+          key: matchedContainer?.value || '', // Sử dụng ID của container từ mảng B làm key
         };
       })
     );
-  }, [data]);
+  }, [dataPropsBooking]);
+
+  useEffect(() => {
+    setDataTable(dataTableS);
+  }, [dataTableS]);
+
+  useEffect(() => {
+    setDataStep2PropsBooking((pre) => ({
+      ...pre,
+      listQuantityType: dataTable.map((itemA) => {
+        const matchedContainer = dataPropsBooking?.listContainerType?.find(
+          (itemB) => itemB.label === itemA.containerType
+        );
+        return {
+          key: matchedContainer?.value || '', // ID của container từ mảng B
+          quantity: itemA.quantity, // Số lượng từ mảng A
+        };
+      }),
+    }));
+  }, [dataTable]);
 
   return (
     <div>

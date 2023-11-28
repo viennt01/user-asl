@@ -1,38 +1,97 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import {
-  Button,
-  Card,
-  Col,
-  Flex,
-  Form,
-  Row,
-  Select,
-  Image,
-  DatePicker,
-} from 'antd';
-import { useRouter } from 'next/router';
 import Information from './information';
 import Description from './description';
 import EditDescription from './editDescription';
-
-const dateFormat = 'YYYY/MM/DD';
+import { IDataBookingProps, IDataStep2Props } from '../..';
+import { API_FEE_GROUP, API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
+import { useQuery } from '@tanstack/react-query';
+import { getFeeWithFeeGroup, getSeaQuotationDetail } from '../../fetcher';
+import dayjs from 'dayjs';
+import { FeeTable, ISeaPricingDetail } from '../../interface';
 
 interface Props {
   displayStep: number;
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
+  dataPropsBooking: IDataBookingProps;
+  setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
+  setDataStep2PropsBooking: React.Dispatch<React.SetStateAction<IDataStep2Props | undefined>>;
+  dataStep2PropsBooking: IDataStep2Props | undefined
 }
 
-export default function Step2({ displayStep, setDisplayStep }: Props) {
-  const [form] = Form.useForm();
-  const router = useRouter();
+export default function Step2({
+  displayStep,
+  setDisplayStep,
+  dataPropsBooking,
+  setDataPropsBooking,
+  setDataStep2PropsBooking,
+  dataStep2PropsBooking,
+}: Props) {
+  const { idQuotation } = dataPropsBooking;
+  const [dataQuotation, setDataQuotation] = useState<ISeaPricingDetail>();
+  const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
+  const [feeGroupID, setFeeGroupID] = useState<string[]>([]);
 
-  const onFinish = (formValues: any) => {
-    console.log(formValues);
-  };
-  const onReset = () => {
-    form.resetFields();
-  };
+  useQuery({
+    queryKey: [API_SEA_QUOTATION.GET_DETAIL, idQuotation],
+    queryFn: () => getSeaQuotationDetail(idQuotation as string),
+    enabled: idQuotation !== '',
+    onSuccess: (data) => {
+      if (data.status) {
+        setDataQuotation({
+          seaQuotationID: data.data.seaQuotationID,
+          podid: data.data.podid,
+          polid: data.data.polid,
+          podName: data.data.podName,
+          polName: data.data.polName,
+          commodityID: data.data.commodityID,
+          vendor: data.data.vendor,
+          note: data.data.note,
+          dateEffect: dayjs(Number(data.data.dateEffect)),
+          validityDate: dayjs(Number(data.data.validityDate)),
+          freqDate: data.data.freqDate,
+          demSeaQuotation: data.data.demSeaQuotation,
+          detSeaQuotation: data.data.detSeaQuotation,
+          stoSeaQuotation: data.data.stoSeaQuotation,
+          lclMinSeaQuotation: data.data.lclMinSeaQuotation,
+          lclSeaQuotation: data.data.lclSeaQuotation,
+          currencyID: data.data.currencyID,
+          public: data.data.public,
+          statusSeaQuotation: data.data.statusSeaQuotation,
+          seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
+          seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,
+          dateInserted: data.data.dateInserted,
+          insertedByUser: data.data.insertedByUser,
+          dateUpdated: data.data.dateUpdated,
+          updatedByUser: data.data.updatedByUser,
+          confirmDated: data.data.confirmDated,
+          confirmByUser: data.data.confirmByUser,
+          salesLeadsSeaQuotationDTOs: data.data.salesLeadsSeaQuotationDTOs,
+          seaQuotaionGroupPartnerDTOs: data.data.seaQuotaionGroupPartnerDTOs,
+        });
+        setFeeGroupID(
+          data.data.seaQuotaionFeeGroupDTOs.map((data) => data.feeGroupID)
+        );
+      } else {
+        setDisplayStep(1);
+      }
+    },
+  });
+
+  useQuery({
+    queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, feeGroupID],
+    queryFn: () => getFeeWithFeeGroup({ id: feeGroupID }),
+    enabled: feeGroupID !== undefined,
+    onSuccess(data) {
+      setDataFeeTable([]);
+      if (data.status) {
+        if (data.data) {
+          setDataFeeTable(data.data);
+        }
+      }
+    },
+  });
+
   return (
     <div
       className={style.step2}
@@ -40,20 +99,37 @@ export default function Step2({ displayStep, setDisplayStep }: Props) {
         display: displayStep === 2.1 || displayStep === 2.2 ? '' : 'none',
       }}
     >
-      <Information />
+      <Information
+        dataPropsBooking={dataPropsBooking}
+        dataQuotation={dataQuotation}
+      />
       <div
         style={{
           display: displayStep === 2.1 ? '' : 'none',
         }}
       >
-        <Description setDisplayStep={setDisplayStep} />
+        <Description
+          setDisplayStep={setDisplayStep}
+          setDataPropsBooking={setDataPropsBooking}
+          dataPropsBooking={dataPropsBooking}
+          dataQuotation={dataQuotation}
+          dataFeeTable={dataFeeTable}
+        />
       </div>
       <div
         style={{
           display: displayStep === 2.2 ? '' : 'none',
         }}
       >
-        <EditDescription setDisplayStep={setDisplayStep} />
+        <EditDescription
+          setDisplayStep={setDisplayStep}
+          setDataPropsBooking={setDataPropsBooking}
+          dataPropsBooking={dataPropsBooking}
+          dataQuotation={dataQuotation}
+          dataFeeTable={dataFeeTable}
+          setDataStep2PropsBooking={setDataStep2PropsBooking}
+          dataStep2PropsBooking={dataStep2PropsBooking}
+        />
       </div>
     </div>
   );
