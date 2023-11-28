@@ -37,7 +37,7 @@ export default function ServiceStep3({
                 <TruckingPol dataPropsBooking={dataPropsBooking} />
               </Col>
               <Col
-                span={dataPropsBooking?.step1?.trafficPol === 'DOOR' ? 24 : 0}
+                span={dataPropsBooking?.step1?.trafficPod === 'DOOR' ? 24 : 0}
               >
                 <TruckingPod dataPropsBooking={dataPropsBooking} />
               </Col>

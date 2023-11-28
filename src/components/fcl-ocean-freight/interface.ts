@@ -89,6 +89,7 @@ export interface IStep1 {
   trafficPod?: string;
   receipt?: string;
   delivery?: string;
+  cargoReady?: number;
   containers?: string[];
   commodities?: string[];
 }
@@ -182,7 +183,7 @@ export interface IRequireSearchTrucking {
   cargoReady: number;
   commodities: string[];
   containers: string[];
-  loadCapacities: string[];
+  // loadCapacities: string[];
   paginateRequest: IPagination;
 }
 export interface IQuotationTrucking {

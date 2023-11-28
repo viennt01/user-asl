@@ -15,7 +15,6 @@ import {
   InputNumber,
   Input,
   Modal,
-  Card,
   Table,
   Tag,
   PaginationProps,
@@ -64,7 +63,7 @@ const initalValueForm = {
   cargoReady: 1,
   commodities: [''],
   containers: [''],
-  loadCapacities: [''],
+  // loadCapacities: [''],
   paginateRequest: {
     currentPage: DEFAULT_PAGINATION.current,
     pageSize: DEFAULT_PAGINATION.pageSize,
@@ -84,160 +83,28 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
     useState<IRequireSearchTrucking>(initalValueForm);
 
   const onFinish = (formValues: IRequireSearchTrucking) => {
-    // const _requestData = {
-    //   pickupID: formValues.pickupID || '',
-    //   deliveryID: dataPropsBooking?.dataColTableStep1?.podid || '',
-    //   typeService: TYPE_SERVICE.FCL,
-    //   loadCapacities: formValues.loadCapacities || [],
-    //   commodities: dataPropsBooking?.step1?.commodities || [],
-    //   containers: dataPropsBooking?.step1?.containers || [],
-    //   cargoReady: formValues.cargoReady,
-    //   paginateRequest: {
-    //     currentPage: pagination.current,
-    //     pageSize: pagination.pageSize,
-    //   },
-    // };
-
-    // const _requestData = {
-    //   pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-    //   deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-    //   typeService: 'FCL',
-    //   cargoReady: 2222222,
-    //   commodities: ['b8559fac-c496-4287-824c-0072a4c6a9fe'],
-    //   containers: [
-    //     'c7d25407-41c4-4652-a4ab-07c560c89050',
-    //     '8682baf0-4159-4c2b-a149-af39628121fe',
-    //     '5f9758fe-0e55-4883-8c79-90bcff124efd',
-    //   ],
-    //   loadCapacities: ['3fa85f64-5717-4562-b3fc-2c963f66afa6'],
-    //   paginateRequest: {
-    //     currentPage: 1,
-    //     pageSize: 10,
-    //   },
-    // };
-    // setDataResearch(_requestData);
-    // if (
-    //   _requestData.pickupID === dataResearch.pickupID &&
-    //   _requestData.loadCapacities === dataResearch.loadCapacities &&
-    //   _requestData.cargoReady === dataResearch.cargoReady
-    // ) {
-    //   getPrice.refetch();
-    // }
-
-    setDataTableResearch([
-      {
-        key: 'b43e1c7a-2cfc-4a6d-b2f9-353d8c70c038',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
+    const _requestData = {
+      pickupID: formValues.pickupID || '',
+      deliveryID: dataPropsBooking?.dataColTableStep1?.polid || '',
+      typeService: TYPE_SERVICE.FCL,
+      // loadCapacities: formValues.loadCapacities || [],
+      commodities: dataPropsBooking?.step1?.commodities || [],
+      containers: dataPropsBooking?.step1?.containers || [],
+      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+      paginateRequest: {
+        currentPage: pagination.current,
+        pageSize: pagination.pageSize,
       },
-      {
-        key: '7056db1f-a879-4e87-952b-36b1bcce1d94',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-      {
-        key: 'd7191311-7c35-450e-8f6d-cfac9331c71e',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-      {
-        key: '4066bab9-6f22-41e9-a207-fb8deea3ec3a',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-      {
-        key: 'f1641491-a07c-4da3-bc89-031b3d94916b',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '',
-          "40' HC GOH": '',
-        },
-      },
-      {
-        key: '7b2b0959-1116-4bbd-ac2e-0f681179c117',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-      {
-        key: '66a6cc2a-9dc3-423a-972e-167898a896fe',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-      {
-        key: 'dc3929ff-1cf0-4a2f-a029-25cbef6e7d3b',
-        pickupID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-        pickupName: 'MAARIANHAMINA/MARIEHAMN',
-        deliveryID: '5a48b8f5-6814-42df-aa06-001b39c9d048',
-        deliveryName: 'CHAMPERICO',
-        commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        commodityName: 'BULDING MATERIALS',
-        truckingQuotationDetailDTOs: {
-          "20' DC": '11.00000 VND',
-          "20' GP": '11.00000 VND',
-          "40' HC GOH": '11.00000 VND',
-        },
-      },
-    ]);
+    };
+    
+    setDataResearch(_requestData);
+    if (
+      _requestData.pickupID === dataResearch.pickupID &&
+      // _requestData.loadCapacities === dataResearch.loadCapacities &&
+      _requestData.cargoReady === dataResearch.cargoReady
+    ) {
+      getPrice.refetch();
+    }
   };
 
   const getPrice = useQuery({
@@ -511,7 +378,7 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                 </Flex>
               </Col>
 
-              <Col className={style.input} span={24}>
+              {/* <Col className={style.input} span={24}>
                 <Flex align={'center'}>
                   <Flex align={'center'} className={style.headerInput}>
                     <Image
@@ -559,7 +426,7 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                     </Form.Item>
                   </div>
                 </Flex>
-              </Col>
+              </Col> */}
 
               <Col className={style.input} span={24}>
                 <Flex align={'center'}>
@@ -630,14 +497,12 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                     },
                   }}
                 >
-                  <Card>
                     <Table
                       scroll={{
                         x: 'max-content',
                       }}
                       columns={columns}
                       dataSource={dataTableResearch}
-                      bordered
                       pagination={{
                         position: ['bottomRight'],
                         showTotal: (total, range) =>
@@ -648,7 +513,6 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                       }}
                       rowSelection={rowSelection}
                     />
-                  </Card>
                 </ConfigProvider>
               </div>
             </Flex>

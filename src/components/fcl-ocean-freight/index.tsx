@@ -70,7 +70,7 @@ export default function FclOceanFreight() {
   );
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchQuotation>(initalValueForm);
-  const [displayStep, setDisplayStep] = useState<number>(3);
+  const [displayStep, setDisplayStep] = useState<number>(1);
   const [dataPropsBooking, setDataPropsBooking] =
     useState<IDataBookingProps>(initalValueProps);
   const [dataStep2PropsBooking, setDataStep2PropsBooking] =
@@ -103,7 +103,7 @@ export default function FclOceanFreight() {
           : (setDataTableResearch(
               data.data.data.map((data) => ({
                 key: data.seaQuotationID,
-                polid: data.podid,
+                polid: data.polid,
                 polName: data.polName,
                 podid: data.podid,
                 podName: data.podName,
@@ -126,32 +126,16 @@ export default function FclOceanFreight() {
   });
 
   const onFinish = (formValues: IRequireSearchQuotation) => {
-    // const _requestData = {
-    //   polid: formValues.polid,
-    //   podid: formValues.podid,
-    //   typeService: TYPE_SERVICE.FCL,
-    //   cargoReady: formValues.cargoReady?.valueOf(),
-    //   commodities: formValues.commodities,
-    //   containers: formValues.containers,
-    //   paginateRequest: {
-    //     currentPage: pagination.current,
-    //     pageSize: pagination.pageSize,
-    //   },
-    // };
     const _requestData = {
-      polid: 'd74a1e9c-2b1c-451e-937f-002c4fecc6fb',
-      podid: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-      typeService: 'FCL',
-      cargoReady: 2222222,
-      commodities: ['b8559fac-c496-4287-824c-0072a4c6a9fe'],
-      containers: [
-        'c7d25407-41c4-4652-a4ab-07c560c89050',
-        '8682baf0-4159-4c2b-a149-af39628121fe',
-        '5f9758fe-0e55-4883-8c79-90bcff124efd',
-      ],
+      polid: formValues.polid,
+      podid: formValues.podid,
+      typeService: TYPE_SERVICE.FCL,
+      cargoReady: formValues.cargoReady?.valueOf(),
+      commodities: formValues.commodities,
+      containers: formValues.containers,
       paginateRequest: {
-        currentPage: 1,
-        pageSize: 10,
+        currentPage: pagination.current,
+        pageSize: pagination.pageSize,
       },
     };
     setDataPropsBooking((pre) => ({
@@ -163,6 +147,7 @@ export default function FclOceanFreight() {
         delivery: formValues.delivery,
         containers: formValues.containers,
         commodities: formValues.commodities,
+        cargoReady: formValues.cargoReady,
       },
       listContainerType:
         formValues.containers?.map((selectedValue: string) => {
