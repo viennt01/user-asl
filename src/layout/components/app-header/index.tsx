@@ -28,7 +28,7 @@ import { API_USER } from '@/fetcherAxios/endpoint';
 import { getUserInfo } from '@/hook/fetcher';
 const { Header } = Layout;
 
-const menuItems = [
+const menuItemsMobil = [
   {
     key: ROUTERS.HOME,
     label: 'Home',
@@ -65,6 +65,25 @@ const menuItems = [
   },
 ];
 
+const menuItems = [
+  {
+    key: ROUTERS.HOME,
+    label: 'Home',
+  },
+  {
+    key: ROUTERS.BOOKING,
+    label: 'Booking',
+  },
+  {
+    key: ROUTERS.TRACK_TRACE,
+    label: 'Track & Trace',
+  },
+  {
+    key: ROUTERS.BOOKINGS_HISTORY,
+    label: 'History Booking',
+  },
+];
+
 const userMenuItems = [
   {
     key: ROUTERS.PROFILE,
@@ -90,6 +109,7 @@ const AppHeader = () => {
   const router = useRouter();
   const routerPath = router.pathname as ROUTERS;
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [activeItemMenuMobil, setActiveItemMenuMobil] = useState(ROUTERS.HOME);
   const [activeItemMenu, setActiveItemMenu] = useState(ROUTERS.HOME);
   const [ipAddress, setIpAddress] = useState<string>('');
   const [deviceName, setDeviceName] = useState<string>('');
@@ -117,11 +137,7 @@ const AppHeader = () => {
     logoutUser.mutate(data);
   };
 
-  const handleClickMenu: MenuProps['onClick'] = (e) => {
-    const menuItem = menuItems.find((item) => item.key === e.key);
-    console.log(menuItem);
-    console.log(e);
-
+  const handleClickMenuMobil: MenuProps['onClick'] = (e) => {
     setShowMobileMenu(false);
     router.push(e.key);
   };
@@ -174,7 +190,17 @@ const AppHeader = () => {
     }
   }, [router.pathname]);
   useEffect(() => {
-    setActiveItemMenu(routerPath);
+    setActiveItemMenuMobil(routerPath);
+    setActiveItemMenu(
+      routerPath === ROUTERS.AIR_FREIGHT ||
+        routerPath === ROUTERS.FCL_OCEAN_FREIGHT ||
+        routerPath === ROUTERS.LCL_OCEAN_FREIGHT ||
+        routerPath === ROUTERS.OCEAN_FREIGHT ||
+        routerPath === ROUTERS.TRUCK_FREIGHT ||
+        routerPath === ROUTERS.CUSTOMS_SERVICE
+        ? ROUTERS.BOOKING
+        : routerPath
+    );
   }, [router.pathname]);
   useEffect(() => {
     setIpAddress(appLocalStorage.get(LOCAL_STORAGE_KEYS.IP_ADDRESS));
@@ -207,7 +233,7 @@ const AppHeader = () => {
             mode="horizontal"
             selectedKeys={[activeItemMenu]}
             items={menuItems}
-            onClick={handleClickMenu}
+            onClick={handleClickMenuMobil}
             subMenuCloseDelay={0.3}
           />
           <div className={style.user}>
@@ -300,9 +326,9 @@ const AppHeader = () => {
                 <Menu
                   className={style.mobileMenu}
                   mode="inline"
-                  selectedKeys={[activeItemMenu]}
-                  items={menuItems}
-                  onClick={handleClickMenu}
+                  selectedKeys={[activeItemMenuMobil]}
+                  items={menuItemsMobil}
+                  onClick={handleClickMenuMobil}
                 />
               </Col>
               <Col>

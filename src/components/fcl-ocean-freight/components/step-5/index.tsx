@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './index.module.scss';
 import {
   Button,
@@ -36,6 +36,26 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    // Dynamically import html2pdf only on the client side
+    const importHtml2pdf = async () => {
+      // @ts-ignore
+      const { default: html2pdf } = await import('html2pdf.js');
+      window.html2pdf = html2pdf;
+    };
+
+    importHtml2pdf();
+
+    return () => {
+      // Cleanup: Remove html2pdf from the window object when the component unmounts
+      if (window.html2pdf) {
+        delete window.html2pdf;
+      }
+    };
+  }, []);
+
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -57,22 +77,30 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
   };
 
   const handlePrint = () => {
-    // Get the HTML element to print
-    var element = document.getElementById('content-to-print');
+    // Ensure html2pdf is available in the window object
+    if (window.html2pdf) {
+      // Get the HTML element to print
+      var element = document.getElementById('content-to-print');
 
-    if (!element) {
-      console.error('Element not found.');
-      return;
+      if (!element) {
+        console.error('Element not found.');
+        return;
+      }
+
+      // Specify the parameters for html2pdf
+      var parameters = {
+        filename: 'Booking.pdf',
+      };
+
+      const pdf = window.html2pdf(element, parameters);
+      pdf.output('datauristring').then((dataUrl: string) => {
+        console.log('PDF Data URL:', dataUrl);
+      });
+    } else {
+      console.error('html2pdf is not available.');
     }
-
-    // Specify the parameters for html2pdf
-    var parameters = {
-      filename: 'Booking.pdf',
-    };
-
-    const pdf1 = html2pdf(element, parameters);
-    pdf1.output('datauristring').then((pdf: any) => console.log(pdf));
   };
+
 
   return (
     <div
