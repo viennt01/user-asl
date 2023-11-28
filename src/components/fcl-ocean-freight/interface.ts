@@ -7,6 +7,12 @@ export enum TYPE_LOCATION {
   'AIR_PORT' = 'Airport',
 }
 
+export enum TYPE_LOAD_CAPACITY {
+  'TRUCKING' = 'Truck',
+  'AIR' = 'Air',
+  'TOTAL' = '',
+}
+
 export enum TYPE_SERVICE {
   'FCL' = 'FCL',
   'LCL' = 'LCL',
@@ -83,6 +89,8 @@ export interface IStep1 {
   trafficPod?: string;
   receipt?: string;
   delivery?: string;
+  containers?: string[];
+  commodities?: string[];
 }
 
 export interface ISeaQuotationDetailDataBody {
@@ -146,7 +154,6 @@ export interface ISeaQuotaionGroupPartnerDTOs {
   groupPartnerID: string;
 }
 
-
 //table fee
 export interface Fee {
   feeID: string;
@@ -165,4 +172,41 @@ export interface FeeTable extends Fee {
 }
 export interface RequestFee {
   id: string[];
+}
+
+// search trucking
+export interface IRequireSearchTrucking {
+  pickupID: string;
+  deliveryID: string;
+  typeService: string;
+  cargoReady: number;
+  commodities: string[];
+  containers: string[];
+  loadCapacities: string[];
+  paginateRequest: IPagination;
+}
+export interface IQuotationTrucking {
+  truckingQuotationID: string;
+  pickupID: string;
+  pickupName: string;
+  deliveryID: string;
+  deliveryName: string;
+  commodityID: string;
+  commodityName: string;
+  truckingQuotationDetailDTOs: { [key: string]: string };
+}
+export interface IQuotationTruckingRequire extends IPagination {
+  data: IQuotationTrucking[];
+}
+export interface IQuotationTruckingTable
+  extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
+  key: React.Key;
+}
+// get all type capacity
+export interface RequireTypeLoadCapacity {
+  loadCapacityID: string;
+  name: string;
+}
+export interface IRequireTypeLoadCapacity {
+  type: TYPE_LOAD_CAPACITY;
 }

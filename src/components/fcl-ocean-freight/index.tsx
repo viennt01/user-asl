@@ -70,7 +70,7 @@ export default function FclOceanFreight() {
   );
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchQuotation>(initalValueForm);
-  const [displayStep, setDisplayStep] = useState<number>(1);
+  const [displayStep, setDisplayStep] = useState<number>(3);
   const [dataPropsBooking, setDataPropsBooking] =
     useState<IDataBookingProps>(initalValueProps);
   const [dataStep2PropsBooking, setDataStep2PropsBooking] =
@@ -143,11 +143,12 @@ export default function FclOceanFreight() {
       podid: '7dd273a3-adcc-4909-a5ad-00173e562e61',
       typeService: 'FCL',
       cargoReady: 2222222,
-      commodities: [
-        'b8559fac-c496-4287-824c-0072a4c6a9fe',
-        '5ee14a5e-f067-49c1-b412-4f5aac1e7748',
+      commodities: ['b8559fac-c496-4287-824c-0072a4c6a9fe'],
+      containers: [
+        'c7d25407-41c4-4652-a4ab-07c560c89050',
+        '8682baf0-4159-4c2b-a149-af39628121fe',
+        '5f9758fe-0e55-4883-8c79-90bcff124efd',
       ],
-      containers: ['416bc5f8-e2ba-4d17-92b9-9f93318c7eee'],
       paginateRequest: {
         currentPage: 1,
         pageSize: 10,
@@ -160,6 +161,8 @@ export default function FclOceanFreight() {
         trafficPod: formValues.trafficPod,
         receipt: formValues.receipt,
         delivery: formValues.delivery,
+        containers: formValues.containers,
+        commodities: formValues.commodities,
       },
       listContainerType:
         formValues.containers?.map((selectedValue: string) => {
@@ -186,7 +189,6 @@ export default function FclOceanFreight() {
   const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
     pagination.current = page;
     pagination.pageSize = size;
-
     searchQuotationsMutation.refetch();
   };
   const onReset = () => {

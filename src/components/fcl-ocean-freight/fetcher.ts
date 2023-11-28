@@ -10,12 +10,17 @@ import {
   ISeaQuotationDetailDataBody,
   FeeTable,
   RequestFee,
+  IRequireSearchTrucking,
+  IQuotationTruckingRequire,
+  IRequireTypeLoadCapacity,
+  RequireTypeLoadCapacity,
 } from './interface';
 import {
   API_BOOKING,
   API_COMMODITY,
   API_CONTAINER_TYPE,
   API_FEE_GROUP,
+  API_LOAD_CAPACITY,
   API_LOCATION,
   API_SEA_QUOTATION,
 } from '@/fetcherAxios/endpoint';
@@ -65,4 +70,22 @@ export const getFeeWithFeeGroup = (data: RequestFee) => {
   return post<RequestFee, ResponseWithPayload<FeeTable[]>>({ data })(
     API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP
   );
+};
+
+// Get price trucking
+export const getPriceTrucking = (data: IRequireSearchTrucking) => {
+  return post<
+    IRequireSearchTrucking,
+    ResponseWithPayload<IQuotationTruckingRequire>
+  >({
+    data,
+  })(API_BOOKING.SEARCH_TRUCKING_QUOTATION);
+};
+
+//Get all Load Capacity
+export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
+  return post<
+    IRequireTypeLoadCapacity,
+    ResponseWithPayload<RequireTypeLoadCapacity[]>
+  >({ data })(API_LOAD_CAPACITY.GET_ALL);
 };

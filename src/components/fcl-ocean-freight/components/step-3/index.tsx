@@ -20,6 +20,7 @@ export default function Step3({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
+  console.log(dataStep2PropsBooking);
 
   return (
     <div
@@ -33,7 +34,12 @@ export default function Step3({
         dataQuotation={dataPropsBooking?.dataQuotation}
       />
       <div>
-        <ServiceStep3 setDisplayStep={setDisplayStep} />
+        <ServiceStep3
+          setDisplayStep={setDisplayStep}
+          dataStep2PropsBooking={dataStep2PropsBooking}
+          dataPropsBooking={dataPropsBooking}
+          setDataPropsBooking={setDataPropsBooking}
+        />
       </div>
     </div>
   );
