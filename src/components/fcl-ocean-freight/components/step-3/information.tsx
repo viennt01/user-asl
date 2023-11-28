@@ -1,14 +1,20 @@
 import React from 'react';
 import style from './index.module.scss';
 import { Col, Flex, Row, Image } from 'antd';
+import { IDataBookingProps } from '../..';
+import { ISeaPricingDetail } from '../../interface';
+interface Props {
+  dataQuotation: ISeaPricingDetail | undefined
+  dataPropsBooking: IDataBookingProps;
+}
 
-export default function Information() {
+export default function Information({ dataPropsBooking, dataQuotation }: Props) {
   return (
     <div className={style.information}>
       <Flex className={style.header} align="center">
         <div className={style.boxHeader} />
         <div className={style.title}>
-          Ho Chi Minh, Vietnam - Los Angeless, California, United States
+          {dataQuotation?.polName} - {dataQuotation?.podName}
         </div>
       </Flex>
       <div className={style.box}>
@@ -17,13 +23,13 @@ export default function Information() {
             <Row>
               <Col sm={12} span={24} style={{ paddingBottom: '16px' }}>
                 <div>From</div>
-                <div className={style.nameFrom}>Ho Chi Minh, Vietnam</div>
-                <div>11/05/2003</div>
+                <div className={style.nameFrom}>{dataQuotation?.polName}</div>
+                {/* <div>11/05/2003</div> */}
               </Col>
               <Col sm={12} span={24}>
                 <div>To</div>
-                <div className={style.nameFrom}>Ho Chi Minh, Vietnam</div>
-                <div>11/05/2003</div>
+                <div className={style.nameFrom}>{dataQuotation?.podName}</div>
+                {/* <div>11/05/2003</div> */}
               </Col>
               <Col span={0} sm={24} style={{ marginTop: '8px' }}>
                 <Flex align="center">
@@ -55,7 +61,7 @@ export default function Information() {
                   </div>
                   <div>
                     <div className={style.nameFrom}>Place of Receipt</div>
-                    <div>PENGKALAN KUBOR</div>
+                    <div>{dataPropsBooking?.step1?.receipt}</div>
                   </div>
                 </Flex>
               </Col>
@@ -70,7 +76,7 @@ export default function Information() {
                   </div>
                   <div>
                     <div className={style.nameFrom}>Place of Delivery</div>
-                    <div>AKYAB (SITTWE)</div>
+                    <div>{dataPropsBooking?.step1?.delivery}</div>
                   </div>
                 </Flex>
               </Col>
@@ -85,7 +91,7 @@ export default function Information() {
                   </div>
                   <div>
                     <div className={style.nameFrom}>Traffic Mode</div>
-                    <div>Door - Door</div>
+                    <div>{dataPropsBooking?.step1?.trafficPol} - {dataPropsBooking?.step1?.trafficPod}</div>
                   </div>
                 </Flex>
               </Col>

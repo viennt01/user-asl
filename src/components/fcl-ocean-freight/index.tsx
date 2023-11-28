@@ -15,6 +15,7 @@ import {
   IQuotationRequire,
   IQuotationTable,
   IRequireSearchQuotation,
+  ISeaPricingDetail,
   IStep1,
   TYPE_SERVICE,
 } from './interface';
@@ -33,6 +34,7 @@ import { IQuantity } from './components/step-2/editDescription';
 
 export interface IDataBookingProps {
   idQuotation: string;
+  dataQuotation?: ISeaPricingDetail;
   dataColTableStep1?: IQuotationTable;
   step1?: IStep1;
   listContainerType?: { label: string; value: string }[];
@@ -247,6 +249,8 @@ export default function FclOceanFreight() {
             displayStep={displayStep}
             setDisplayStep={setDisplayStep}
             dataStep2PropsBooking={dataStep2PropsBooking}
+            dataPropsBooking={dataPropsBooking}
+            setDataPropsBooking={setDataPropsBooking}
           />
           <Step4 displayStep={displayStep} setDisplayStep={setDisplayStep} />
           <Step5 displayStep={displayStep} setDisplayStep={setDisplayStep} />

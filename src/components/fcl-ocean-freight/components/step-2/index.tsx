@@ -15,8 +15,10 @@ interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
   dataPropsBooking: IDataBookingProps;
   setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
-  setDataStep2PropsBooking: React.Dispatch<React.SetStateAction<IDataStep2Props | undefined>>;
-  dataStep2PropsBooking: IDataStep2Props | undefined
+  setDataStep2PropsBooking: React.Dispatch<
+    React.SetStateAction<IDataStep2Props | undefined>
+  >;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 
 export default function Step2({
@@ -28,7 +30,6 @@ export default function Step2({
   dataStep2PropsBooking,
 }: Props) {
   const { idQuotation } = dataPropsBooking;
-  const [dataQuotation, setDataQuotation] = useState<ISeaPricingDetail>();
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
   const [feeGroupID, setFeeGroupID] = useState<string[]>([]);
 
@@ -38,37 +39,40 @@ export default function Step2({
     enabled: idQuotation !== '',
     onSuccess: (data) => {
       if (data.status) {
-        setDataQuotation({
-          seaQuotationID: data.data.seaQuotationID,
-          podid: data.data.podid,
-          polid: data.data.polid,
-          podName: data.data.podName,
-          polName: data.data.polName,
-          commodityID: data.data.commodityID,
-          vendor: data.data.vendor,
-          note: data.data.note,
-          dateEffect: dayjs(Number(data.data.dateEffect)),
-          validityDate: dayjs(Number(data.data.validityDate)),
-          freqDate: data.data.freqDate,
-          demSeaQuotation: data.data.demSeaQuotation,
-          detSeaQuotation: data.data.detSeaQuotation,
-          stoSeaQuotation: data.data.stoSeaQuotation,
-          lclMinSeaQuotation: data.data.lclMinSeaQuotation,
-          lclSeaQuotation: data.data.lclSeaQuotation,
-          currencyID: data.data.currencyID,
-          public: data.data.public,
-          statusSeaQuotation: data.data.statusSeaQuotation,
-          seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
-          seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,
-          dateInserted: data.data.dateInserted,
-          insertedByUser: data.data.insertedByUser,
-          dateUpdated: data.data.dateUpdated,
-          updatedByUser: data.data.updatedByUser,
-          confirmDated: data.data.confirmDated,
-          confirmByUser: data.data.confirmByUser,
-          salesLeadsSeaQuotationDTOs: data.data.salesLeadsSeaQuotationDTOs,
-          seaQuotaionGroupPartnerDTOs: data.data.seaQuotaionGroupPartnerDTOs,
-        });
+        setDataPropsBooking((pre) => ({
+          ...pre,
+          dataQuotation: {
+            seaQuotationID: data.data.seaQuotationID,
+            podid: data.data.podid,
+            polid: data.data.polid,
+            podName: data.data.podName,
+            polName: data.data.polName,
+            commodityID: data.data.commodityID,
+            vendor: data.data.vendor,
+            note: data.data.note,
+            dateEffect: dayjs(Number(data.data.dateEffect)),
+            validityDate: dayjs(Number(data.data.validityDate)),
+            freqDate: data.data.freqDate,
+            demSeaQuotation: data.data.demSeaQuotation,
+            detSeaQuotation: data.data.detSeaQuotation,
+            stoSeaQuotation: data.data.stoSeaQuotation,
+            lclMinSeaQuotation: data.data.lclMinSeaQuotation,
+            lclSeaQuotation: data.data.lclSeaQuotation,
+            currencyID: data.data.currencyID,
+            public: data.data.public,
+            statusSeaQuotation: data.data.statusSeaQuotation,
+            seaQuotationDetailDTOs: data.data.seaQuotationDetailDTOs,
+            seaQuotaionFeeGroupDTOs: data.data.seaQuotaionFeeGroupDTOs,
+            dateInserted: data.data.dateInserted,
+            insertedByUser: data.data.insertedByUser,
+            dateUpdated: data.data.dateUpdated,
+            updatedByUser: data.data.updatedByUser,
+            confirmDated: data.data.confirmDated,
+            confirmByUser: data.data.confirmByUser,
+            salesLeadsSeaQuotationDTOs: data.data.salesLeadsSeaQuotationDTOs,
+            seaQuotaionGroupPartnerDTOs: data.data.seaQuotaionGroupPartnerDTOs,
+          },
+        }));
         setFeeGroupID(
           data.data.seaQuotaionFeeGroupDTOs.map((data) => data.feeGroupID)
         );
@@ -101,7 +105,7 @@ export default function Step2({
     >
       <Information
         dataPropsBooking={dataPropsBooking}
-        dataQuotation={dataQuotation}
+        dataQuotation={dataPropsBooking?.dataQuotation}
       />
       <div
         style={{
@@ -112,7 +116,7 @@ export default function Step2({
           setDisplayStep={setDisplayStep}
           setDataPropsBooking={setDataPropsBooking}
           dataPropsBooking={dataPropsBooking}
-          dataQuotation={dataQuotation}
+          dataQuotation={dataPropsBooking?.dataQuotation}
           dataFeeTable={dataFeeTable}
         />
       </div>
@@ -125,7 +129,7 @@ export default function Step2({
           setDisplayStep={setDisplayStep}
           setDataPropsBooking={setDataPropsBooking}
           dataPropsBooking={dataPropsBooking}
-          dataQuotation={dataQuotation}
+          dataQuotation={dataPropsBooking?.dataQuotation}
           dataFeeTable={dataFeeTable}
           setDataStep2PropsBooking={setDataStep2PropsBooking}
           dataStep2PropsBooking={dataStep2PropsBooking}
