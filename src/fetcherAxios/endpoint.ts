@@ -31,6 +31,7 @@ export const API_COMMODITY = {
 };
 
 export const API_BOOKING = {
+  CREATE_BOOKING: '/create-booking',
   SEARCH_SEA: '/search-sea-quotation-for-booking',
   SEARCH_TRUCKING_QUOTATION: '/search-trucking-quotation-for-booking',
   SEARCH_CUSTOMS_QUOTATION: '/search-custom-quotation-for-booking',
@@ -46,4 +47,8 @@ export const API_FEE_GROUP = {
 
 export const API_LOAD_CAPACITY = {
   GET_ALL: '/get-all-load-capacity',
+};
+
+export const API_TYPE_OF_TRANSPORT = {
+  GET_ALL: '/get-all-type-of-transport',
 };

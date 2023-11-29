@@ -43,6 +43,8 @@ import {
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 }
 
 import { useRouter } from 'next/router';
@@ -69,7 +71,11 @@ const initalValueForm = {
   },
 };
 
-export default function TruckingPod({ dataPropsBooking }: Props) {
+export default function TruckingPod({
+  dataPropsBooking,
+  selectedRowKeys,
+  setSelectedRowKeys,
+}: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
   const [pagination, setPagination] =
@@ -77,7 +83,6 @@ export default function TruckingPod({ dataPropsBooking }: Props) {
   const [dataTableResearch, setDataTableResearch] = useState<
     IQuotationTruckingTable[]
   >([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
 
@@ -280,7 +285,7 @@ export default function TruckingPod({ dataPropsBooking }: Props) {
             forceRender
             header={
               <Title className="vioer" level={4} style={{ margin: '4px 0' }}>
-                Trucking (POD)
+                Trucking (DESTINATION)
               </Title>
             }
             extra={

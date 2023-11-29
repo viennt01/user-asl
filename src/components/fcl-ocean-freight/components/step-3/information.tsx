@@ -4,11 +4,14 @@ import { Col, Flex, Row, Image } from 'antd';
 import { IDataBookingProps } from '../..';
 import { ISeaPricingDetail } from '../../interface';
 interface Props {
-  dataQuotation: ISeaPricingDetail | undefined
+  dataQuotation: ISeaPricingDetail | undefined;
   dataPropsBooking: IDataBookingProps;
 }
 
-export default function Information({ dataPropsBooking, dataQuotation }: Props) {
+export default function Information({
+  dataPropsBooking,
+  dataQuotation,
+}: Props) {
   return (
     <div className={style.information}>
       <Flex className={style.header} align="center">
@@ -91,7 +94,10 @@ export default function Information({ dataPropsBooking, dataQuotation }: Props) 
                   </div>
                   <div>
                     <div className={style.nameFrom}>Traffic Mode</div>
-                    <div>{dataPropsBooking?.step1?.trafficPol} - {dataPropsBooking?.step1?.trafficPod}</div>
+                    <div>
+                      {dataPropsBooking?.step1?.trafficPol?.name} -{' '}
+                      {dataPropsBooking?.step1?.trafficPod?.name}
+                    </div>
                   </div>
                 </Flex>
               </Col>

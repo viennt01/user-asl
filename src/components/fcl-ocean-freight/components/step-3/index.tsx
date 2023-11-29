@@ -20,7 +20,6 @@ export default function Step3({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
-  console.log(dataStep2PropsBooking);
 
   return (
     <div

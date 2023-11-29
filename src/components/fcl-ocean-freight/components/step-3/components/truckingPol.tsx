@@ -12,7 +12,6 @@ import {
   Image,
   Select,
   DatePicker,
-  InputNumber,
   Input,
   Modal,
   Table,
@@ -20,7 +19,7 @@ import {
   PaginationProps,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   API_BOOKING,
   API_LOAD_CAPACITY,
@@ -44,6 +43,8 @@ import {
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 }
 
 import { useRouter } from 'next/router';
@@ -63,14 +64,17 @@ const initalValueForm = {
   cargoReady: 1,
   commodities: [''],
   containers: [''],
-  // loadCapacities: [''],
   paginateRequest: {
     currentPage: DEFAULT_PAGINATION.current,
     pageSize: DEFAULT_PAGINATION.pageSize,
   },
 };
 
-export default function TruckingPol({ dataPropsBooking }: Props) {
+export default function TruckingPol({
+  dataPropsBooking,
+  selectedRowKeys,
+  setSelectedRowKeys,
+}: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
   const [pagination, setPagination] =
@@ -78,7 +82,6 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
   const [dataTableResearch, setDataTableResearch] = useState<
     IQuotationTruckingTable[]
   >([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
 
@@ -87,7 +90,6 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
       pickupID: formValues.pickupID || '',
       deliveryID: dataPropsBooking?.dataColTableStep1?.polid || '',
       typeService: TYPE_SERVICE.FCL,
-      // loadCapacities: formValues.loadCapacities || [],
       commodities: dataPropsBooking?.step1?.commodities || [],
       containers: dataPropsBooking?.step1?.containers || [],
       cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
@@ -100,7 +102,6 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
     setDataResearch(_requestData);
     if (
       _requestData.pickupID === dataResearch.pickupID &&
-      // _requestData.loadCapacities === dataResearch.loadCapacities &&
       _requestData.cargoReady === dataResearch.cargoReady
     ) {
       getPrice.refetch();
@@ -281,7 +282,7 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
             forceRender
             header={
               <Title className="vioer" level={4} style={{ margin: '4px 0' }}>
-                Trucking (POL)
+                Trucking (ORIGIN)
               </Title>
             }
             extra={

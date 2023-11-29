@@ -16,6 +16,8 @@ import {
   RequireTypeLoadCapacity,
   IRequireSearchCustoms,
   IQuotationCustomsRequire,
+  ITypeOfTransport,
+  IBooking,
 } from './interface';
 import {
   API_BOOKING,
@@ -25,6 +27,7 @@ import {
   API_LOAD_CAPACITY,
   API_LOCATION,
   API_SEA_QUOTATION,
+  API_TYPE_OF_TRANSPORT,
 } from '@/fetcherAxios/endpoint';
 
 // Get all location
@@ -100,4 +103,16 @@ export const getPriceCustom = (data: IRequireSearchCustoms) => {
   >({
     data,
   })(API_BOOKING.SEARCH_CUSTOMS_QUOTATION);
+};
+//Get type of transport
+export const getListTypeTransport = () => {
+  return get<ResponseWithPayload<ITypeOfTransport[]>>({})(
+    API_TYPE_OF_TRANSPORT.GET_ALL
+  );
+};
+//Booking
+export const createBooking = (data: IBooking) => {
+  return post<IBooking, ResponseWithPayload<IQuotationCustomsRequire>>({
+    data,
+  })(API_BOOKING.CREATE_BOOKING);
 };

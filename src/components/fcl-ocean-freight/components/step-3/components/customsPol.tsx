@@ -4,9 +4,7 @@ import {
   Collapse,
   ConfigProvider,
   Flex,
-  Form,
   Typography,
-  Image,
   Tag,
   Table,
   PaginationProps,
@@ -15,11 +13,8 @@ import {
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING, API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import {
-  getFeeWithFeeGroup,
-  getPriceCustom,
-} from '@/components/fcl-ocean-freight/fetcher';
+import { API_BOOKING } from '@/fetcherAxios/endpoint';
+import { getPriceCustom } from '@/components/fcl-ocean-freight/fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import {
   DEFAULT_PAGINATION,
@@ -28,17 +23,16 @@ import {
   IQuotationCustomsTable,
   IRequireSearchCustoms,
 } from '@/components/fcl-ocean-freight/interface';
-import {
-  ColumnsType,
-  TableRowSelection,
-} from 'antd/lib/table/interface';
+import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
-import FeeOfCustoms from './feeOfCustoms';
+import FeeOfCustoms from './customsPol/feeOfCustoms';
 const { Panel } = Collapse;
 const { Title } = Typography;
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
 }
 const initalValueForm = {
   cargoReady: 1,
@@ -49,14 +43,16 @@ const initalValueForm = {
   },
 };
 
-export default function Customs({ dataPropsBooking }: Props) {
-  const [form] = Form.useForm();
+export default function CustomsPol({
+  dataPropsBooking,
+  selectedRowKeys,
+  setSelectedRowKeys,
+}: Props) {
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [dataTableResearch, setDataTableResearch] = useState<
     IQuotationCustomsTable[]
   >([]);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [selectedRow, setSelectedRow] = useState<IQuotationCustomsTable[]>([]);
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
@@ -258,32 +254,12 @@ export default function Customs({ dataPropsBooking }: Props) {
           forceRender
           header={
             <Title level={4} style={{ margin: '4px 0' }}>
-              Customs (POL)
+              Customs (ORIGIN)
             </Title>
           }
           key="1"
         >
           <Flex style={{ padding: '0 8px 16px 0' }}>
-            <Flex>
-              <Image
-                src={'/images/oceanFreight/money.svg'}
-                alt="logo"
-                preview={false}
-                width={25}
-              />
-              <div
-                className={style.titleInput}
-                style={{
-                  marginRight: '12px',
-                  marginLeft: '12px',
-                  width: '170px',
-                  fontWeight: '700',
-                  fontSize: '18px',
-                }}
-              >
-                Price:
-              </div>
-            </Flex>
             <Card
               title={
                 <Title level={4} style={{ margin: '4px 0' }}>

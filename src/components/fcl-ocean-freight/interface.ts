@@ -85,11 +85,12 @@ export interface IQuotationTable extends Omit<IQuotation, 'seaQuotationID'> {
 }
 
 export interface IStep1 {
-  trafficPol?: string;
-  trafficPod?: string;
+  trafficPol?: ITypeOfTransport;
+  trafficPod?: ITypeOfTransport;
   receipt?: string;
   delivery?: string;
   cargoReady?: number;
+  cargoCutOffDated?: number;
   containers?: string[];
   commodities?: string[];
 }
@@ -211,7 +212,6 @@ export interface RequireTypeLoadCapacity {
 export interface IRequireTypeLoadCapacity {
   type: TYPE_LOAD_CAPACITY;
 }
-// search trucking
 export interface IRequireSearchCustoms {
   cargoReady: number;
   commodities?: string[];
@@ -238,4 +238,60 @@ export interface IQuotationCustomsRequire extends IPagination {
 export interface IQuotationCustomsTable
   extends Omit<IQuotationCustoms, 'customQuotationID'> {
   key: React.Key;
+}
+
+export interface ITypeOfTransport {
+  typeOfTransportID?: string;
+  abbreviations: string;
+  name: string;
+  description: string;
+}
+//Booking
+export interface IBooking {
+  podid: string;
+  polid: string;
+  typeOfPOLID: string;
+  typeOfPODID: string;
+  commodityID: string;
+  currencyID: string;
+  typeOfSeaService: boolean; // true: FCL
+  typeOfService: string; // SEA
+  cargoReadyDated: string;
+  cargoCutOffDated: string;
+  placeOfRecipt: string;
+  placeOfDelivery: string;
+  note: string;
+  statusBooking: string;
+  isManualBooking: boolean;
+  quotationBookingDetailRegisterRequests: {
+    seaQuotationID: string;
+    truckingQuotationPOLID: string;
+    truckingQuotationPODID: string;
+    customQuotationPOLID: string;
+    customQuotationPODID: string;
+    customQuotationPOLDetailRegisterRequests: ICustomQuotationPOL[];
+    customQuotationPODDetailRegisterRequests: ICustomQuotationPOD[];
+  };
+  seaBookingFCLDetailRegisterRequests: [
+    {
+      containerTypeID: string;
+      quantityContainer: string;
+    }
+  ];
+}
+export interface ICustomQuotationPOL {
+  feeGroupID: string;
+  customQuotationPOLFeeDetailRegisterRequests: [
+    {
+      feeGroupDetailID: string;
+    }
+  ];
+}
+export interface ICustomQuotationPOD {
+  feeGroupID: string;
+  customQuotationPODFeeDetailRegisterRequests: [
+    {
+      feeGroupDetailID: string;
+    }
+  ];
 }

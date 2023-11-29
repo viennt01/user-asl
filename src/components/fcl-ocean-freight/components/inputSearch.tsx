@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from '../index.module.scss';
 import {
   Col,
@@ -15,22 +15,17 @@ import {
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import {
   API_COMMODITY,
-  API_CONTAINER_TYPE,
   API_LOCATION,
 } from '@/fetcherAxios/endpoint';
-import {
-  getAllCommodity,
-  getAllContainerType,
-  getAllLocation,
-} from '../fetcher';
+import { getAllCommodity, getAllLocation } from '../fetcher';
 import {
   IRequireSearchQuotation,
+  ITypeOfTransport,
   RequireTypeContainer,
   TYPE_LOCATION,
 } from '../interface';
 import { useRouter } from 'next/router';
 import { ResponseWithPayload } from '@/fetcherAxios';
-import { IDataBookingProps } from '..';
 const dateFormat = 'YYYY/MM/DD';
 
 interface Props {
@@ -43,6 +38,10 @@ interface Props {
     ResponseWithPayload<RequireTypeContainer[]>,
     unknown
   >;
+  getTypeTransport: UseQueryResult<
+    ResponseWithPayload<ITypeOfTransport[]>,
+    unknown
+  >;
 }
 
 export default function InputFclOceanFreight({
@@ -52,6 +51,7 @@ export default function InputFclOceanFreight({
   onReset,
   loading,
   getContainerType,
+  getTypeTransport,
 }: Props) {
   const router = useRouter();
   const trafficPol = Form.useWatch('trafficPol', form);
@@ -230,16 +230,14 @@ export default function InputFclOceanFreight({
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
-                    options={[
-                      {
-                        value: 'CY',
-                        label: 'CY',
-                      },
-                      {
-                        value: 'DOOR',
-                        label: 'DOOR',
-                      },
-                    ]}
+                    options={
+                      getTypeTransport.data?.data?.map((item) => {
+                        return {
+                          value: item.typeOfTransportID,
+                          label: item.name,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>
@@ -281,28 +279,61 @@ export default function InputFclOceanFreight({
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     size="large"
-                    options={[
-                      {
-                        value: 'CY',
-                        label: 'CY',
-                      },
-                      {
-                        value: 'DOOR',
-                        label: 'DOOR',
-                      },
-                    ]}
+                    options={
+                      getTypeTransport.data?.data?.map((item) => {
+                        return {
+                          value: item.typeOfTransportID,
+                          label: item.name,
+                        };
+                      }) || []
+                    }
                   />
                 </Form.Item>
               </div>
             </Flex>
           </Col>
 
-          <Col span={trafficPol !== 'DOOR' ? 12 : 0}></Col>
+          <Col
+            span={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPol)?.label !== 'DOOR'
+                ? 12
+                : 0
+            }
+          ></Col>
 
           <Col
             className={style.input}
-            lg={trafficPol === 'DOOR' ? 12 : 0}
-            span={trafficPol === 'DOOR' ? 24 : 0}
+            lg={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPol)?.label === 'DOOR'
+                ? 12
+                : 0
+            }
+            span={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPol)?.label === 'DOOR'
+                ? 24
+                : 0
+            }
           >
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>
@@ -336,8 +367,30 @@ export default function InputFclOceanFreight({
           </Col>
           <Col
             className={style.input}
-            lg={trafficPod === 'DOOR' ? 12 : 0}
-            span={trafficPod === 'DOOR' ? 24 : 0}
+            lg={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPod)?.label === 'DOOR'
+                ? 12
+                : 0
+            }
+            span={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPod)?.label === 'DOOR'
+                ? 24
+                : 0
+            }
           >
             <Flex align={'center'}>
               <Flex align={'center'} className={style.headerInput}>
@@ -370,7 +423,20 @@ export default function InputFclOceanFreight({
             </Flex>
           </Col>
 
-          <Col span={trafficPod !== 'DOOR' ? 12 : 0}></Col>
+          <Col
+            span={
+              getTypeTransport.data?.data
+                ?.map((item) => {
+                  return {
+                    value: item.typeOfTransportID,
+                    label: item.name,
+                  };
+                })
+                .find((item) => item.value === trafficPod)?.label !== 'DOOR'
+                ? 12
+                : 0
+            }
+          ></Col>
 
           <Col className={style.input} lg={12} span={24}>
             <Flex align={'center'}>
@@ -417,7 +483,7 @@ export default function InputFclOceanFreight({
               </Flex>
               <div className={style.contentInput}>
                 <Form.Item
-                  name="cargoCutoffTo"
+                  name="cargoCutOffDated"
                   rules={[
                     {
                       required: true,

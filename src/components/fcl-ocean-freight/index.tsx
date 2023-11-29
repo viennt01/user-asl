@@ -17,16 +17,21 @@ import {
   IRequireSearchQuotation,
   ISeaPricingDetail,
   IStep1,
+  ITypeOfTransport,
   TYPE_SERVICE,
 } from './interface';
 import { useQuery } from '@tanstack/react-query';
-import { getAllContainerType, searchQuotation } from './fetcher';
+import {
+  getAllContainerType,
+  getListTypeTransport,
+  searchQuotation,
+} from './fetcher';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import {
   API_BOOKING,
   API_CONTAINER_TYPE,
-  API_LOCATION,
+  API_TYPE_OF_TRANSPORT,
 } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { useRouter } from 'next/router';
@@ -91,6 +96,11 @@ export default function FclOceanFreight() {
     },
   });
 
+  const getTypeTransport = useQuery(
+    [API_TYPE_OF_TRANSPORT.GET_ALL],
+    getListTypeTransport
+  );
+
   const searchQuotationsMutation = useQuery({
     queryKey: [API_BOOKING.SEARCH_SEA, dataResearch],
     queryFn: () => searchQuotation(dataResearch),
@@ -141,13 +151,20 @@ export default function FclOceanFreight() {
     setDataPropsBooking((pre) => ({
       ...pre,
       step1: {
-        trafficPol: formValues.trafficPol,
-        trafficPod: formValues.trafficPod,
+        trafficPol: getTypeTransport?.data?.data.find(
+          (item: ITypeOfTransport) =>
+            item.typeOfTransportID === formValues.trafficPod
+        ),
+        trafficPod: getTypeTransport?.data?.data.find(
+          (item: ITypeOfTransport) =>
+            item.typeOfTransportID === formValues.trafficPod
+        ),
         receipt: formValues.receipt,
         delivery: formValues.delivery,
         containers: formValues.containers,
         commodities: formValues.commodities,
         cargoReady: formValues.cargoReady,
+        cargoCutOffDated: formValues.cargoCutOffDated,
       },
       listContainerType:
         formValues.containers?.map((selectedValue: string) => {
@@ -215,6 +232,7 @@ export default function FclOceanFreight() {
             onReset={onReset}
             loading={searchQuotationsMutation.isFetching}
             getContainerType={getContainerType}
+            getTypeTransport={getTypeTransport}
           />
           <TableReturn
             displayStep={displayStep}

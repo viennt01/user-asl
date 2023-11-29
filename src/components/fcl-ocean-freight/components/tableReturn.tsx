@@ -74,6 +74,11 @@ export default function TableReturn({
     },
     ...containerReturn,
     {
+      title: <div className={style.title}>Commodity</div>,
+      dataIndex: 'commodityName',
+      key: 'commodityName',
+    },
+    {
       title: <div className={style.title}>POL</div>,
       dataIndex: 'polName',
       key: 'polName',
