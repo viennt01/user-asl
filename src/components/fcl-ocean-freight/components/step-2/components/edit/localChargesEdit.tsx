@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Table, ConfigProvider, InputRef, Input, Space, Button } from 'antd';
+import { Table, ConfigProvider, InputRef, Input, Space, Button, Flex } from 'antd';
 import COLORS from '@/constants/color';
 import { FeeTable } from '@/components/fcl-ocean-freight/interface';
 import {
@@ -129,48 +129,74 @@ export default function LocalChargesEdit({ dataFeeTable }: Props) {
 
   const columns: ColumnsType<FeeTable> = [
     {
-      title: 'Name',
+      title: (
+        <Flex align="center" justify="center">
+          Name
+        </Flex>
+      ),
       dataIndex: 'feeName',
       key: 'feeName',
       fixed: 'left',
       ...getColumnSearchProps('feeName'),
     },
     {
-      title: 'Price',
+      title: (
+        <Flex align="center" justify="center">
+          Price
+        </Flex>
+      ),
       dataIndex: 'priceFeeGroup',
       key: 'priceFeeGroup',
       fixed: 'right',
+      align: 'right',
       ...getColumnSearchProps('priceFeeGroup'),
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
     },
     {
-      title: 'VAT',
+      title: (
+        <Flex align="center" justify="center">
+          VAT
+        </Flex>
+      ),
       dataIndex: 'vatFeeGroup',
       key: 'vatFeeGroup',
       fixed: 'right',
+      align: 'right',
       ...getColumnSearchProps('vatFeeGroup'),
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
     },
     {
-      title: 'Type fee',
+      title: (
+        <Flex align="center" justify="center">
+          Type fee
+        </Flex>
+      ),
       dataIndex: 'typeFeeName',
       key: 'typeFeeName',
       fixed: 'left',
       ...getColumnSearchProps('typeFeeName'),
     },
     {
-      title: 'Currency',
+      title: (
+        <Flex align="center" justify="center">
+          Currency
+        </Flex>
+      ),
       dataIndex: 'currencyName',
       key: 'currencyName',
       fixed: 'left',
       ...getColumnSearchProps('currencyName'),
     },
     {
-      title: 'Unit',
+      title: (
+        <Flex align="center" justify="center">
+          Unit
+        </Flex>
+      ),
       dataIndex: 'unitInternationalCode',
       key: 'unitInternationalCode',
       fixed: 'left',
@@ -196,7 +222,6 @@ export default function LocalChargesEdit({ dataFeeTable }: Props) {
           }}
           columns={columns}
           dataSource={dataFeeTable}
-          pagination={false}
           bordered
           style={{ marginBottom: '24px' }}
         />

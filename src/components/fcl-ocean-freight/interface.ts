@@ -211,3 +211,31 @@ export interface RequireTypeLoadCapacity {
 export interface IRequireTypeLoadCapacity {
   type: TYPE_LOAD_CAPACITY;
 }
+// search trucking
+export interface IRequireSearchCustoms {
+  cargoReady: number;
+  commodities?: string[];
+  paginateRequest: IPagination;
+}
+export interface IQuotationCustoms {
+  customQuotationID: string;
+  typeDelaracrionID: string;
+  typeDelaracrionCode: string;
+  transactionTypeID: string;
+  transactionTypeName: string;
+  currencyID: string;
+  abbreviations: string;
+  commodityID: string;
+  commodityName: string;
+  customRedPrice: string;
+  customYellowPrice: string;
+  customGreenPrice: string;
+  listFeeGroup: string[];
+}
+export interface IQuotationCustomsRequire extends IPagination {
+  data: IQuotationCustoms[];
+}
+export interface IQuotationCustomsTable
+  extends Omit<IQuotationCustoms, 'customQuotationID'> {
+  key: React.Key;
+}

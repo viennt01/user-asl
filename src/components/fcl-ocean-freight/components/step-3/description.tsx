@@ -42,7 +42,7 @@ export default function ServiceStep3({
                 <TruckingPod dataPropsBooking={dataPropsBooking} />
               </Col>
               <Col span={24}>
-                <Customs />
+                <Customs dataPropsBooking={dataPropsBooking}/>
               </Col>
             </Row>
           </Card>

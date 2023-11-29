@@ -14,6 +14,8 @@ import {
   IQuotationTruckingRequire,
   IRequireTypeLoadCapacity,
   RequireTypeLoadCapacity,
+  IRequireSearchCustoms,
+  IQuotationCustomsRequire,
 } from './interface';
 import {
   API_BOOKING,
@@ -88,4 +90,14 @@ export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
     IRequireTypeLoadCapacity,
     ResponseWithPayload<RequireTypeLoadCapacity[]>
   >({ data })(API_LOAD_CAPACITY.GET_ALL);
+};
+
+// Get price custom
+export const getPriceCustom = (data: IRequireSearchCustoms) => {
+  return post<
+    IRequireSearchCustoms,
+    ResponseWithPayload<IQuotationCustomsRequire>
+  >({
+    data,
+  })(API_BOOKING.SEARCH_CUSTOMS_QUOTATION);
 };

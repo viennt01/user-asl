@@ -96,7 +96,7 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
         pageSize: pagination.pageSize,
       },
     };
-    
+
     setDataResearch(_requestData);
     if (
       _requestData.pickupID === dataResearch.pickupID &&
@@ -378,56 +378,6 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                 </Flex>
               </Col>
 
-              {/* <Col className={style.input} span={24}>
-                <Flex align={'center'}>
-                  <Flex align={'center'} className={style.headerInput}>
-                    <Image
-                      src={'/images/oceanFreight/weight.svg'}
-                      alt="logo"
-                      preview={false}
-                      width={25}
-                    />
-                    <div className={style.titleInput}>Load capacity</div>
-                  </Flex>
-                  <div className={style.contentInput}>
-                    <Form.Item
-                      name="loadCapacities"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please select load capacity',
-                        },
-                      ]}
-                    >
-                      <Select
-                        mode="multiple"
-                        style={{ margin: '0px' }}
-                        showSearch
-                        placeholder={'Please select load capacity'}
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                          (option?.label ?? '').includes(input)
-                        }
-                        filterSort={(optionA, optionB) =>
-                          (optionA?.label ?? '')
-                            .toLowerCase()
-                            .localeCompare((optionB?.label ?? '').toLowerCase())
-                        }
-                        size="large"
-                        options={
-                          getLoadCapacity.data?.data?.map((item) => {
-                            return {
-                              value: item.loadCapacityID,
-                              label: item.name,
-                            };
-                          }) || []
-                        }
-                      />
-                    </Form.Item>
-                  </div>
-                </Flex>
-              </Col> */}
-
               <Col className={style.input} span={24}>
                 <Flex align={'center'}>
                   <Flex align={'center'} className={style.headerInput}>
@@ -486,34 +436,22 @@ export default function TruckingPol({ dataPropsBooking }: Props) {
                   display: dataTableResearch.length === 0 ? 'none' : '',
                 }}
               >
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Table: {
-                        headerBg: 'rgb(202, 215, 238)',
-                        headerColor: 'rgb(29, 68, 134)',
-                        borderColor: '#000',
-                      },
-                    },
+                <Table
+                  scroll={{
+                    x: 'max-content',
                   }}
-                >
-                    <Table
-                      scroll={{
-                        x: 'max-content',
-                      }}
-                      columns={columns}
-                      dataSource={dataTableResearch}
-                      pagination={{
-                        position: ['bottomRight'],
-                        showTotal: (total, range) =>
-                          `${range[0]}-${range[1]} of ${total} items`,
-                        showSizeChanger: true,
-                        ...pagination,
-                        onChange: handlePaginationChange,
-                      }}
-                      rowSelection={rowSelection}
-                    />
-                </ConfigProvider>
+                  columns={columns}
+                  dataSource={dataTableResearch}
+                  pagination={{
+                    position: ['bottomRight'],
+                    showTotal: (total, range) =>
+                      `${range[0]}-${range[1]} of ${total} items`,
+                    showSizeChanger: true,
+                    ...pagination,
+                    onChange: handlePaginationChange,
+                  }}
+                  rowSelection={rowSelection}
+                />
               </div>
             </Flex>
           </Panel>
