@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 export function formatCurrency(amount: number) {
   if (!amount && amount !== 0) return '--';
@@ -25,11 +25,26 @@ export function formatNumberPercent(amount: number) {
 
 export function formatDate(
   value: dayjs.ConfigType,
-  // formatString = 'YYYY-MM-DD'
-  formatString = 'DD/MM/YYYY'
+  formatString = 'YYYY-MM-DD'
+  // formatString = 'DD/MM/YYYY'
 ) {
   if (value) {
     return dayjs(value).format(formatString);
   }
   return;
+}
+
+export function formatCurrencyHasCurrency(input: string): string {
+  if (!input) {
+    return '-';
+  }
+  const parts = input.split(' ');
+  if (parts.length !== 2) {
+    return '-';
+  }
+  const amount = parseFloat(parts[0]);
+  if (isNaN(amount)) {
+    return '-';
+  }
+  return `${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ` ${parts[1]}`;
 }

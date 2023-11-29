@@ -56,7 +56,8 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
             unitID: item.unitID,
             currencyID: item.currencyID,
           }));
-          setDataFeeTable(newData);
+          // setDataFeeTable(newData);
+          setDataFeeTable(data.data); 
 
           const newDataSelect = data.data.map((item) => item.feeID);
           setSelectedRowKeys(newDataSelect);

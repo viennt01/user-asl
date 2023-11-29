@@ -84,6 +84,8 @@ export default function ServiceStep3({
     setDisplayStep(4);
   };
 
+  console.log(dataPropsBooking?.step1?.trafficPol?.name);
+
   return (
     <div className={style.service}>
       <Row gutter={16}>
@@ -126,8 +128,8 @@ export default function ServiceStep3({
               <Col span={24}>
                 <CustomsPod
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysCustomsPOL}
-                  setSelectedRowKeys={setSelectedRowKeysCustomsPOL}
+                  selectedRowKeys={selectedRowKeysCustomsPOD}
+                  setSelectedRowKeys={setSelectedRowKeysCustomsPOD}
                 />
               </Col>
             </Row>

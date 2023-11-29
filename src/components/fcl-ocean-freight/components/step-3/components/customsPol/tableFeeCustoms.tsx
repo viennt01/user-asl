@@ -41,31 +41,31 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
     enabled: idFeeGroup !== undefined,
     onSuccess(data) {
       setDataFeeTable([]);
+      // setSelectedRowKeys([]);
       if (data.status) {
         if (data.data) {
-             const newData = data.data.map((item) => ({
+          const newData = data.data.map((item) => ({
             key: item.feeID,
-            currencyName: item.currencyName, 
-            unitInternationalCode: item.unitInternationalCode, 
-            feeNo: item.feeNo, 
-            feeName: item.feeName, 
-            typeFeeName: item.typeFeeName, 
+            currencyName: item.currencyName,
+            unitInternationalCode: item.unitInternationalCode,
+            feeNo: item.feeNo,
+            feeName: item.feeName,
+            typeFeeName: item.typeFeeName,
             feeID: item.feeID,
             priceFeeGroup: item.priceFeeGroup,
             vatFeeGroup: item.vatFeeGroup,
             unitID: item.unitID,
             currencyID: item.currencyID,
           }));
-          setDataFeeTable(newData);
+          // setDataFeeTable(newData); 
+          setDataFeeTable(data.data); 
 
-          const newDataSelect = data.data.map((item) => item.feeID);
-          setSelectedRowKeys(newDataSelect);
+          // const newDataSelect = data.data.map((item) => item.feeID);
+          // setSelectedRowKeys(newDataSelect);
         }
       }
     },
   });
-  console.log(selectedRowKeys);
-  console.log(dataFeeTable);
   const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
     setSelectedRowKeys(selectedRowKeys);
   };
@@ -263,9 +263,6 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
         selectedRowKeys: selectedRowKeys,
         onChange: handleSelectionChange,
       }}
-      // style={{
-      //   marginBottom: '24px',
-      // }}
     />
   );
 }

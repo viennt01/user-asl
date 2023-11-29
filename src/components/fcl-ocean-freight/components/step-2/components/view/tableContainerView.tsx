@@ -4,6 +4,7 @@ import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { ISeaPricingDetail } from '@/components/fcl-ocean-freight/interface';
+import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -43,6 +44,7 @@ export default function TableContainerView({ dataPropsBooking }: Props) {
       dataIndex: 'oceanFreight',
       key: 'oceanFreight',
       align: 'center',
+      render: (value) => formatCurrencyHasCurrency(value),
     },
     {
       title: 'Quantity',

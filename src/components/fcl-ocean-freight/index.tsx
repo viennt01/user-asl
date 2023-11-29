@@ -153,7 +153,7 @@ export default function FclOceanFreight() {
       step1: {
         trafficPol: getTypeTransport?.data?.data.find(
           (item: ITypeOfTransport) =>
-            item.typeOfTransportID === formValues.trafficPod
+            item.typeOfTransportID === formValues.trafficPol
         ),
         trafficPod: getTypeTransport?.data?.data.find(
           (item: ITypeOfTransport) =>

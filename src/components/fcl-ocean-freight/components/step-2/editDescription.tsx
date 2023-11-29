@@ -4,7 +4,6 @@ import { Button, Col, Flex, Row } from 'antd';
 import COLORS from '@/constants/color';
 import LocalChargesEdit from './components/edit/localChargesEdit';
 import TableContainerEdit from './components/edit/tableContainerEdit';
-import CardTotal from './components/edit/cardTotal';
 import { IDataBookingProps, IDataStep2Props } from '../..';
 import { FeeTable, ISeaPricingDetail } from '../../interface';
 
@@ -36,7 +35,7 @@ export default function EditDescription({
   return (
     <div className={style.description}>
       <Row gutter={16}>
-        <Col span={24} lg={16}>
+        <Col span={24}>
           <Row>
             <Col span={24}>
               <TableContainerEdit
@@ -49,9 +48,6 @@ export default function EditDescription({
               <LocalChargesEdit dataFeeTable={dataFeeTable} />
             </Col>
           </Row>
-        </Col>
-        <Col span={24} lg={8}>
-          <CardTotal />
         </Col>
         <Col span={24}>
           <Flex justify="space-between">

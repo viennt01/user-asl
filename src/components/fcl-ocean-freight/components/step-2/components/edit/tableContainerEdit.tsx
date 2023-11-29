@@ -13,6 +13,7 @@ import {
   IDataBookingProps,
   IDataStep2Props,
 } from '@/components/fcl-ocean-freight';
+import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -80,6 +81,7 @@ export default function TableContainerEdit({
       dataIndex: 'oceanFreight',
       key: 'oceanFreight',
       align: 'center',
+      render: (value) => formatCurrencyHasCurrency(value),
     },
     {
       title: 'Quantity',

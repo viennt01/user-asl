@@ -13,6 +13,7 @@ import {
 import { ColumnsType } from 'antd/lib/table';
 import { IPaginationOfAntd, IQuotationTable } from '../interface';
 import { IDataBookingProps } from '..';
+import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 export interface ITypeDTOs {
   [key: string]: string;
@@ -49,7 +50,9 @@ export default function TableReturn({
                 <Tag
                   color="#F2F48E"
                   style={{ color: '#000', fontWeight: '450' }}
-                >{`${value[key]}`}</Tag>
+                >
+                  {formatCurrencyHasCurrency(value[key])}
+                </Tag>
               );
             },
           };
@@ -114,7 +117,6 @@ export default function TableReturn({
             onClick={() => (
               console.log(record),
               setDisplayStep(2.2),
-              
               setDataPropsBooking((pre) => ({
                 ...pre,
                 idQuotation: record.key,
