@@ -32,8 +32,8 @@ export interface IRequireTrackTrade {
   noPieces: string;
   totalGW: string;
   totalCBM: string;
-  isSeaLCL: string;
-  isSealFCL: string;
+  isSeaLCL: boolean;
+  isSealFCL: boolean;
   localVessel: string;
   oceanVessel: string;
 }

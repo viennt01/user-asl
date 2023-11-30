@@ -55,7 +55,7 @@ import { ITypeDTOs } from '../../tableReturn';
 import { TableRowSelection } from 'antd/lib/table/interface';
 const { Panel } = Collapse;
 const { Title } = Typography;
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'YYYY-MM-DD';
 
 const initalValueForm = {
   pickupID: '',

@@ -26,7 +26,7 @@ import {
 } from '../interface';
 import { useRouter } from 'next/router';
 import { ResponseWithPayload } from '@/fetcherAxios';
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'YYYY-MM-DD';
 
 interface Props {
   displayStep: number;
