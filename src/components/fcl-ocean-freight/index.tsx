@@ -3,7 +3,6 @@ import style from './index.module.scss';
 import { Flex, Form, Modal, PaginationProps } from 'antd';
 import HeaderFclOceanFreight from './components/header';
 import InputFclOceanFreight from './components/inputSearch';
-import TableReturn from './components/tableReturn';
 import Step2 from './components/step-2';
 import Step3 from './components/step-3';
 import Step4 from './components/step-4';
@@ -233,11 +232,8 @@ export default function FclOceanFreight() {
             loading={searchQuotationsMutation.isFetching}
             getContainerType={getContainerType}
             getTypeTransport={getTypeTransport}
-          />
-          <TableReturn
-            displayStep={displayStep}
             setDisplayStep={setDisplayStep}
-            data={dataTableResearch}
+            dataTableResearch={dataTableResearch}
             setDataPropsBooking={setDataPropsBooking}
             pagination={pagination}
             handlePaginationChange={handlePaginationChange}
