@@ -75,27 +75,46 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
   const onChange = () => {
     setIsChecked(!isChecked);
   };
-
-  const handlePrint = () => {
+  const handlePrint = async () => {
     // Ensure html2pdf is available in the window object
     if (window.html2pdf) {
       // Get the HTML element to print
-      var element = document.getElementById('content-to-print');
-
+      const element = document.getElementById('content-to-print');
+  
       if (!element) {
         console.error('Element not found.');
         return;
       }
-
+  
       // Specify the parameters for html2pdf
-      var parameters = {
+      const parameters = {
         filename: 'Booking.pdf',
       };
-
+  
       const pdf = window.html2pdf(element, parameters);
-      pdf.output('datauristring').then((dataUrl: string) => {
-        console.log('PDF Data URL:', dataUrl);
-      });
+  
+      // Output the PDF as a data URL
+      const dataUrl = await pdf.output('datauristring');
+  
+      // Create a Blob from the data URL
+      const blob = await fetch(dataUrl).then((res) => res.blob());
+  
+      // Create a FormData object to send the file
+      const formData = new FormData();
+      formData.append('pdfFile', blob, 'Booking.pdf');
+  
+      // Make an HTTP request to your server
+      try {
+        const response = await fetch('YOUR_SERVER_UPLOAD_ENDPOINT', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        // Handle the server response as needed
+        console.log('Server Response:', response);
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     } else {
       console.error('html2pdf is not available.');
     }
