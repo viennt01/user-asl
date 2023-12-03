@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../index.module.scss';
 import { Flex, Image } from 'antd';
 import COLORS from '@/constants/color';
@@ -8,6 +8,15 @@ interface Props {
 }
 
 export default function HeaderFclOceanFreight({ displayStep }: Props) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  console.log(windowWidth < 576 && displayStep === 1);
+
   return (
     <div className={style.header}>
       <Flex
@@ -17,7 +26,10 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
       >
         <Flex
           className={style.step}
-          style={{ background: displayStep === 1 ? COLORS.WHITE : '' }}
+          style={{
+            background: displayStep === 1 ? COLORS.WHITE : '',
+            // display: windowWidth < 576 && displayStep === 1 ? '' : 'none',
+          }}
           justify={'center'}
           align={'center'}
         >
@@ -52,6 +64,10 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           style={{
             background:
               displayStep === 2.1 || displayStep === 2.2 ? COLORS.WHITE : '',
+            // display:
+            //   (windowWidth < 576 && displayStep === 2.1) || displayStep === 2.2
+            //     ? ''
+            //     : 'none',
           }}
           justify={'center'}
           align={'center'}
@@ -91,6 +107,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 3 ? COLORS.WHITE : '',
+            // display: windowWidth < 576 && displayStep === 3 ? '' : 'none',
           }}
         >
           <Flex
@@ -128,6 +145,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 4 ? COLORS.WHITE : '',
+            // display: windowWidth < 576 && displayStep === 4 ? '' : 'none',
           }}
         >
           <Flex
@@ -165,6 +183,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 5 ? COLORS.WHITE : '',
+            // display: windowWidth < 576 && displayStep === 5 ? '' : 'none',
           }}
         >
           <Flex

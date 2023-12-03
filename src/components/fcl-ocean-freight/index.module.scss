@@ -46,7 +46,7 @@
       .header {
         position: relative;
         height: 50px;
-        width: 90%;
+        width: 100%;
         background: $WHITE;
         z-index: 2;
         top: 20px;
@@ -58,32 +58,15 @@
           background: $BG_OUTSIDE_BTN;
           z-index: 3;
           border-radius: 8px;
-          .stepActive {
-            width: 100%;
-            margin: 0 8px;
-            height: 40px;
-            border-radius: 8px;
-            .no {
-              width: 30px;
-              height: 30px;
-              background: $GREY_COLOR_HOVER;
-              border-radius: 50%;
-            }
-            .contentStep {
-              width: 60%;
-              color: $GREY_COLOR_HOVER;
-              text-align: center;
-              font-weight: 600;
-            }
-          }
           .step {
             width: 100%;
             margin: 0 8px;
             height: 40px;
             border-radius: 8px;
             .no {
-              width: 30px;
-              height: 30px;
+              display: none;
+              width: 20px;
+              height: 20px;
               background: $DISABLED;
               border-radius: 50%;
             }
@@ -141,11 +124,75 @@
     }
   }
 }
+@media (min-width: 576px) {
+  .wrapper {
+    .checkPrice {
+      .content {
+        .header {
+          width: 100%;
+          .contentHeader {
+            .step {
+              .no {
+                display: none;
+                width: 20px;
+                height: 20px;
+              }
+              .contentStep {
+                width: 70%;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    .checkPrice {
+      .content {
+        .header {
+          width: 90%;
+          .contentHeader {
+            .step {
+              .no {
+                display: flex;
+                width: 25px;
+                height: 25px;
+              }
+              .contentStep {
+                width: 65%;
+                font-weight: 500;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
 @media (min-width: 992px) {
   .wrapper {
     .checkPrice {
-      padding: 16px 16px 32px;
+      .content {
+        .header {
+          .contentHeader {
+            .step {
+              .no {
+                width: 30px;
+                height: 30px;
+              }
+              .contentStep {
+                width: 60%;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

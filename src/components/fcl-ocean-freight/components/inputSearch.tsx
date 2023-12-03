@@ -130,9 +130,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select port of loading'}
+                      placeholder={'Select port of loading'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
@@ -179,9 +178,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select port of discharge'}
+                      placeholder={'Select port of discharge'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
@@ -229,9 +227,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select traffic mode'}
+                      placeholder={'Select traffic mode'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
@@ -278,9 +275,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select traffic mode'}
+                      placeholder={'Select traffic mode'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
@@ -364,14 +360,13 @@ export default function InputFclOceanFreight({
                     rules={[
                       {
                         required: trafficPol === 'DOOR',
-                        message: 'Please ent delivery (POL)',
+                        message: 'Please enter delivery (POL)',
                       },
                     ]}
                   >
                     <Input
                       size="large"
-                      style={{ margin: '0px' }}
-                      placeholder={'Please enter place of receipt'}
+                      placeholder={'Enter place of receipt'}
                     />
                   </Form.Item>
                 </div>
@@ -427,8 +422,7 @@ export default function InputFclOceanFreight({
                   >
                     <Input
                       size="large"
-                      style={{ margin: '0px' }}
-                      placeholder={'Please enter place of delivery'}
+                      placeholder={'Enter place of delivery'}
                     />
                   </Form.Item>
                 </div>
@@ -536,9 +530,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select type of container'}
+                      placeholder={'Select type of container'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
@@ -587,9 +580,8 @@ export default function InputFclOceanFreight({
                     ]}
                   >
                     <Select
-                      style={{ margin: '0px' }}
                       showSearch
-                      placeholder={'Please select commodity'}
+                      placeholder={'Select commodity'}
                       optionFilterProp="children"
                       filterOption={(input, option) =>
                         (option?.label ?? '').includes(input)
