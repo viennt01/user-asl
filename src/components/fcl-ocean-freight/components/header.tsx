@@ -16,6 +16,14 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
   console.log(windowWidth < 576 && displayStep === 1);
+  // Xác định điều kiện để hiển thị hoặc ẩn các bước
+  const shouldDisplayStep = (step: number) => {
+    if (windowWidth < 600) {
+      return displayStep === step;
+    } else {
+      return true; // Hiển thị tất cả bước khi windowWidth > 576
+    }
+  };
 
   return (
     <div className={style.header}>
@@ -28,7 +36,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           className={style.step}
           style={{
             background: displayStep === 1 ? COLORS.WHITE : '',
-            // display: windowWidth < 576 && displayStep === 1 ? '' : 'none',
+            display: shouldDisplayStep(1) ? '' : 'none',
           }}
           justify={'center'}
           align={'center'}
@@ -64,10 +72,9 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           style={{
             background:
               displayStep === 2.1 || displayStep === 2.2 ? COLORS.WHITE : '',
-            // display:
-            //   (windowWidth < 576 && displayStep === 2.1) || displayStep === 2.2
-            //     ? ''
-            //     : 'none',
+            display: shouldDisplayStep(displayStep === 2.1 ? 2.1 : 2.2)
+              ? ''
+              : 'none',
           }}
           justify={'center'}
           align={'center'}
@@ -107,7 +114,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 3 ? COLORS.WHITE : '',
-            // display: windowWidth < 576 && displayStep === 3 ? '' : 'none',
+            display: shouldDisplayStep(3) ? '' : 'none',
           }}
         >
           <Flex
@@ -145,7 +152,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 4 ? COLORS.WHITE : '',
-            // display: windowWidth < 576 && displayStep === 4 ? '' : 'none',
+            display: shouldDisplayStep(4) ? '' : 'none',
           }}
         >
           <Flex
@@ -183,7 +190,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           align={'center'}
           style={{
             background: displayStep === 5 ? COLORS.WHITE : '',
-            // display: windowWidth < 576 && displayStep === 5 ? '' : 'none',
+            display: shouldDisplayStep(5) ? '' : 'none',
           }}
         >
           <Flex
