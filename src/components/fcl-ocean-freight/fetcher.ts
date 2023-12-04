@@ -11,13 +11,14 @@ import {
   FeeTable,
   RequestFee,
   IRequireSearchTrucking,
-  IQuotationTruckingRequire,
   IRequireTypeLoadCapacity,
   RequireTypeLoadCapacity,
   IRequireSearchCustoms,
   IQuotationCustomsRequire,
   ITypeOfTransport,
   IBooking,
+  IQuotationTrucking,
+  IQuotationTruckingTable,
 } from './interface';
 import {
   API_BOOKING,
@@ -81,10 +82,10 @@ export const getFeeWithFeeGroup = (data: RequestFee) => {
 export const getPriceTrucking = (data: IRequireSearchTrucking) => {
   return post<
     IRequireSearchTrucking,
-    ResponseWithPayload<IQuotationTruckingRequire>
+    ResponseWithPayload<IQuotationTrucking>
   >({
     data,
-  })(API_BOOKING.SEARCH_TRUCKING_QUOTATION);
+  })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING);
 };
 
 //Get all Load Capacity

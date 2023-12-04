@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
 import { Button, Card, Col, Flex, Row } from 'antd';
-import TruckingPol from './components/truckingPol';
 import COLORS from '@/constants/color';
 import CustomsPol from './components/customsPol';
 import { IDataBookingProps, IDataStep2Props } from '../..';
-import TruckingPod from './components/truckingPod';
+import Trucking from './components/trucking';
 import { useMutation } from '@tanstack/react-query';
 import { createBooking } from '../../fetcher';
 import { IBooking } from '../../interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import CustomsPod from './components/customsPod';
+
+export enum TYPE_POL_POD {
+  'POL' = 'POL',
+  'POD' = 'POD',
+}
 
 interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
@@ -84,8 +88,6 @@ export default function ServiceStep3({
     setDisplayStep(4);
   };
 
-  console.log(dataPropsBooking?.step1?.trafficPol?.name);
-
   return (
     <div className={style.service}>
       <Row gutter={16}>
@@ -100,7 +102,8 @@ export default function ServiceStep3({
                   dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ? 24 : 0
                 }
               >
-                <TruckingPol
+                <Trucking
+                  type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
                   selectedRowKeys={selectedRowKeysPOL}
                   setSelectedRowKeys={setSelectedRowKeysPOL}
@@ -111,12 +114,14 @@ export default function ServiceStep3({
                   dataPropsBooking?.step1?.trafficPod?.name === 'DOOR' ? 24 : 0
                 }
               >
-                <TruckingPod
+                <Trucking
+                  type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
                   selectedRowKeys={selectedRowKeysPOD}
                   setSelectedRowKeys={setSelectedRowKeysPOD}
                 />
               </Col>
+
               <Col span={24}>
                 <CustomsPol
                   dataPropsBooking={dataPropsBooking}
@@ -124,7 +129,6 @@ export default function ServiceStep3({
                   setSelectedRowKeys={setSelectedRowKeysCustomsPOL}
                 />
               </Col>
-
               <Col span={24}>
                 <CustomsPod
                   dataPropsBooking={dataPropsBooking}

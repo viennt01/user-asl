@@ -115,7 +115,6 @@ export default function TableReturn({
             type="primary"
             style={{ width: '120px' }}
             onClick={() => (
-              console.log(record),
               setDisplayStep(2.2),
               setDataPropsBooking((pre) => ({
                 ...pre,

@@ -15,7 +15,6 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  console.log(windowWidth < 576 && displayStep === 1);
   // Xác định điều kiện để hiển thị hoặc ẩn các bước
   const shouldDisplayStep = (step: number) => {
     if (windowWidth < 600) {

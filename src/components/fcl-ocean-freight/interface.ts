@@ -182,10 +182,9 @@ export interface IRequireSearchTrucking {
   deliveryID: string;
   typeService: string;
   cargoReady: number;
-  commodities: string[];
+  commodityID: string;
   containers: string[];
   // loadCapacities: string[];
-  paginateRequest: IPagination;
 }
 export interface IQuotationTrucking {
   truckingQuotationID: string;
@@ -196,9 +195,6 @@ export interface IQuotationTrucking {
   commodityID: string;
   commodityName: string;
   truckingQuotationDetailDTOs: { [key: string]: string };
-}
-export interface IQuotationTruckingRequire extends IPagination {
-  data: IQuotationTrucking[];
 }
 export interface IQuotationTruckingTable
   extends Omit<IQuotationTrucking, 'truckingQuotationID'> {

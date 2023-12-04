@@ -16,43 +16,34 @@ import {
   Modal,
   Table,
   Tag,
-  PaginationProps,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { API_BOOKING, API_LOCATION } from '@/fetcherAxios/endpoint';
 import {
-  API_BOOKING,
-  API_LOAD_CAPACITY,
-  API_LOCATION,
-} from '@/fetcherAxios/endpoint';
-import {
-  getAllLoadCapacity,
   getAllLocation,
   getPriceTrucking,
 } from '@/components/fcl-ocean-freight/fetcher';
 import {
-  DEFAULT_PAGINATION,
-  IPaginationOfAntd,
-  IQuotationTruckingRequire,
+  IQuotationTrucking,
   IQuotationTruckingTable,
   IRequireSearchTrucking,
-  TYPE_LOAD_CAPACITY,
   TYPE_LOCATION,
   TYPE_SERVICE,
 } from '@/components/fcl-ocean-freight/interface';
-
-interface Props {
-  dataPropsBooking: IDataBookingProps;
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
-}
-
 import { useRouter } from 'next/router';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
 import { ITypeDTOs } from '../../tableReturn';
 import { TableRowSelection } from 'antd/lib/table/interface';
+import { TYPE_POL_POD } from '../description';
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+  selectedRowKeys: React.Key[];
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  type: TYPE_POL_POD;
+}
 const { Panel } = Collapse;
 const { Title } = Typography;
 const dateFormat = 'YYYY-MM-DD';
@@ -62,24 +53,19 @@ const initalValueForm = {
   deliveryID: '',
   typeService: TYPE_SERVICE.FCL,
   cargoReady: 1,
-  commodities: [''],
+  commodityID: '',
   containers: [''],
   loadCapacities: [''],
-  paginateRequest: {
-    currentPage: DEFAULT_PAGINATION.current,
-    pageSize: DEFAULT_PAGINATION.pageSize,
-  },
 };
 
-export default function TruckingPod({
+export default function Trucking({
   dataPropsBooking,
   selectedRowKeys,
   setSelectedRowKeys,
+  type,
 }: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
-  const [pagination, setPagination] =
-    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [dataTableResearch, setDataTableResearch] = useState<
     IQuotationTruckingTable[]
   >([]);
@@ -87,20 +73,35 @@ export default function TruckingPod({
     useState<IRequireSearchTrucking>(initalValueForm);
 
   const onFinish = (formValues: IRequireSearchTrucking) => {
+    const data =
+      type === TYPE_POL_POD.POD
+        ? {
+            deliveryID: formValues.deliveryID || '',
+            pickupID: dataPropsBooking?.dataColTableStep1?.podid || '',
+            typeService: TYPE_SERVICE.FCL,
+            commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+            containers: dataPropsBooking?.step1?.containers || [],
+            cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+          }
+        : {
+            pickupID: formValues.pickupID || '',
+            deliveryID: dataPropsBooking?.dataColTableStep1?.polid || '',
+            typeService: TYPE_SERVICE.FCL,
+            commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+            containers: dataPropsBooking?.step1?.containers || [],
+            cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+          };
     const _requestData = {
-      deliveryID: formValues.deliveryID || '',
-      pickupID: dataPropsBooking?.dataColTableStep1?.podid || '',
-      typeService: TYPE_SERVICE.FCL,
-      // loadCapacities: formValues.loadCapacities || [],
-      commodities: dataPropsBooking?.step1?.commodities || [],
-      containers: dataPropsBooking?.step1?.containers || [],
-      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-      paginateRequest: {
-        currentPage: pagination.current,
-        pageSize: pagination.pageSize,
-      },
+      pickupID: '33d5922b-68e3-425a-8d62-006805387031',
+      deliveryID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
+      typeService: 'FCL',
+      cargoReady: 111111111111,
+      commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
+      containers: [
+        '416bc5f8-e2ba-4d17-92b9-9f93318c7eee',
+        'b88cfeb8-ddf6-4d0f-84da-4a7c3a755e1c',
+      ],
     };
-
     setDataResearch(_requestData);
     if (
       _requestData.pickupID === dataResearch.pickupID &&
@@ -112,31 +113,29 @@ export default function TruckingPod({
   };
 
   const getPrice = useQuery({
-    queryKey: [API_BOOKING.SEARCH_TRUCKING_QUOTATION, dataResearch],
+    queryKey: [
+      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING,
+      dataResearch,
+    ],
     queryFn: () => getPriceTrucking(dataResearch),
     enabled: dataResearch.pickupID !== '',
-    onSuccess: (data: ResponseWithPayload<IQuotationTruckingRequire>) => {
-      const { currentPage, pageSize, totalPages } = data.data;
+    onSuccess: (data: ResponseWithPayload<IQuotationTrucking>) => {
       data.status
-        ? data.data.data.length === 0
-          ? warning()
-          : (setDataTableResearch(
-              data.data.data.map((data) => ({
-                key: data.truckingQuotationID,
-                pickupID: data.pickupID,
-                pickupName: data.pickupName,
-                deliveryID: data.deliveryID,
-                deliveryName: data.deliveryName,
-                commodityID: data.commodityID,
-                commodityName: data.commodityName,
-                truckingQuotationDetailDTOs: data.truckingQuotationDetailDTOs,
-              }))
-            ),
-            setPagination({
-              current: currentPage,
-              pageSize: pageSize,
-              total: totalPages,
-            }))
+        ? data.data
+          ? setDataTableResearch([
+              {
+                key: data.data.truckingQuotationID,
+                pickupID: data.data.pickupID,
+                pickupName: data.data.pickupName,
+                deliveryID: data.data.deliveryID,
+                deliveryName: data.data.deliveryName,
+                commodityID: data.data.commodityID,
+                commodityName: data.data.commodityName,
+                truckingQuotationDetailDTOs:
+                  data.data.truckingQuotationDetailDTOs,
+              },
+            ])
+          : warning()
         : warning();
     },
     onError() {
@@ -154,22 +153,6 @@ export default function TruckingPod({
           TYPE_LOCATION.INDUSTRIAL_ZONE,
           TYPE_LOCATION.PORT,
         ],
-      }),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-      }
-    },
-    onError: () => {
-      router.back();
-    },
-  });
-
-  const getLoadCapacity = useQuery({
-    queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () =>
-      getAllLoadCapacity({
-        type: TYPE_LOAD_CAPACITY.TRUCKING,
       }),
     onSuccess: (data) => {
       if (!data.status) {
@@ -219,43 +202,19 @@ export default function TruckingPod({
     return result;
   }, [dataTableResearch]);
 
-  const columns: ColumnsType<IQuotationTruckingTable> = [
-    {
-      title: <div className={style.title}>NO.</div>,
-      dataIndex: 'index',
-      width: 50,
-      align: 'right',
-      fixed: 'left',
-      render: (_, record, index) => {
-        const { pageSize = 0, current = 0 } = pagination ?? {};
-        return index + pageSize * (current - 1) + 1;
-      },
-    },
-    ...containerReturn,
-  ];
-
-  const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    pagination.current = page;
-    pagination.pageSize = size;
-    getPrice.refetch();
-  };
+  const columns: ColumnsType<IQuotationTruckingTable> = [...containerReturn];
 
   const rowSelection: TableRowSelection<IQuotationTruckingTable> = {
-    type: 'radio',
+    type: 'checkbox',
     columnWidth: 48,
     selectedRowKeys,
     onChange: (
       selectedRowKeys: React.Key[],
       selectedRows: IQuotationTruckingTable[]
     ) => {
-      // Lưu giá trị được chọn vào state
       setSelectedRowKeys(selectedRowKeys);
-
-      // Thực hiện các hành động khác nếu cần
-      // Ví dụ: console.log giá trị được chọn
-      console.log('Selected Row Keys:', selectedRowKeys);
-      console.log('Selected Rows:', selectedRows);
     },
+    hideSelectAll: true,
   };
 
   return (
@@ -285,7 +244,8 @@ export default function TruckingPod({
             forceRender
             header={
               <Title className="vioer" level={4} style={{ margin: '4px 0' }}>
-                Trucking (DESTINATION)
+                Trucking ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'}
+                )
               </Title>
             }
             extra={
@@ -311,7 +271,11 @@ export default function TruckingPod({
                       preview={false}
                       width={25}
                     />
-                    <div className={style.titleInput}>Delivery address</div>
+                    <div className={style.titleInput}>
+                      {type === TYPE_POL_POD.POD
+                        ? 'Delivery address'
+                        : 'Pick up address'}
+                    </div>
                   </Flex>
                   <div className={style.contentInput}>
                     <Form.Item
@@ -319,14 +283,21 @@ export default function TruckingPod({
                       rules={[
                         {
                           required: true,
-                          message: 'Please select delivery address',
+                          message:
+                            type === TYPE_POL_POD.POD
+                              ? 'Please select delivery address'
+                              : 'Please select pick up address',
                         },
                       ]}
                     >
                       <Select
                         style={{ margin: '0px' }}
                         showSearch
-                        placeholder={'Please select delivery address'}
+                        placeholder={
+                          type === TYPE_POL_POD.POD
+                            ? 'Please select delivery address'
+                            : 'Please select pick up address'
+                        }
                         optionFilterProp="children"
                         filterOption={(input, option) =>
                           (option?.label ?? '').includes(input)
@@ -414,26 +385,6 @@ export default function TruckingPod({
               }}
             />
             <Flex style={{ padding: '0 8px' }}>
-              <Flex>
-                <Image
-                  src={'/images/oceanFreight/money.svg'}
-                  alt="logo"
-                  preview={false}
-                  width={25}
-                />
-                <div
-                  className={style.titleInput}
-                  style={{
-                    marginRight: '12px',
-                    marginLeft: '12px',
-                    width: '170px',
-                    fontWeight: '700',
-                    fontSize: '18px',
-                  }}
-                >
-                  Price:
-                </div>
-              </Flex>
               <div
                 style={{
                   width: '100%',
@@ -446,14 +397,7 @@ export default function TruckingPod({
                   }}
                   columns={columns}
                   dataSource={dataTableResearch}
-                  pagination={{
-                    position: ['bottomRight'],
-                    showTotal: (total, range) =>
-                      `${range[0]}-${range[1]} of ${total} items`,
-                    showSizeChanger: true,
-                    ...pagination,
-                    onChange: handlePaginationChange,
-                  }}
+                  pagination={false}
                   rowSelection={rowSelection}
                 />
               </div>

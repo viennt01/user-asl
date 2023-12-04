@@ -35,6 +35,7 @@ export const API_BOOKING = {
   SEARCH_SEA: '/search-sea-quotation-for-booking',
   SEARCH_TRUCKING_QUOTATION: '/search-trucking-quotation-for-booking',
   SEARCH_CUSTOMS_QUOTATION: '/search-custom-quotation-for-booking',
+  RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING: '/recommend-trucking-quotation-for-booking',
 };
 
 export const API_SEA_QUOTATION = {
