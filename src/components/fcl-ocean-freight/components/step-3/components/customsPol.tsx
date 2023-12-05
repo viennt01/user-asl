@@ -13,221 +13,168 @@ import {
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING } from '@/fetcherAxios/endpoint';
-import { getPriceCustom } from '@/components/fcl-ocean-freight/fetcher';
+import { API_BOOKING, API_UNIT } from '@/fetcherAxios/endpoint';
+import {
+  getListTypeUnit,
+  getPriceCustom,
+} from '@/components/fcl-ocean-freight/fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import {
   DEFAULT_PAGINATION,
+  ICustomQuotationFCLDetailForBookings,
   IPaginationOfAntd,
+  IQuotationCustoms,
   IQuotationCustomsRequire,
   IQuotationCustomsTable,
   IRequireSearchCustoms,
+  TYPE_UNIT,
 } from '@/components/fcl-ocean-freight/interface';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
-import FeeOfCustoms from './customsPol/feeOfCustoms';
+import FeeOfCustoms, { ISubmitFeeCustoms } from './customsPol/feeOfCustoms';
+import { TYPE_POL_POD } from '../description';
 const { Panel } = Collapse;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 interface Props {
+  type: TYPE_POL_POD;
   dataPropsBooking: IDataBookingProps;
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  setSubmitFeeCustoms: React.Dispatch<
+    React.SetStateAction<ISubmitFeeCustoms[]>
+  >;
 }
 const initalValueForm = {
-  cargoReady: 1,
-  // commodities: [],
-  paginateRequest: {
-    currentPage: DEFAULT_PAGINATION.current,
-    pageSize: DEFAULT_PAGINATION.pageSize,
-  },
+  cargoReady: 22222222222222,
+  commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
 };
 
-export default function CustomsPol({
+export default function Customs({
+  type,
   dataPropsBooking,
-  selectedRowKeys,
-  setSelectedRowKeys,
+  setSubmitFeeCustoms,
 }: Props) {
-  const [pagination, setPagination] =
-    useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
-  const [dataTableResearch, setDataTableResearch] = useState<
-    IQuotationCustomsTable[]
-  >([]);
-  const [selectedRow, setSelectedRow] = useState<IQuotationCustomsTable[]>([]);
+  const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
+  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
+    []
+  );
+
+  useQuery({
+    queryKey: [API_UNIT.GET_ALL],
+    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
+    onSuccess: (data) => {
+      if (data.status) {
+        const newData = data.data.map((unit) => ({
+          label: unit.internationalCode,
+          value: unit.unitID,
+        }));
+        setDataUnit(newData);
+      }
+    },
+  });
 
   useEffect(() => {
+    // const _requestData = {
+    //   cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+    //   commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+    // };
     const _requestData = {
-      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-      commodities: dataPropsBooking?.step1?.commodities || [],
-      paginateRequest: {
-        currentPage: pagination.current,
-        pageSize: pagination.pageSize,
-      },
+      cargoReady: 22222222222222,
+      commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
     };
     setDataResearch(_requestData);
   }, [dataPropsBooking]);
 
-  const getPrice = useQuery({
-    queryKey: [API_BOOKING.SEARCH_CUSTOMS_QUOTATION, dataResearch],
+  useQuery({
+    queryKey: [
+      API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING,
+      dataResearch,
+    ],
     queryFn: () => getPriceCustom(dataResearch),
-    enabled: dataResearch.commodities !== undefined,
-    onSuccess: (data: ResponseWithPayload<IQuotationCustomsRequire>) => {
-      const { currentPage, pageSize, totalPages } = data.data;
-      data.status
-        ? (setDataTableResearch(
-            data.data.data.map((data) => ({
-              key: data.customQuotationID,
-              typeDelaracrionID: data.typeDelaracrionID,
-              typeDelaracrionCode: data.typeDelaracrionCode,
-              transactionTypeID: data.transactionTypeID,
-              transactionTypeName: data.transactionTypeName,
-              currencyID: data.currencyID,
-              abbreviations: data.abbreviations,
-              commodityID: data.commodityID,
-              commodityName: data.commodityName,
-              customRedPrice: data.customRedPrice,
-              customYellowPrice: data.customYellowPrice,
-              customGreenPrice: data.customGreenPrice,
-              listFeeGroup: data.listFeeGroup,
-            }))
-          ),
-          setPagination({
-            current: currentPage,
-            pageSize: pageSize,
-            total: totalPages,
-          }))
-        : setDataTableResearch([]);
+    enabled: dataResearch.commodityID !== undefined,
+    onSuccess: (data: ResponseWithPayload<IQuotationCustoms>) => {
+      if (data.status) {
+        setDataAPIResearch({
+          customQuotationID: data.data.customQuotationID,
+          typeDelaracrionID: data.data.typeDelaracrionID,
+          typeDelaracrionCode: data.data.typeDelaracrionCode,
+          transactionTypeID: data.data.transactionTypeID,
+          transactionTypeName: data.data.transactionTypeName,
+          currencyID: data.data.currencyID,
+          abbreviations: data.data.abbreviations,
+          commodityID: data.data.commodityID,
+          commodityName: data.data.commodityName,
+          listFeeGroup: data.data.listFeeGroup,
+          customQuotationFCLDetailForBookings:
+            data.data.customQuotationFCLDetailForBookings,
+        });
+      }
     },
   });
 
-  const columns: ColumnsType<IQuotationCustomsTable> = [
+  const columns: ColumnsType<ICustomQuotationFCLDetailForBookings> = [
     {
-      title: (
-        <Flex align="center" justify="center">
-          NO.
-        </Flex>
-      ),
-      dataIndex: 'index',
-      width: 50,
+      title: 'Unit',
+      dataIndex: 'unitID',
       align: 'center',
-      fixed: 'left',
-      render: (_, record, index) => {
-        const { pageSize = 0, current = 0 } = pagination ?? {};
-        return index + pageSize * (current - 1) + 1;
+      render: (value) => {
+        return dataUnit.find((item) => item.value === value)?.label;
+      },
+    },
+    {
+      title: <Text style={{ color: 'green' }}>Base Green Lane</Text>,
+      dataIndex: 'basePriceGreenLane',
+      align: 'center',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <Text style={{ color: '#d4b106' }}>Base Yellow Lane</Text>,
+      dataIndex: 'basePriceYellowLane',
+      align: 'center',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
+      },
+    },
+    {
+      title: <Text style={{ color: '#cf1322' }}>Base Red Lane</Text>,
+      dataIndex: 'basePriceRedLane',
+      align: 'center',
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
     {
       title: (
-        <Flex align="center" justify="center">
-          Green Price
-        </Flex>
+        <Text color={'green'} style={{ color: 'green' }}>
+          Green Lane
+        </Text>
       ),
-      dataIndex: 'index',
-      width: 50,
+      dataIndex: 'priceGreenLane',
       align: 'center',
-      render: (_, record, index) => {
-        return (
-          <Tag
-            color="green"
-            style={{
-              height: '30px',
-              fontWeight: '700',
-              fontSize: '18px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {record.abbreviations}{' '}
-            {record.customGreenPrice
-              ? formatNumber(Number(record.customGreenPrice) || 0)
-              : '-'}
-          </Tag>
-        );
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
     {
-      title: (
-        <Flex align="center" justify="center">
-          Yellow Price
-        </Flex>
-      ),
-      dataIndex: 'index',
-      width: 50,
+      title: <Text style={{ color: '#d4b106' }}>Yellow Lane</Text>,
+      dataIndex: 'priceYellowLane',
       align: 'center',
-      render: (_, record, index) => {
-        return (
-          <Tag
-            color="yellow"
-            style={{
-              height: '30px',
-              fontWeight: '700',
-              fontSize: '18px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {record.abbreviations}{' '}
-            {record.customYellowPrice
-              ? formatNumber(Number(record.customYellowPrice) || 0)
-              : '-'}
-          </Tag>
-        );
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
     {
-      title: (
-        <Flex align="center" justify="center">
-          Red Price
-        </Flex>
-      ),
-      dataIndex: 'index',
-      width: 50,
+      title: <Text style={{ color: '#cf1322' }}>Red Lane</Text>,
+      dataIndex: 'priceRedLane',
       align: 'center',
-      render: (_, record, index) => {
-        return (
-          <Tag
-            color="red"
-            style={{
-              height: '30px',
-              fontWeight: '700',
-              fontSize: '18px',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {record.abbreviations}{' '}
-            {record.customRedPrice
-              ? formatNumber(Number(record.customRedPrice) || 0)
-              : '-'}
-          </Tag>
-        );
+      render: (value) => {
+        return formatNumber(Number(value) || 0);
       },
     },
   ];
-
-  const handlePaginationChange: PaginationProps['onChange'] = (page, size) => {
-    pagination.current = page;
-    pagination.pageSize = size;
-    getPrice.refetch();
-  };
-
-  const rowSelection: TableRowSelection<IQuotationCustomsTable> = {
-    type: 'radio',
-    columnWidth: 48,
-    selectedRowKeys,
-    onChange: (
-      selectedRowKeys: React.Key[],
-      selectedRows: IQuotationCustomsTable[]
-    ) => {
-      setSelectedRowKeys(selectedRowKeys);
-      setSelectedRow(selectedRows);
-    },
-  };
 
   return (
     <ConfigProvider
@@ -239,8 +186,8 @@ export default function CustomsPol({
             fontSizeIcon: 16,
           },
           Table: {
-            headerBg: COLORS.GREY_COLOR_HOVER,
-            headerColor: COLORS.WHITE,
+            // headerBg: COLORS.GREY_COLOR_HOVER,
+            // headerColor: COLORS.WHITE,
           },
         },
       }}
@@ -254,47 +201,25 @@ export default function CustomsPol({
           forceRender
           header={
             <Title level={4} style={{ margin: '4px 0' }}>
-              Customs (ORIGIN)
+              Customs ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'})
             </Title>
           }
           key="1"
         >
           <Flex style={{ padding: '0 8px 16px 0' }}>
-            <Card
-              title={
-                <Title level={4} style={{ margin: '4px 0' }}>
-                  Select price
-                </Title>
-              }
-              style={{
-                width: '100%',
+            <Table
+              scroll={{
+                x: 'max-content',
               }}
-            >
-              <Table
-                showHeader={false}
-                scroll={{
-                  x: 'max-content',
-                }}
-                style={{ width: '100%' }}
-                columns={columns}
-                dataSource={dataTableResearch}
-                pagination={{
-                  position: ['bottomRight'],
-                  showTotal: (total, range) =>
-                    `${range[0]}-${range[1]} of ${total} items`,
-                  showSizeChanger: true,
-                  ...pagination,
-                  onChange: handlePaginationChange,
-                }}
-                rowSelection={rowSelection}
-              />
-            </Card>
+              style={{ width: '100%' }}
+              columns={columns}
+              dataSource={dataAPIResearch?.customQuotationFCLDetailForBookings}
+              pagination={false}
+            />
           </Flex>
           <FeeOfCustoms
-            selectedRowKeys={selectedRowKeys}
-            setSelectedRowKeys={setSelectedRowKeys}
-            selectedRow={selectedRow}
-            setSelectedRow={setSelectedRow}
+            dataAPIResearch={dataAPIResearch}
+            setSubmitFeeCustoms={setSubmitFeeCustoms}
           />
         </Panel>
       </Collapse>

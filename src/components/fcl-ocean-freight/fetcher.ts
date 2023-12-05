@@ -19,6 +19,9 @@ import {
   IBooking,
   IQuotationTrucking,
   IQuotationTruckingTable,
+  IQuotationCustoms,
+  IRequireTypeUnit,
+  TypeUnitData,
 } from './interface';
 import {
   API_BOOKING,
@@ -29,6 +32,7 @@ import {
   API_LOCATION,
   API_SEA_QUOTATION,
   API_TYPE_OF_TRANSPORT,
+  API_UNIT,
 } from '@/fetcherAxios/endpoint';
 
 // Get all location
@@ -100,10 +104,10 @@ export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
 export const getPriceCustom = (data: IRequireSearchCustoms) => {
   return post<
     IRequireSearchCustoms,
-    ResponseWithPayload<IQuotationCustomsRequire>
+    ResponseWithPayload<IQuotationCustoms>
   >({
     data,
-  })(API_BOOKING.SEARCH_CUSTOMS_QUOTATION);
+  })(API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING);
 };
 //Get type of transport
 export const getListTypeTransport = () => {
@@ -116,4 +120,10 @@ export const createBooking = (data: IBooking) => {
   return post<IBooking, ResponseWithPayload<IQuotationCustomsRequire>>({
     data,
   })(API_BOOKING.CREATE_BOOKING);
+};
+//Get type unit
+export const getListTypeUnit = (data: IRequireTypeUnit) => {
+  return post<IRequireTypeUnit, ResponseWithPayload<TypeUnitData[]>>({ data })(
+    API_UNIT.GET_ALL
+  );
 };

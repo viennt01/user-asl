@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Table, InputRef, Input, Space, Button } from 'antd';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
@@ -6,7 +6,6 @@ import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
 import { getFeeWithFeeGroup } from '@/components/fcl-ocean-freight/fetcher';
 import {
   FeeTable,
-  IQuotationCustomsTable,
 } from '@/components/fcl-ocean-freight/interface';
 import {
   ColumnType,
@@ -20,7 +19,6 @@ import { ISubmitFeeCustoms } from './feeOfCustoms';
 
 interface Props {
   idFeeGroup: string;
-  submitFeeCustoms: ISubmitFeeCustoms[];
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
@@ -28,24 +26,35 @@ interface Props {
 
 type DataIndex = keyof FeeTable;
 
-export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
+export default function TableFeeOfCustoms({
+  idFeeGroup,
+  setSubmitFeeCustoms,
+}: Props) {
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
+  useEffect(() => {
+    setSubmitFeeCustoms((pre) => {
+      const filteredData = pre.filter(function (item) {
+        return item.feeGroupID !== idFeeGroup;
+      });
+      return [...filteredData, { feeGroupID: idFeeGroup, listFee: selectedRowKeys }];
+    });
+  }, [selectedRowKeys]);
   useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, idFeeGroup],
     queryFn: () => getFeeWithFeeGroup({ id: [idFeeGroup] }),
     enabled: idFeeGroup !== undefined,
     onSuccess(data) {
       setDataFeeTable([]);
-      // setSelectedRowKeys([]);
       if (data.status) {
         if (data.data) {
           const newData = data.data.map((item) => ({
-            key: item.feeID,
+            key: item.feeGroupDetailID,
+            feeGroupDetailID: item.feeGroupDetailID,
             currencyName: item.currencyName,
             unitInternationalCode: item.unitInternationalCode,
             feeNo: item.feeNo,
@@ -57,11 +66,7 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
             unitID: item.unitID,
             currencyID: item.currencyID,
           }));
-          // setDataFeeTable(newData); 
-          setDataFeeTable(data.data); 
-
-          // const newDataSelect = data.data.map((item) => item.feeID);
-          // setSelectedRowKeys(newDataSelect);
+          setDataFeeTable(newData);
         }
       }
     },
@@ -263,6 +268,7 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
         selectedRowKeys: selectedRowKeys,
         onChange: handleSelectionChange,
       }}
+      pagination={false}
     />
   );
 }

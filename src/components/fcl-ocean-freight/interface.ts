@@ -17,6 +17,15 @@ export enum TYPE_SERVICE {
   'FCL' = 'FCL',
   'LCL' = 'LCL',
 }
+
+export enum TYPE_UNIT {
+  'SEA' = 'Sea',
+  'TRUCKING' = 'Truck',
+  'AIR' = 'Air',
+  'ALL' = 'All',
+  'TOTAL' = '',
+}
+
 export interface IPagination {
   currentPage: number;
   pageSize: number;
@@ -159,6 +168,7 @@ export interface ISeaQuotaionGroupPartnerDTOs {
 //table fee
 export interface Fee {
   feeID: string;
+  feeGroupDetailID: string;
   priceFeeGroup: string;
   vatFeeGroup: string;
   unitID: string;
@@ -210,8 +220,7 @@ export interface IRequireTypeLoadCapacity {
 }
 export interface IRequireSearchCustoms {
   cargoReady: number;
-  commodities?: string[];
-  paginateRequest: IPagination;
+  commodityID?: string;
 }
 export interface IQuotationCustoms {
   customQuotationID: string;
@@ -223,10 +232,19 @@ export interface IQuotationCustoms {
   abbreviations: string;
   commodityID: string;
   commodityName: string;
-  customRedPrice: string;
-  customYellowPrice: string;
-  customGreenPrice: string;
   listFeeGroup: string[];
+  customQuotationFCLDetailForBookings: ICustomQuotationFCLDetailForBookings[];
+}
+
+export interface ICustomQuotationFCLDetailForBookings {
+  unitID: string;
+  internationalCode: string;
+  basePriceRedLane: string;
+  basePriceGreenLane: string;
+  basePriceYellowLane: string;
+  priceRedLane: string;
+  priceGreenLane: string;
+  priceYellowLane: string;
 }
 export interface IQuotationCustomsRequire extends IPagination {
   data: IQuotationCustoms[];
@@ -252,8 +270,8 @@ export interface IBooking {
   currencyID: string;
   typeOfSeaService: boolean; // true: FCL
   typeOfService: string; // SEA
-  cargoReadyDated: string;
-  cargoCutOffDated: string;
+  cargoReadyDated: number;
+  cargoCutOffDated: number;
   placeOfRecipt: string;
   placeOfDelivery: string;
   note: string;
@@ -261,33 +279,35 @@ export interface IBooking {
   isManualBooking: boolean;
   quotationBookingDetailRegisterRequests: {
     seaQuotationID: string;
-    truckingQuotationPOLID: string;
-    truckingQuotationPODID: string;
-    customQuotationPOLID: string;
-    customQuotationPODID: string;
+    truckingQuotationPOLID: React.Key;
+    truckingQuotationPODID: React.Key;
+    customQuotationPOLID: React.Key;
+    customQuotationPODID: React.Key;
     customQuotationPOLDetailRegisterRequests: ICustomQuotationPOL[];
     customQuotationPODDetailRegisterRequests: ICustomQuotationPOD[];
   };
-  seaBookingFCLDetailRegisterRequests: [
-    {
-      containerTypeID: string;
-      quantityContainer: string;
-    }
-  ];
+  seaBookingFCLDetailRegisterRequests: {
+    containerTypeID: string;
+    quantityContainer: string;
+  }[];
 }
 export interface ICustomQuotationPOL {
   feeGroupID: string;
-  customQuotationPOLFeeDetailRegisterRequests: [
-    {
-      feeGroupDetailID: string;
-    }
-  ];
+  customQuotationPOLFeeDetailRegisterRequests: {
+    feeGroupDetailID: React.Key;
+  }[];
 }
 export interface ICustomQuotationPOD {
   feeGroupID: string;
-  customQuotationPODFeeDetailRegisterRequests: [
-    {
-      feeGroupDetailID: string;
-    }
-  ];
+  customQuotationPODFeeDetailRegisterRequests: {
+    feeGroupDetailID: React.Key;
+  }[];
+}
+export interface TypeUnitData {
+  unitID: string;
+  internationalCode: string;
+}
+
+export interface IRequireTypeUnit {
+  typeUnit: TYPE_UNIT;
 }

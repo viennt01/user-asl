@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import style from './index.module.scss';
 import { Button, Card, Col, Flex, Row } from 'antd';
 import COLORS from '@/constants/color';
-import CustomsPol from './components/customsPol';
+import Customs from './components/customsPol';
 import { IDataBookingProps, IDataStep2Props } from '../..';
 import Trucking from './components/trucking';
 import { useMutation } from '@tanstack/react-query';
 import { createBooking } from '../../fetcher';
-import { IBooking } from '../../interface';
+import {
+  IBooking,
+  ICustomQuotationPOD,
+  ICustomQuotationPOL,
+} from '../../interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import CustomsPod from './components/customsPod';
+import { ISubmitFeeCustoms } from './components/customsPol/feeOfCustoms';
 
 export enum TYPE_POL_POD {
   'POL' = 'POL',
@@ -38,6 +43,42 @@ export default function ServiceStep3({
   const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] = useState<
     React.Key[]
   >([]);
+  const [submitFeeCustomsPOL, setSubmitFeeCustomsPOL] = useState<
+    ISubmitFeeCustoms[]
+  >([]);
+  const [submitFeeCustomsPOD, setSubmitFeeCustomsPOD] = useState<
+    ISubmitFeeCustoms[]
+  >([]);
+
+  const FeeCustomsPOL: ICustomQuotationPOL[] = submitFeeCustomsPOL
+    .map((itemA) => {
+      if (itemA.listFee.length === 0) return null;
+      const itemB: ICustomQuotationPOL = {
+        feeGroupID: itemA.feeGroupID,
+        customQuotationPOLFeeDetailRegisterRequests: itemA.listFee.map(
+          (detailID) => ({
+            feeGroupDetailID: detailID,
+          })
+        ),
+      };
+      return itemB;
+    })
+    .filter((item) => item !== null) as ICustomQuotationPOL[];
+
+  const FeeCustomsPOD: ICustomQuotationPOD[] = submitFeeCustomsPOD
+    .map((itemA) => {
+      if (itemA.listFee.length === 0) return null;
+      const itemB: ICustomQuotationPOD = {
+        feeGroupID: itemA.feeGroupID,
+        customQuotationPODFeeDetailRegisterRequests: itemA.listFee.map(
+          (detailID) => ({
+            feeGroupDetailID: detailID,
+          })
+        ),
+      };
+      return itemB;
+    })
+    .filter((item) => item !== null) as ICustomQuotationPOD[];
 
   const createBookingMutation = useMutation({
     mutationFn: (body: IBooking) => {
@@ -46,6 +87,7 @@ export default function ServiceStep3({
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
+        setDisplayStep(4);
       }
     },
     onError() {
@@ -63,29 +105,29 @@ export default function ServiceStep3({
       currencyID: dataPropsBooking.dataQuotation?.currencyID || '',
       typeOfSeaService: true,
       typeOfService: 'SEA',
-      cargoReadyDated: dataPropsBooking.step1?.cargoReady || '',
-      cargoCutOffDated: dataPropsBooking.step1?.cargoCutOffDated || '',
+      cargoReadyDated: dataPropsBooking.step1?.cargoReady || 1,
+      cargoCutOffDated: dataPropsBooking.step1?.cargoCutOffDated || 1,
       placeOfRecipt: dataPropsBooking.step1?.receipt || '',
       placeOfDelivery: dataPropsBooking.step1?.delivery || '',
       note: '',
       statusBooking: 'DRAFT',
       isManualBooking: false,
-      seaBookingFCLDetailRegisterRequests:
-        dataStep2PropsBooking?.listQuantityType?.map((item) => ({
-          containerTypeID: item.key,
-          quantityContainer: item.quantity,
-        })) || [],
       quotationBookingDetailRegisterRequests: {
         seaQuotationID: dataPropsBooking.idQuotation || '',
         truckingQuotationPOLID: selectedRowKeysPOL[0] || '',
         truckingQuotationPODID: selectedRowKeysPOD[0] || '',
         customQuotationPOLID: selectedRowKeysCustomsPOL[0] || '',
         customQuotationPODID: selectedRowKeysCustomsPOD[0] || '',
+        customQuotationPOLDetailRegisterRequests: FeeCustomsPOL || [],
+        customQuotationPODDetailRegisterRequests: FeeCustomsPOD || [],
       },
+      seaBookingFCLDetailRegisterRequests:
+        dataStep2PropsBooking?.listQuantityType?.map((item) => ({
+          containerTypeID: item.key || '',
+          quantityContainer: item.quantity || '',
+        })) || [],
     };
-    console.log(_requestData);
-
-    setDisplayStep(4);
+    createBookingMutation.mutate(_requestData);
   };
 
   return (
@@ -123,17 +165,17 @@ export default function ServiceStep3({
               </Col>
 
               <Col span={24}>
-                <CustomsPol
+                <Customs
+                  type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysCustomsPOL}
-                  setSelectedRowKeys={setSelectedRowKeysCustomsPOL}
+                  setSubmitFeeCustoms={setSubmitFeeCustomsPOL}
                 />
               </Col>
               <Col span={24}>
-                <CustomsPod
+                <Customs
+                  type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysCustomsPOD}
-                  setSelectedRowKeys={setSelectedRowKeysCustomsPOD}
+                  setSubmitFeeCustoms={setSubmitFeeCustomsPOD}
                 />
               </Col>
             </Row>
