@@ -76,6 +76,12 @@ export default function FeeOfCustoms({
   const remove = (targetKey: TargetKey) => {
     const targetIndex = items.findIndex((pane) => pane.key === targetKey);
     const newPanes = items.filter((pane) => pane.key !== targetKey);
+    setSubmitFeeCustoms((pre) => {
+      const filteredData = pre.filter(function (item) {
+        return item.feeGroupID !== targetKey;
+      });
+      return filteredData;
+    });
     if (newPanes.length && targetKey === activeKey) {
       const { key } =
         newPanes[

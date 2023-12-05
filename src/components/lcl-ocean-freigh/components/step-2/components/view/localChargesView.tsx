@@ -1,75 +1,28 @@
-import React, { useRef, useState } from 'react';
-import { Flex, Table, InputRef, Input, Space, Button } from 'antd';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
-import { useQuery } from '@tanstack/react-query';
-import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getFeeWithFeeGroup } from '@/components/fcl-ocean-freight/fetcher';
-import {
-  FeeTable,
-  IQuotationCustomsTable,
-} from '@/components/fcl-ocean-freight/interface';
+import React, { useMemo, useRef, useState } from 'react';
+import { Table, ConfigProvider, InputRef, Input, Space, Button, Flex } from 'antd';
+import COLORS from '@/constants/color';
+import { FeeTable } from '@/components/fcl-ocean-freight/interface';
 import {
   ColumnType,
   ColumnsType,
   FilterConfirmProps,
 } from 'antd/lib/table/interface';
-import { formatNumber } from '@/utils/format-number';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
-import { ISubmitFeeCustoms } from './feeOfCustoms';
+import { formatNumber } from '@/utils/format-number';
 
 interface Props {
-  idFeeGroup: string;
-  submitFeeCustoms: ISubmitFeeCustoms[];
-  setSubmitFeeCustoms: React.Dispatch<
-    React.SetStateAction<ISubmitFeeCustoms[]>
-  >;
+  dataFeeTable: FeeTable[];
 }
-
 type DataIndex = keyof FeeTable;
 
-export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
-  const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
+export default function LocalChargesView({
+  dataFeeTable,
+}: Props) {
+
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
-  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
-
-  useQuery({
-    queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, idFeeGroup],
-    queryFn: () => getFeeWithFeeGroup({ id: [idFeeGroup] }),
-    enabled: idFeeGroup !== undefined,
-    onSuccess(data) {
-      setDataFeeTable([]);
-      if (data.status) {
-        if (data.data) {
-             const newData = data.data.map((item) => ({
-            key: item.feeID,
-            currencyName: item.currencyName, 
-            unitInternationalCode: item.unitInternationalCode, 
-            feeNo: item.feeNo, 
-            feeName: item.feeName, 
-            typeFeeName: item.typeFeeName, 
-            feeID: item.feeID,
-            priceFeeGroup: item.priceFeeGroup,
-            vatFeeGroup: item.vatFeeGroup,
-            unitID: item.unitID,
-            currencyID: item.currencyID,
-          }));
-          // setDataFeeTable(newData);
-          setDataFeeTable(data.data); 
-
-          const newDataSelect = data.data.map((item) => item.feeID);
-          setSelectedRowKeys(newDataSelect);
-        }
-      }
-    },
-  });
-  console.log(selectedRowKeys);
-  console.log(dataFeeTable);
-  const handleSelectionChange = (selectedRowKeys: React.Key[]) => {
-    setSelectedRowKeys(selectedRowKeys);
-  };
 
   const handleSearch = (
     selectedKeys: string[],
@@ -177,7 +130,7 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
       ),
   });
 
-  const columnsFee: ColumnsType<FeeTable> = [
+  const columns: ColumnsType<FeeTable> = [
     {
       title: (
         <Flex align="center" justify="center">
@@ -255,18 +208,25 @@ export default function TableFeeOfCustoms({ idFeeGroup }: Props) {
   ];
 
   return (
-    <Table
-      columns={columnsFee}
-      dataSource={dataFeeTable}
-      bordered
-      rowSelection={{
-        type: 'checkbox',
-        selectedRowKeys: selectedRowKeys,
-        onChange: handleSelectionChange,
-      }}
-      // style={{
-      //   marginBottom: '24px',
-      // }}
-    />
+    <div>
+      <ConfigProvider
+        theme={{
+          components: {
+            Table: {
+              headerBg: COLORS.GREY_COLOR_HOVER,
+              headerColor: COLORS.WHITE,
+              borderColor: COLORS.BLACK,
+            },
+          },
+        }}
+      >
+        <Table
+          columns={columns}
+          dataSource={dataFeeTable}
+          bordered
+          style={{ marginBottom: '24px' }}
+        />
+      </ConfigProvider>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import style from '../index.module.scss';
+import style from '../../index.module.scss';
 import {
   Collapse,
   ConfigProvider,
@@ -31,8 +31,8 @@ import {
 } from '@/components/fcl-ocean-freight/interface';
 import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
-import FeeOfCustoms, { ISubmitFeeCustoms } from './customsPol/feeOfCustoms';
-import { TYPE_POL_POD } from '../description';
+import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
+import { TYPE_POL_POD } from '../../description';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
 import {
   FeeTable,
+  IQuotationCustoms,
   IQuotationCustomsTable,
 } from '@/components/fcl-ocean-freight/interface';
 import TableFeeOfCustoms from './tableFeeCustoms';
@@ -9,11 +10,9 @@ import TableFeeOfCustoms from './tableFeeCustoms';
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 interface Props {
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
-  selectedRow: IQuotationCustomsTable[];
-  setSelectedRow: React.Dispatch<
-    React.SetStateAction<IQuotationCustomsTable[]>
+  dataAPIResearch: IQuotationCustoms | undefined;
+  setSubmitFeeCustoms: React.Dispatch<
+    React.SetStateAction<ISubmitFeeCustoms[]>
   >;
 }
 
@@ -24,19 +23,15 @@ export interface ISeaQuotationFeeFormValue {
 
 export interface ISubmitFeeCustoms {
   feeGroupID: string;
-  listFee: FeeTable[];
+  listFee: React.Key[];
 }
 
 export default function FeeOfCustoms({
-  selectedRowKeys,
-  setSelectedRowKeys,
-  selectedRow,
-  setSelectedRow,
+  dataAPIResearch,
+  setSubmitFeeCustoms,
 }: Props) {
   const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
-  const [submitFeeCustoms, setSubmitFeeCustoms] = useState<ISubmitFeeCustoms[]>(
-    []
-  );
+
   const [activeKey, setActiveKey] = useState('1');
   const [idActive, setIdActive] = useState<string[]>([]);
 
@@ -47,7 +42,6 @@ export default function FeeOfCustoms({
         children: (
           <TableFeeOfCustoms
             idFeeGroup={value.feeGroupID}
-            submitFeeCustoms={submitFeeCustoms}
             setSubmitFeeCustoms={setSubmitFeeCustoms}
           />
         ),
@@ -62,12 +56,12 @@ export default function FeeOfCustoms({
 
   useEffect(() => {
     setDataFee(
-      selectedRow[0]?.listFeeGroup.map((value, index) => ({
+      dataAPIResearch?.listFeeGroup.map((value, index) => ({
         feeGroupID: value,
         feeGroupName: `Fee Group ${index + 1}`,
       })) || []
     );
-  }, [selectedRow]);
+  }, [dataAPIResearch]);
 
   useEffect(() => {
     setItems(defaultPanes);
@@ -82,6 +76,12 @@ export default function FeeOfCustoms({
   const remove = (targetKey: TargetKey) => {
     const targetIndex = items.findIndex((pane) => pane.key === targetKey);
     const newPanes = items.filter((pane) => pane.key !== targetKey);
+    setSubmitFeeCustoms((pre) => {
+      const filteredData = pre.filter(function (item) {
+        return item.feeGroupID !== targetKey;
+      });
+      return filteredData;
+    });
     if (newPanes.length && targetKey === activeKey) {
       const { key } =
         newPanes[
