@@ -28,10 +28,10 @@ export interface ISubmitFeeCustoms {
 
 export default function FeeOfCustoms({
   dataAPIResearch,
-  setSubmitFeeCustoms
+  setSubmitFeeCustoms,
 }: Props) {
   const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
- 
+
   const [activeKey, setActiveKey] = useState('1');
   const [idActive, setIdActive] = useState<string[]>([]);
 
@@ -57,8 +57,8 @@ export default function FeeOfCustoms({
   useEffect(() => {
     setDataFee(
       dataAPIResearch?.listFeeGroup.map((value, index) => ({
-        feeGroupID: value,
-        feeGroupName: `Fee Group ${index + 1}`,
+        feeGroupID: value.feeGroupID,
+        feeGroupName: value.feeGroupName,
       })) || []
     );
   }, [dataAPIResearch]);

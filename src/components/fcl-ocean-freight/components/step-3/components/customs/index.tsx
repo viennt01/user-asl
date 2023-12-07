@@ -45,7 +45,7 @@ interface Props {
 }
 const initalValueForm = {
   cargoReady: 22222222222222,
-  commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
+  commodityID: ''
 };
 
 export default function Customs({
@@ -75,14 +75,14 @@ export default function Customs({
   });
 
   useEffect(() => {
-    // const _requestData = {
-    //   cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-    //   commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
-    // };
     const _requestData = {
-      cargoReady: 22222222222222,
-      commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
+      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
     };
+    // const _requestData = {
+    //   cargoReady: 22222222222222,
+    //   commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
+    // };
     setDataResearch(_requestData);
   }, [dataPropsBooking]);
 
@@ -92,7 +92,7 @@ export default function Customs({
       dataResearch,
     ],
     queryFn: () => getPriceCustom(dataResearch),
-    enabled: dataResearch.commodityID !== undefined,
+    enabled: dataResearch.commodityID !== '',
     onSuccess: (data: ResponseWithPayload<IQuotationCustoms>) => {
       if (data.status) {
         setDataAPIResearch({

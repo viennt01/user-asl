@@ -18,10 +18,11 @@ import {
   ITypeOfTransport,
   IBooking,
   IQuotationTrucking,
-  IQuotationTruckingTable,
   IQuotationCustoms,
   IRequireTypeUnit,
   TypeUnitData,
+  IRequireDetailBooking,
+  IDetailBooking,
 } from './interface';
 import {
   API_BOOKING,
@@ -84,10 +85,7 @@ export const getFeeWithFeeGroup = (data: RequestFee) => {
 
 // Get price trucking
 export const getPriceTrucking = (data: IRequireSearchTrucking) => {
-  return post<
-    IRequireSearchTrucking,
-    ResponseWithPayload<IQuotationTrucking>
-  >({
+  return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking>>({
     data,
   })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING);
 };
@@ -102,10 +100,7 @@ export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
 
 // Get price custom
 export const getPriceCustom = (data: IRequireSearchCustoms) => {
-  return post<
-    IRequireSearchCustoms,
-    ResponseWithPayload<IQuotationCustoms>
-  >({
+  return post<IRequireSearchCustoms, ResponseWithPayload<IQuotationCustoms>>({
     data,
   })(API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING);
 };
@@ -120,6 +115,11 @@ export const createBooking = (data: IBooking) => {
   return post<IBooking, ResponseWithPayload<IQuotationCustomsRequire>>({
     data,
   })(API_BOOKING.CREATE_BOOKING);
+};
+export const getDetailBooking = (data: IRequireDetailBooking) => {
+  return post<IRequireDetailBooking, ResponseWithPayload<IDetailBooking>>({
+    data,
+  })(API_BOOKING.GET_SEA_BOOKING_BY_ID);
 };
 //Get type unit
 export const getListTypeUnit = (data: IRequireTypeUnit) => {

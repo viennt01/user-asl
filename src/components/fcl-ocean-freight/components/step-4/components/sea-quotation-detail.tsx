@@ -1,29 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice from './totalPrice';
+import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { formatNumber } from '@/utils/format-number';
 
-export default function QuotationDetail() {
-  interface DataType {
-    key: string;
-    description?: string;
-    quantity?: string;
-    price?: string;
-    currency?: string;
-    total?: string;
-    remark?: string;
-  }
-
-  const sharedOnCell = (_: DataType, index: number | undefined) => {
-    if (index === 1) {
-      return { colSpan: 0 };
-    }
-
-    return {};
-  };
-
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+}
+interface DataType {
+  key: number;
+  description: string;
+  quantity: string;
+  price: string;
+  currency: string;
+  total: string;
+}
+export default function QuotationDetail({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
   const columns: ColumnsType<DataType> = [
     {
       title: <div className={style.titleTable}>No.</div>,
@@ -44,12 +40,14 @@ export default function QuotationDetail() {
       title: <div className={style.titleTable}>Quantity</div>,
       dataIndex: 'quantity',
       key: 'quantity',
-      // onCell: sharedOnCell,
     },
     {
       title: <div className={style.titleTable}>Price</div>,
       dataIndex: 'price',
       key: 'price',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: <div className={style.titleTable}>Currency</div>,
@@ -60,59 +58,26 @@ export default function QuotationDetail() {
       title: <div className={style.titleTable}>Total Amount</div>,
       dataIndex: 'total',
       key: 'total',
-    },
-    {
-      title: <div className={style.titleTable}>Remark</div>,
-      dataIndex: 'remark',
-      key: 'remark',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '2',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '3',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-    },
-    {
-      key: '5',
-    },
-  ];
-
+  useEffect(() => {
+    setData(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking.seaQuotationFCLDetails.map(
+        (item, index) => ({
+          key: index,
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          currency: item.currency,
+          total: item.totalAmount,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
   return (
     <ConfigProvider
       theme={{
@@ -139,7 +104,7 @@ export default function QuotationDetail() {
       }}
     >
       <Card
-        title="Quotation details"
+        title="Sea quotation details"
         style={{ width: '100%' }}
         className={style.cardCustomer}
       >

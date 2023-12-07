@@ -1,30 +1,61 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Flex,
-  Row,
-  Image,
-  ConfigProvider,
-  Table,
-} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, Flex, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
+import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 
-export default function CustomerInformation() {
-  interface DataType {
-    key: string;
-    right: string;
-    left: string;
-    Customer?: string;
-    Email?: string;
-    Address?: string;
-    Contact?: string;
-    Mobile?: string;
-    Tel?: string;
-  }
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+}
+interface DataType {
+  key: string;
+  right: string;
+  left: string;
+  'Company Name'?: string;
+  'Company Address'?: string;
+  Customer?: string;
+  Email?: string;
+  Address?: string;
+  Contact?: string;
+  Mobile?: string;
+  Tel?: string;
+}
+
+export default function CustomerInformation({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([
+    {
+      key: '1',
+      right: 'Customer',
+      Customer: 'Nguyen Thanh Vien',
+      left: 'Email',
+      Email: 'thanhviennguyen01@gmail.com',
+    },
+    {
+      key: '2',
+      right: 'Address',
+      Address: 'Nguyen Thanh Vien',
+      left: 'Mobile',
+      Mobile: 'Nguyen Thanh Vien',
+    },
+    {
+      key: '3',
+      right: 'Contact',
+      Contact: 'Nguyen Thanh Vien',
+      left: 'Tel',
+      Tel: 'Nguyen Thanh Vien',
+    },
+  ]);
+  const {
+    customer,
+    companyName,
+    email,
+    addresss,
+    companyAddress,
+    tel,
+    mobil,
+    contact,
+  } = dataPropsBooking?.detailBooking?.customerInformation || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -38,7 +69,7 @@ export default function CustomerInformation() {
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '100px',
+                width: '130px',
               }}
             >
               {text}:
@@ -67,7 +98,7 @@ export default function CustomerInformation() {
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '100px',
+                width: '155px',
               }}
             >
               {text}:
@@ -87,29 +118,38 @@ export default function CustomerInformation() {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      right: 'Customer',
-      Customer: 'Nguyen Thanh Vien',
-      left: 'Email',
-      Email: 'thanhviennguyen01@gmail.com',
-    },
-    {
-      key: '2',
-      right: 'Address',
-      Address: 'Nguyen Thanh Vien',
-      left: 'Mobile',
-      Mobile: 'Nguyen Thanh Vien',
-    },
-    {
-      key: '3',
-      right: 'Contact',
-      Contact: 'Nguyen Thanh Vien',
-      left: 'Tel',
-      Tel: 'Nguyen Thanh Vien',
-    },
-  ];
+  useEffect(() => {
+    setData([
+      {
+        key: '0',
+        right: 'Company Name',
+        'Company Name': companyName || '',
+        left: 'Company Address',
+        'Company Address': companyAddress || '',
+      },
+      {
+        key: '1',
+        right: 'Customer',
+        Customer: customer || '',
+        left: 'Email',
+        Email: email || '',
+      },
+      {
+        key: '2',
+        right: 'Address',
+        Address: addresss || '',
+        left: 'Mobile',
+        Mobile: mobil || '',
+      },
+      {
+        key: '3',
+        right: 'Contact',
+        Contact: contact || '',
+        left: 'Tel',
+        Tel: tel || '',
+      },
+    ]);
+  }, [dataPropsBooking]);
 
   return (
     <ConfigProvider

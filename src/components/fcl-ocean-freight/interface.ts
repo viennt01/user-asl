@@ -232,7 +232,10 @@ export interface IQuotationCustoms {
   abbreviations: string;
   commodityID: string;
   commodityName: string;
-  listFeeGroup: string[];
+  listFeeGroup: {
+    feeGroupID: string;
+    feeGroupName: string;
+  }[];
   customQuotationFCLDetailForBookings: ICustomQuotationFCLDetailForBookings[];
 }
 
@@ -310,4 +313,61 @@ export interface TypeUnitData {
 
 export interface IRequireTypeUnit {
   typeUnit: TYPE_UNIT;
+}
+//Detail booking
+export interface IDetailBooking {
+  customerInformation: ICustomerInformation;
+  shipmentDetail: {
+    modeOfTransportation: string;
+    pol: string;
+    pod: string;
+    quotationNo: string;
+    date: string;
+    valitidyTo: string;
+    commodity: string;
+    seaBookingFCLDetailDTOs: {
+      containerTypeCode: string;
+      quantity: string;
+    }[];
+  };
+  seaQuotationBooking: {
+    quotationNo: string;
+    seaQuotationFCLDetails: {
+      description: string;
+      unit: string;
+      price: string;
+      quantity: string;
+      currency: string;
+      totalAmount: string;
+    }[];
+    ortherChargeDetailForBookings: // TODO: sea other charges
+    {
+      description: string;
+      quantity: string;
+      unit: string;
+      price: string;
+      vat: string;
+      currency: string;
+      totalAmount: string;
+    }[];
+  };
+  aslContactBooking: {
+    issuedBy: string;
+    possition: string;
+    email: string;
+    tel: string;
+  };
+}
+export interface ICustomerInformation {
+  customer: string;
+  companyName: string;
+  email: string;
+  addresss: string;
+  companyAddress: string;
+  tel: string;
+  mobil: string;
+  contact: string;
+}
+export interface IRequireDetailBooking {
+  id?: string;
 }

@@ -8,8 +8,17 @@ import {
   Typography,
 } from 'antd';
 import COLORS from '@/constants/color';
+import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 const { Text } = Typography;
-export default function Finish() {
+
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+}
+
+export default function Finish({ dataPropsBooking }: Props) {
+  const { issuedBy, possition, email, tel } =
+    dataPropsBooking?.detailBooking?.aslContactBooking || {};
+
   const items: DescriptionsProps['items'] = [
     {
       label: (
@@ -22,7 +31,9 @@ export default function Finish() {
         </Flex>
       ),
       children: (
-        <div style={{ fontSize: '14px', fontWeight: '720' }}>ASL system</div>
+        <div style={{ fontSize: '14px', fontWeight: '720' }}>
+          {issuedBy || ''}
+        </div>
       ),
     },
     {
@@ -36,9 +47,7 @@ export default function Finish() {
         </Flex>
       ),
       children: (
-        <div style={{ fontSize: '14px', fontWeight: '720' }}>
-          thanhviennguyen01@gmail.com
-        </div>
+        <div style={{ fontSize: '14px', fontWeight: '720' }}>{email || ''}</div>
       ),
     },
     {
@@ -52,7 +61,10 @@ export default function Finish() {
         </Flex>
       ),
       children: (
-        <div style={{ fontSize: '14px', fontWeight: '720' }}>ASL system</div>
+        <div style={{ fontSize: '14px', fontWeight: '720' }}>
+          {' '}
+          {possition || ''}
+        </div>
       ),
     },
     {
@@ -66,7 +78,7 @@ export default function Finish() {
         </Flex>
       ),
       children: (
-        <div style={{ fontSize: '14px', fontWeight: '720' }}>0914730992</div>
+        <div style={{ fontSize: '14px', fontWeight: '720' }}> {tel || ''}</div>
       ),
     },
   ];

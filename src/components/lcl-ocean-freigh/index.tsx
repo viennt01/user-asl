@@ -74,7 +74,7 @@ export default function LclOceanFreight() {
   );
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchQuotation>(initalValueForm);
-  const [displayStep, setDisplayStep] = useState<number>(3);
+  const [displayStep, setDisplayStep] = useState<number>(5);
   const [dataPropsBooking, setDataPropsBooking] =
     useState<IDataBookingProps>(initalValueProps);
   const [dataStep2PropsBooking, setDataStep2PropsBooking] =

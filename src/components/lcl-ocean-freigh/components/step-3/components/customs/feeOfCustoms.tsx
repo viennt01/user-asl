@@ -57,8 +57,8 @@ export default function FeeOfCustoms({
   useEffect(() => {
     setDataFee(
       dataAPIResearch?.listFeeGroup.map((value, index) => ({
-        feeGroupID: value,
-        feeGroupName: `Fee Group ${index + 1}`,
+        feeGroupID: value.feeGroupID,
+        feeGroupName: value.feeGroupName,
       })) || []
     );
   }, [dataAPIResearch]);

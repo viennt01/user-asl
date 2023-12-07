@@ -1,36 +1,40 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Card,
-  Col,
-  Flex,
-  Row,
-  Image,
-  ConfigProvider,
-  Table,
-} from 'antd';
-import COLORS from '@/constants/color';
+import React, { useEffect, useState } from 'react';
+import { Card, Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-
-export default function ShipmentDetail() {
-  interface DataType {
-    key: string;
-    right: string;
-    left: string;
-    'Mode of transportation'?: string;
-    'Port of loading'?: string;
-    'Place of pick up'?: string;
-    Commodity?: string;
-    'Customs declaration form'?: string;
-    'HS code'?: string;
-    'Quotation no'?: string;
-    Date?: string;
-    'Validity to'?: string;
-    'Gross weight'?: string;
-    Mearsurement?: string;
-    Quantity?: string;
-  }
+import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { formatDate } from '@/utils/format-number';
+interface Props {
+  dataPropsBooking: IDataBookingProps;
+}
+interface DataType {
+  key: string;
+  right: string;
+  left: string;
+  'Mode of transportation'?: string;
+  'Port of loading'?: string;
+  'Port of discharge'?: string;
+  Commodity?: string;
+  'Quotation no'?: string;
+  Date?: string;
+  'Validity to'?: string;
+  'Gross weight'?: string;
+  Mearsurement?: string;
+  Quantity?: string;
+}
+export default function ShipmentDetail({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
+  const [dataQuantity, setDataQuantity] = useState<string>('');
+  const {
+    modeOfTransportation,
+    pol,
+    pod,
+    quotationNo,
+    date,
+    valitidyTo,
+    commodity,
+    seaBookingFCLDetailDTOs,
+  } = dataPropsBooking?.detailBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -93,50 +97,50 @@ export default function ShipmentDetail() {
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      right: 'Mode of transportation',
-      'Mode of transportation': 'Nguyen Thanh Vien',
-      left: 'Quotation no',
-      'Quotation no': 'Nguyen Thanh Vien',
-    },
-    {
-      key: '2',
-      right: 'Port of loading',
-      'Port of loading': 'Nguyen Thanh Vien',
-      left: 'Date',
-      Date: 'Nguyen Thanh Vien',
-    },
-    {
-      key: '3',
-      right: 'Place of pick up',
-      'Place of pick up': 'Nguyen Thanh Vien',
-      left: 'Validity to',
-      'Validity to': 'Nguyen Thanh Vien',
-    },
-    {
-      key: '4',
-      right: 'Commodity',
-      Commodity: 'Nguyen Thanh Vien',
-      left: 'Gross weight',
-      'Gross weight': 'Nguyen Thanh Vien',
-    },
-    {
-      key: '5',
-      right: 'Customs declaration form',
-      'Customs declaration form': 'Nguyen Thanh Vien',
-      left: 'Mearsurement',
-      Mearsurement: 'Nguyen Thanh Vien',
-    },
-    {
-      key: '6',
-      right: 'HS code',
-      'HS code': 'Nguyen Thanh Vien',
-      left: 'Quantity',
-      Quantity: 'Nguyen Thanh Vien',
-    },
-  ];
+  useEffect(() => {
+    setDataQuantity(
+      seaBookingFCLDetailDTOs
+        ?.map((item) => `${item.quantity} x ${item.containerTypeCode}`)
+        .join(', ') || ''
+    );
+    setData([
+      {
+        key: '1',
+        right: 'Mode of transportation',
+        'Mode of transportation': modeOfTransportation || '',
+        left: 'Quotation no',
+        'Quotation no': quotationNo || '',
+      },
+      {
+        key: '2',
+        right: 'Port of loading',
+        'Port of loading': pol || '',
+        left: 'Date',
+        Date: formatDate(Number(date)) || '',
+      },
+      {
+        key: '3',
+        right: 'Port of discharge',
+        'Port of discharge': pod || '',
+        left: 'Validity to',
+        'Validity to': formatDate(Number(valitidyTo)) || '',
+      },
+      {
+        key: '4',
+        right: 'Commodity',
+        Commodity: commodity || '',
+        left: 'Gross weight',
+        'Gross weight': '',
+      },
+      {
+        key: '5',
+        right: 'Mearsurement',
+        Mearsurement: '',
+        left: 'Quantity',
+        Quantity: dataQuantity || '',
+      },
+    ]);
+  }, [dataPropsBooking]);
 
   return (
     <ConfigProvider

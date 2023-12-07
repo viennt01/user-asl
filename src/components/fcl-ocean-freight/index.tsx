@@ -10,6 +10,7 @@ import Step5 from './components/step-5';
 import Service from '../home-page/components/service';
 import {
   DEFAULT_PAGINATION,
+  IDetailBooking,
   IPaginationOfAntd,
   IQuotationRequire,
   IQuotationTable,
@@ -37,16 +38,20 @@ import { useRouter } from 'next/router';
 import { IQuantity } from './components/step-2/editDescription';
 
 export interface IDataBookingProps {
+  idBooking?: string;
   idQuotation: string;
   dataQuotation?: ISeaPricingDetail;
   dataColTableStep1?: IQuotationTable;
   step1?: IStep1;
   listContainerType?: { label: string; value: string }[];
   listQuantityType?: IQuantity[];
+  detailBooking?: IDetailBooking;
 }
 
 export const initalValueProps = {
   idQuotation: '',
+  // idBooking: '07bb42ce-00cf-498b-ae88-9b56a8307460',
+  idBooking: '',
 };
 
 export interface IDataStep2Props {
@@ -74,7 +79,7 @@ export default function FclOceanFreight() {
   );
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchQuotation>(initalValueForm);
-  const [displayStep, setDisplayStep] = useState<number>(3);
+  const [displayStep, setDisplayStep] = useState<number>(1);
   const [dataPropsBooking, setDataPropsBooking] =
     useState<IDataBookingProps>(initalValueProps);
   const [dataStep2PropsBooking, setDataStep2PropsBooking] =
@@ -139,6 +144,7 @@ export default function FclOceanFreight() {
       polid: formValues.polid,
       podid: formValues.podid,
       typeService: TYPE_SERVICE.FCL,
+      // TypeOfSeaService: 'SEA',
       cargoReady: formValues.cargoReady?.valueOf(),
       commodities: formValues.commodities,
       containers: formValues.containers,
@@ -253,7 +259,12 @@ export default function FclOceanFreight() {
             dataPropsBooking={dataPropsBooking}
             setDataPropsBooking={setDataPropsBooking}
           />
-          <Step4 displayStep={displayStep} setDisplayStep={setDisplayStep} />
+          <Step4
+            displayStep={displayStep}
+            setDisplayStep={setDisplayStep}
+            dataPropsBooking={dataPropsBooking}
+            setDataPropsBooking={setDataPropsBooking}
+          />
           <Step5 displayStep={displayStep} setDisplayStep={setDisplayStep} />
         </div>
       </Flex>

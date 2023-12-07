@@ -1,34 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice from './totalPrice';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { formatNumber } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
 }
-
-export default function OtherServiceCharges({ dataPropsBooking }: Props) {
-  interface DataType {
-    key: string;
-    description?: string;
-    quantity?: string;
-    price?: string;
-    currency?: string;
-    total?: string;
-    remark?: string;
-  }
-
-  const sharedOnCell = (_: DataType, index: number | undefined) => {
-    if (index === 1) {
-      return { colSpan: 0 };
-    }
-
-    return {};
-  };
-
+interface DataType {
+  key: number;
+  description: string;
+  quantity: string;
+  price: string;
+  currency: string;
+  vat: string;
+  total: string;
+}
+export default function SeaOtherCharges({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
   const columns: ColumnsType<DataType> = [
     {
       title: <div className={style.titleTable}>No.</div>,
@@ -54,6 +46,9 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       title: <div className={style.titleTable}>Price</div>,
       dataIndex: 'price',
       key: 'price',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: <div className={style.titleTable}>Currency</div>,
@@ -61,56 +56,35 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       key: 'currency',
     },
     {
+      title: <div className={style.titleTable}>VAT</div>,
+      dataIndex: 'vat',
+      key: 'vat',
+    },
+    {
       title: <div className={style.titleTable}>Total Amount</div>,
       dataIndex: 'total',
       key: 'total',
-    },
-    {
-      title: <div className={style.titleTable}>Remark</div>,
-      dataIndex: 'remark',
-      key: 'remark',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '2',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '3',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-  ];
-
+  useEffect(() => {
+    setData(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking.ortherChargeDetailForBookings.map(
+        (item, index) => ({
+          key: index,
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          currency: item.currency,
+          vat: item.vat,
+          total: item.totalAmount,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
   return (
     <ConfigProvider
       theme={{
@@ -137,7 +111,7 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       }}
     >
       <Card
-        title="OTHER SERVICE CHARGES (IF REQUEST)"
+        title="Sea other Charges"
         style={{ width: '100%' }}
         className={style.cardCustomer}
       >
@@ -152,6 +126,7 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             x: 'max-content',
           }}
         />
+        <TotalPrice />
       </Card>
     </ConfigProvider>
   );

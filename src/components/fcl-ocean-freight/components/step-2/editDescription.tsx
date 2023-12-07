@@ -13,8 +13,10 @@ interface Props {
   dataPropsBooking: IDataBookingProps;
   dataQuotation: ISeaPricingDetail | undefined;
   dataFeeTable: FeeTable[];
-  setDataStep2PropsBooking: React.Dispatch<React.SetStateAction<IDataStep2Props | undefined>>;
-  dataStep2PropsBooking: IDataStep2Props | undefined
+  setDataStep2PropsBooking: React.Dispatch<
+    React.SetStateAction<IDataStep2Props | undefined>
+  >;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 
 export interface IQuantity {
@@ -30,8 +32,6 @@ export default function EditDescription({
   setDataStep2PropsBooking,
   dataStep2PropsBooking,
 }: Props) {
-
-  
   return (
     <div className={style.description}>
       <Row gutter={16}>
@@ -59,7 +59,8 @@ export default function EditDescription({
                 height: '40px',
               }}
               onClick={() => (
-                setDisplayStep(1), setDataPropsBooking({ idQuotation: '' })
+                setDisplayStep(1),
+                setDataPropsBooking((pre) => ({ ...pre, idQuotation: '' }))
               )}
             >
               Previous

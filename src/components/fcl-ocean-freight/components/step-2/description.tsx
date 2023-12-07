@@ -43,7 +43,8 @@ export default function Description({
                 height: '40px',
               }}
               onClick={() => (
-                setDisplayStep(1), setDataPropsBooking({ idQuotation: '' })
+                setDisplayStep(1),
+                setDataPropsBooking((pre) => ({ ...pre, idQuotation: '' }))
               )}
             >
               Close
