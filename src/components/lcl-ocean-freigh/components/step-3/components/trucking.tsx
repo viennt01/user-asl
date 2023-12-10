@@ -51,7 +51,7 @@ const dateFormat = 'YYYY-MM-DD';
 const initalValueForm = {
   pickupID: '',
   deliveryID: '',
-  typeService: TYPE_SERVICE.FCL,
+  typeSeaService: TYPE_SERVICE.FCL,
   cargoReady: 1,
   commodityID: '',
   containers: [''],
@@ -73,12 +73,12 @@ export default function Trucking({
     useState<IRequireSearchTrucking>(initalValueForm);
 
   const onFinish = (formValues: IRequireSearchTrucking) => {
-    const data =
+    const _requestData =
       type === TYPE_POL_POD.POD
         ? {
             deliveryID: formValues.deliveryID || '',
             pickupID: dataPropsBooking?.dataColTableStep1?.podid || '',
-            typeService: TYPE_SERVICE.FCL,
+            typeSeaService: TYPE_SERVICE.FCL,
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
             containers: dataPropsBooking?.step1?.containers || [],
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
@@ -86,22 +86,12 @@ export default function Trucking({
         : {
             pickupID: formValues.pickupID || '',
             deliveryID: dataPropsBooking?.dataColTableStep1?.polid || '',
-            typeService: TYPE_SERVICE.FCL,
+            typeSeaService: TYPE_SERVICE.FCL,
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
             containers: dataPropsBooking?.step1?.containers || [],
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
           };
-    const _requestData = {
-      pickupID: '33d5922b-68e3-425a-8d62-006805387031',
-      deliveryID: '7dd273a3-adcc-4909-a5ad-00173e562e61',
-      typeService: 'FCL',
-      cargoReady: 111111111111,
-      commodityID: 'b8559fac-c496-4287-824c-0072a4c6a9fe',
-      containers: [
-        '416bc5f8-e2ba-4d17-92b9-9f93318c7eee',
-        'b88cfeb8-ddf6-4d0f-84da-4a7c3a755e1c',
-      ],
-    };
+
     setDataResearch(_requestData);
     if (
       _requestData.pickupID === dataResearch.pickupID &&

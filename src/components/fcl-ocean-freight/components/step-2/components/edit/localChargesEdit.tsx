@@ -1,5 +1,13 @@
 import React, { useMemo, useRef, useState } from 'react';
-import { Table, ConfigProvider, InputRef, Input, Space, Button, Flex } from 'antd';
+import {
+  Table,
+  ConfigProvider,
+  InputRef,
+  Input,
+  Space,
+  Button,
+  Flex,
+} from 'antd';
 import COLORS from '@/constants/color';
 import { FeeTable } from '@/components/fcl-ocean-freight/interface';
 import {
@@ -131,13 +139,24 @@ export default function LocalChargesEdit({ dataFeeTable }: Props) {
     {
       title: (
         <Flex align="center" justify="center">
-          Name
+          Other Charges
         </Flex>
       ),
       dataIndex: 'feeName',
       key: 'feeName',
       fixed: 'left',
       ...getColumnSearchProps('feeName'),
+    },
+    {
+      title: (
+        <Flex align="center" justify="center">
+          Unit
+        </Flex>
+      ),
+      dataIndex: 'unitInternationalCode',
+      key: 'unitInternationalCode',
+      fixed: 'left',
+      ...getColumnSearchProps('unitInternationalCode'),
     },
     {
       title: (
@@ -157,32 +176,6 @@ export default function LocalChargesEdit({ dataFeeTable }: Props) {
     {
       title: (
         <Flex align="center" justify="center">
-          VAT
-        </Flex>
-      ),
-      dataIndex: 'vatFeeGroup',
-      key: 'vatFeeGroup',
-      fixed: 'right',
-      align: 'right',
-      ...getColumnSearchProps('vatFeeGroup'),
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <Flex align="center" justify="center">
-          Type fee
-        </Flex>
-      ),
-      dataIndex: 'typeFeeName',
-      key: 'typeFeeName',
-      fixed: 'left',
-      ...getColumnSearchProps('typeFeeName'),
-    },
-    {
-      title: (
-        <Flex align="center" justify="center">
           Currency
         </Flex>
       ),
@@ -194,13 +187,17 @@ export default function LocalChargesEdit({ dataFeeTable }: Props) {
     {
       title: (
         <Flex align="center" justify="center">
-          Unit
+          VAT
         </Flex>
       ),
-      dataIndex: 'unitInternationalCode',
-      key: 'unitInternationalCode',
-      fixed: 'left',
-      ...getColumnSearchProps('unitInternationalCode'),
+      dataIndex: 'vatFeeGroup',
+      key: 'vatFeeGroup',
+      fixed: 'right',
+      align: 'right',
+      ...getColumnSearchProps('vatFeeGroup'),
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
   return (

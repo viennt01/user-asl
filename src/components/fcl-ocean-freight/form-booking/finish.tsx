@@ -18,7 +18,6 @@ interface Props {
 export default function Finish({ dataPropsBooking }: Props) {
   const { issuedBy, possition, email, tel } =
     dataPropsBooking?.detailBooking?.aslContactBooking || {};
-
   const items: DescriptionsProps['items'] = [
     {
       label: (
@@ -63,7 +62,7 @@ export default function Finish({ dataPropsBooking }: Props) {
       children: (
         <div style={{ fontSize: '14px', fontWeight: '720' }}>
           {' '}
-          {possition || ''}
+          {possition?.join(' ') || ''}
         </div>
       ),
     },

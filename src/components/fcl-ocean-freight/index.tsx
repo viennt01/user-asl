@@ -61,7 +61,7 @@ export interface IDataStep2Props {
 export const initalValueForm = {
   polid: '',
   podid: '',
-  typeService: TYPE_SERVICE.FCL,
+  typeSeaService: TYPE_SERVICE.FCL,
   cargoReady: 1,
   commodities: [''],
   containers: [''],
@@ -143,8 +143,7 @@ export default function FclOceanFreight() {
     const _requestData = {
       polid: formValues.polid,
       podid: formValues.podid,
-      typeService: TYPE_SERVICE.FCL,
-      // TypeOfSeaService: 'SEA',
+      typeSeaService: TYPE_SERVICE.FCL,
       cargoReady: formValues.cargoReady?.valueOf(),
       commodities: formValues.commodities,
       containers: formValues.containers,
@@ -265,7 +264,10 @@ export default function FclOceanFreight() {
             dataPropsBooking={dataPropsBooking}
             setDataPropsBooking={setDataPropsBooking}
           />
-          <Step5 displayStep={displayStep} setDisplayStep={setDisplayStep} />
+          <Step5
+            displayStep={displayStep}
+            dataPropsBooking={dataPropsBooking}
+          />
         </div>
       </Flex>
       <Service />

@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import { Button, Card, Col, Flex, Row, Image, ConfigProvider } from 'antd';
-import COLORS from '@/constants/color';
-import CustomerInformation from './components/customer-information';
-import ShipmentDetail from './components/shipment-details';
-import QuotationDetail from './components/sea-quotation-detail';
-import TermsConditions from './components/terms-conditions';
-import OtherServiceCharges from './components/other-service-charges';
-import Finish from './components/finish';
+import {
+  Button,
+  Card,
+  Col,
+  Flex,
+  Row,
+  ConfigProvider,
+  Checkbox,
+} from 'antd';
 import { IDataBookingProps } from '../..';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
-import { useQuery } from '@tanstack/react-query';
-import { getDetailBooking } from '../../fetcher';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { confirmBooking, getDetailBooking } from '../../fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
-import { IDetailBooking } from '../../interface';
+import { IDetailBooking, IRequireDetailBooking } from '../../interface';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
-import SeaOtherCharges from './components/sea-other-charge';
+import FormBooking from '../../form-booking';
 
 interface Props {
   displayStep: number;
@@ -31,9 +32,13 @@ export default function Step4({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
+  const [isChecked, setIsChecked] = useState(false);
+  const onChange = () => {
+    setIsChecked(!isChecked);
+  };
   useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, dataPropsBooking.idBooking],
-    queryFn: () => getDetailBooking({ id: dataPropsBooking.idBooking}),
+    queryFn: () => getDetailBooking({ id: dataPropsBooking.idBooking }),
     enabled: dataPropsBooking.idBooking !== '',
     onSuccess: (data: ResponseWithPayload<IDetailBooking>) => {
       if (data.status) {
@@ -42,6 +47,12 @@ export default function Step4({
     },
     onError() {
       errorToast(API_MESSAGE.ERROR);
+    },
+  });
+
+  const confirmBookingMutation = useMutation({
+    mutationFn: (body: IRequireDetailBooking) => {
+      return confirmBooking(body);
     },
   });
 
@@ -54,43 +65,48 @@ export default function Step4({
     >
       <Card className={style.cardMain} title="Review Booking">
         <Row gutter={26}>
-          <Col
-            span={24}
-            style={{
-              marginBottom: '24px',
-            }}
-          >
-            <Image
-              src={'/images/oceanFreight/contactAsl.png'}
-              preview={false}
-            />
-          </Col>
-          <CustomerInformation dataPropsBooking={dataPropsBooking} />
-          <ShipmentDetail dataPropsBooking={dataPropsBooking} />
-          <QuotationDetail dataPropsBooking={dataPropsBooking} />
-          <SeaOtherCharges dataPropsBooking={dataPropsBooking} />
-          <TermsConditions />
-          <OtherServiceCharges dataPropsBooking={dataPropsBooking} />
-          <Finish dataPropsBooking={dataPropsBooking} />
+          <FormBooking dataPropsBooking={dataPropsBooking}/>
           <Col span={24} style={{ marginTop: '16px' }}>
-            <Flex justify="space-between">
-              <Button
-                style={{
-                  marginRight: '8px',
-                  color: COLORS.GREY_COLOR_HOVER,
-                  width: '120px',
-                  height: '40px',
-                }}
-                onClick={() => setDisplayStep(3)}
+            <ConfigProvider
+              theme={{
+                components: {
+                  Checkbox: {
+                    fontSize: 16,
+                    controlInteractiveSize: 20,
+                  },
+                },
+              }}
+            >
+              <Checkbox
+                value={isChecked}
+                onChange={onChange}
+                style={{ marginBottom: '16px', fontWeight: 600 }}
               >
-                Pervious
-              </Button>
+                I confirm the accuracy of the information provided above.
+              </Checkbox>
+            </ConfigProvider>
+            <Flex justify="center">
               <Button
-                style={{ width: '120px', height: '40px' }}
+                style={{ width: '150px', height: '40px' }}
                 type="primary"
-                onClick={() => setDisplayStep(5)}
+                onClick={() =>
+                  confirmBookingMutation.mutate(
+                    { id: dataPropsBooking.idBooking || '' },
+                    {
+                      onSuccess: (data) => {
+                        data.status
+                          ? setDisplayStep(5)
+                          : errorToast(data.message);
+                      },
+                      onError() {
+                        errorToast(API_MESSAGE.ERROR);
+                      },
+                    }
+                  )
+                }
+                disabled={!isChecked}
               >
-                Next
+                Submit booking
               </Button>
             </Flex>
           </Col>

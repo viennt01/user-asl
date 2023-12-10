@@ -80,7 +80,7 @@ export interface IQuotation {
 export interface IRequireSearchQuotation extends IStep1 {
   polid: string;
   podid: string;
-  typeService: string;
+  typeSeaService: string;
   cargoReady: number;
   commodities: string[];
   containers: string[];
@@ -190,7 +190,7 @@ export interface RequestFee {
 export interface IRequireSearchTrucking {
   pickupID: string;
   deliveryID: string;
-  typeService: string;
+  typeSeaService: string;
   cargoReady: number;
   commodityID: string;
   containers: string[];
@@ -271,7 +271,7 @@ export interface IBooking {
   typeOfPODID: string;
   commodityID: string;
   currencyID: string;
-  typeOfSeaService: boolean; // true: FCL
+  typeSeaService: string; 
   typeOfService: string; // SEA
   cargoReadyDated: number;
   cargoCutOffDated: number;
@@ -280,7 +280,7 @@ export interface IBooking {
   note: string;
   statusBooking: string;
   isManualBooking: boolean;
-  quotationBookingDetailRegisterRequests: {
+  quotationBookingDetailRegisterRequest: {
     seaQuotationID: string;
     truckingQuotationPOLID: React.Key;
     truckingQuotationPODID: React.Key;
@@ -353,7 +353,7 @@ export interface IDetailBooking {
   };
   aslContactBooking: {
     issuedBy: string;
-    possition: string;
+    possition: string[];
     email: string;
     tel: string;
   };
@@ -363,11 +363,14 @@ export interface ICustomerInformation {
   companyName: string;
   email: string;
   addresss: string;
-  companyAddress: string;
+  addressCompany: string;
   tel: string;
   mobil: string;
   contact: string;
 }
 export interface IRequireDetailBooking {
+  id?: string;
+}
+export interface IRequireConfirmBooking {
   id?: string;
 }

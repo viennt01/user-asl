@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import style from '../../index.module.scss';
-import {
-  Collapse,
-  ConfigProvider,
-  Flex,
-  Typography,
-  Tag,
-  Table,
-  PaginationProps,
-  Card,
-} from 'antd';
+import { Collapse, ConfigProvider, Flex, Typography, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
@@ -20,12 +11,8 @@ import {
 } from '@/components/fcl-ocean-freight/fetcher';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import {
-  DEFAULT_PAGINATION,
   ICustomQuotationFCLDetailForBookings,
-  IPaginationOfAntd,
   IQuotationCustoms,
-  IQuotationCustomsRequire,
-  IQuotationCustomsTable,
   IRequireSearchCustoms,
   TYPE_UNIT,
 } from '@/components/fcl-ocean-freight/interface';
@@ -42,16 +29,18 @@ interface Props {
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
+  setSelectedRowKey: React.Dispatch<React.SetStateAction<string[]>>;
 }
 const initalValueForm = {
   cargoReady: 22222222222222,
-  commodityID: ''
+  commodityID: '',
 };
 
 export default function Customs({
   type,
   dataPropsBooking,
   setSubmitFeeCustoms,
+  setSelectedRowKey,
 }: Props) {
   const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
   const [dataResearch, setDataResearch] =
@@ -79,10 +68,6 @@ export default function Customs({
       cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
       commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
     };
-    // const _requestData = {
-    //   cargoReady: 22222222222222,
-    //   commodityID: '888f5c7f-3e74-45e8-9b74-cac0aa9c32ab',
-    // };
     setDataResearch(_requestData);
   }, [dataPropsBooking]);
 
@@ -109,6 +94,7 @@ export default function Customs({
           customQuotationFCLDetailForBookings:
             data.data.customQuotationFCLDetailForBookings,
         });
+        setSelectedRowKey([data.data.customQuotationID]);
       }
     },
   });

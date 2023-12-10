@@ -84,10 +84,7 @@ export const getFeeWithFeeGroup = (data: RequestFee) => {
 
 // Get price trucking
 export const getPriceTrucking = (data: IRequireSearchTrucking) => {
-  return post<
-    IRequireSearchTrucking,
-    ResponseWithPayload<IQuotationTrucking>
-  >({
+  return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking>>({
     data,
   })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING);
 };
@@ -102,10 +99,7 @@ export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
 
 // Get price custom
 export const getPriceCustom = (data: IRequireSearchCustoms) => {
-  return post<
-    IRequireSearchCustoms,
-    ResponseWithPayload<IQuotationCustoms>
-  >({
+  return post<IRequireSearchCustoms, ResponseWithPayload<IQuotationCustoms>>({
     data,
   })(API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING);
 };

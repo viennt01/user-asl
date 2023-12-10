@@ -99,19 +99,6 @@ export default function TableReturn({
       render: (_, record) => (
         <Space size="middle">
           <Button
-            style={{ width: '120px' }}
-            onClick={() => (
-              setDisplayStep(2.1),
-              setDataPropsBooking((pre) => ({
-                ...pre,
-                idQuotation: record.key,
-                dataColTableStep1: record,
-              }))
-            )}
-          >
-            View Details
-          </Button>
-          <Button
             type="primary"
             style={{ width: '120px' }}
             onClick={() => (

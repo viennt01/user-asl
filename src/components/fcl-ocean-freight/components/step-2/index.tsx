@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
 import Information from './information';
-import Description from './description';
 import EditDescription from './editDescription';
 import { IDataBookingProps, IDataStep2Props } from '../..';
 import { API_FEE_GROUP, API_SEA_QUOTATION } from '@/fetcherAxios/endpoint';
 import { useQuery } from '@tanstack/react-query';
 import { getFeeWithFeeGroup, getSeaQuotationDetail } from '../../fetcher';
 import dayjs from 'dayjs';
-import { FeeTable, ISeaPricingDetail } from '../../interface';
+import { FeeTable } from '../../interface';
 
 interface Props {
   displayStep: number;
@@ -100,26 +99,13 @@ export default function Step2({
     <div
       className={style.step2}
       style={{
-        display: displayStep === 2.1 || displayStep === 2.2 ? '' : 'none',
+        display: displayStep === 2.2 ? '' : 'none',
       }}
     >
       <Information
         dataPropsBooking={dataPropsBooking}
         dataQuotation={dataPropsBooking?.dataQuotation}
       />
-      <div
-        style={{
-          display: displayStep === 2.1 ? '' : 'none',
-        }}
-      >
-        <Description
-          setDisplayStep={setDisplayStep}
-          setDataPropsBooking={setDataPropsBooking}
-          dataPropsBooking={dataPropsBooking}
-          dataQuotation={dataPropsBooking?.dataQuotation}
-          dataFeeTable={dataFeeTable}
-        />
-      </div>
       <div
         style={{
           display: displayStep === 2.2 ? '' : 'none',

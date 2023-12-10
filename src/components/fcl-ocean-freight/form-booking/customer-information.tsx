@@ -51,7 +51,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
     companyName,
     email,
     addresss,
-    companyAddress,
+    addressCompany,
     tel,
     mobil,
     contact,
@@ -98,7 +98,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
               style={{
                 fontSize: '12px',
                 fontWeight: '700',
-                width: '155px',
+                width: '160px',
               }}
             >
               {text}:
@@ -125,7 +125,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
         right: 'Company Name',
         'Company Name': companyName || '',
         left: 'Company Address',
-        'Company Address': companyAddress || '',
+        'Company Address': addressCompany || '',
       },
       {
         key: '1',
@@ -155,11 +155,6 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
     <ConfigProvider
       theme={{
         components: {
-          Card: {
-            colorBorderSecondary: 'rgba(0, 0, 0, 0.1)',
-            borderRadiusLG: 0,
-            borderRadius: 0,
-          },
           Table: {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
@@ -168,20 +163,40 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
         },
       }}
     >
-      <Card
-        title="Customer information"
-        style={{ width: '100%' }}
+      <div
         className={style.cardCustomer}
+        style={{
+          marginBottom: '16px',
+        }}
       >
+        <div
+          className={style.cardCustomerHeader}
+          style={{
+            paddingLeft: '16px',
+            backgroundColor: COLORS.GREY_COLOR_HOVER,
+            border: '1px solid #1D4486',
+            width: '100%',
+            color: COLORS.WHITE,
+            fontSize: '18px',
+            fontWeight: 600,
+            height: '50px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          Customer information
+        </div>
         <Table
-          style={{ width: '100%' }}
+          style={{
+            width: '100%',
+          }}
           columns={columns}
           dataSource={data}
           showHeader={false}
           pagination={false}
           bordered
         />
-      </Card>
+      </div>
     </ConfigProvider>
   );
 }

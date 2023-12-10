@@ -1,12 +1,13 @@
 import React, {
   MutableRefObject,
   Ref,
+  createRef,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
-import { Table, ConfigProvider, InputNumber } from 'antd';
+import { Table, ConfigProvider, InputNumber, Flex } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
 import {
@@ -39,9 +40,9 @@ export default function TableContainerEdit({
   setDataStep2PropsBooking,
   dataStep2PropsBooking,
 }: Props) {
-  const inputRef = useRef();
   const [dataTable, setDataTable] = useState<DataType[]>([]);
   const [dataTableS, setDataTableS] = useState<DataType[]>([]);
+  const inputRefs = useRef<Array<React.MutableRefObject<any>>>([]);
 
   const data =
     Object.entries(
@@ -52,6 +53,13 @@ export default function TableContainerEdit({
       quantity: '1',
       key: (index + 1).toString(),
     })) || [];
+
+  // Thêm useEffect để khởi tạo mảng tham chiếu
+  useEffect(() => {
+    inputRefs.current = Array(data.length)
+      .fill(0)
+      .map((_, index) => inputRefs.current[index] || createRef());
+  }, [data.length]);
 
   const save = (value: DataType, inputRef: React.MutableRefObject<any>) => {
     const filteredArray =
@@ -69,29 +77,43 @@ export default function TableContainerEdit({
       listQuantityType: [...filteredArray, ...newData],
     }));
   };
+
   const columns: ColumnsType<DataType> = [
     {
-      title: 'Container Type',
+      title: (
+        <Flex align="center" justify="center">
+          Container Type
+        </Flex>
+      ),
       dataIndex: 'containerType',
       key: 'containerType',
-      align: 'center',
+      align: 'left',
     },
     {
-      title: 'Ocean Freight',
+      title: (
+        <Flex align="center" justify="center">
+          Ocean Freight
+        </Flex>
+      ),
       dataIndex: 'oceanFreight',
       key: 'oceanFreight',
-      align: 'center',
+      align: 'right',
       render: (value) => formatCurrencyHasCurrency(value),
     },
     {
-      title: 'Quantity',
+      title: (
+        <Flex align="center" justify="center">
+          Quantity
+        </Flex>
+      ),
       dataIndex: 'quantity',
       key: 'quantity',
-      align: 'center',
-      render: (_, recode) => {
+      align: 'right',
+      render: (_, recode, index) => {
+        const inputRef = inputRefs.current[index];
         return (
           <InputNumber
-            ref={inputRef as unknown as Ref<HTMLInputElement>}
+            ref={inputRef}
             defaultValue={1}
             onPressEnter={() => save(recode, inputRef)}
             onBlur={() => save(recode, inputRef)}

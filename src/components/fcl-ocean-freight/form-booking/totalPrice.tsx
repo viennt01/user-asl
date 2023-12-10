@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigProvider, Descriptions, Flex } from 'antd';
+import { ConfigProvider, Descriptions, Flex, Table } from 'antd';
 import type { DescriptionsProps } from 'antd';
 import style from '../index.module.scss';
 
@@ -8,7 +8,7 @@ interface DataType {
   price?: string;
 }
 
-const dataList = [
+const dataList: DataType[] = [
   {
     key: '1',
     price: 'VND 100,000',
@@ -45,7 +45,8 @@ const items: DescriptionsProps['items'] = [
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              borderBottom: index === dataList.length - 1 ? 'none' : '1px solid',
+              borderBottom:
+                index === dataList.length - 1 ? 'none' : '1px solid',
             }}
           >
             {data.price}

@@ -11,6 +11,7 @@ import {
   IBooking,
   ICustomQuotationPOD,
   ICustomQuotationPOL,
+  TYPE_SERVICE,
 } from '../../interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
@@ -37,10 +38,10 @@ export default function ServiceStep3({
   const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<React.Key[]>([]);
   const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<React.Key[]>([]);
   const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] = useState<
-    React.Key[]
+    string[]
   >([]);
   const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] = useState<
-    React.Key[]
+    string[]
   >([]);
   const [submitFeeCustomsPOL, setSubmitFeeCustomsPOL] = useState<
     ISubmitFeeCustoms[]
@@ -86,6 +87,7 @@ export default function ServiceStep3({
     onSuccess: (data) => {
       if (data.status) {
         successToast(data.message);
+        setDataPropsBooking((pre) => ({ ...pre, idBooking: data.data || '' }));
         setDisplayStep(4);
       }
     },
@@ -102,21 +104,26 @@ export default function ServiceStep3({
       typeOfPODID: dataPropsBooking.step1?.trafficPod?.typeOfTransportID || '',
       commodityID: dataPropsBooking.dataQuotation?.commodityID || '',
       currencyID: dataPropsBooking.dataQuotation?.currencyID || '',
-      typeOfSeaService: true,
+      typeSeaService: TYPE_SERVICE.FCL,
       typeOfService: 'SEA',
-      cargoReadyDated: dataPropsBooking.step1?.cargoReady || 1,
-      cargoCutOffDated: dataPropsBooking.step1?.cargoCutOffDated || 1,
+      cargoReadyDated: dataPropsBooking.step1?.cargoReady?.valueOf() || 1,
+      cargoCutOffDated:
+        dataPropsBooking.step1?.cargoCutOffDated?.valueOf() || 1,
       placeOfRecipt: dataPropsBooking.step1?.receipt || '',
       placeOfDelivery: dataPropsBooking.step1?.delivery || '',
       note: '',
       statusBooking: 'DRAFT',
       isManualBooking: false,
-      quotationBookingDetailRegisterRequests: {
+      quotationBookingDetailRegisterRequest: {
         seaQuotationID: dataPropsBooking.idQuotation || '',
         truckingQuotationPOLID: selectedRowKeysPOL[0] || '',
         truckingQuotationPODID: selectedRowKeysPOD[0] || '',
-        customQuotationPOLID: selectedRowKeysCustomsPOL[0] || '',
-        customQuotationPODID: selectedRowKeysCustomsPOD[0] || '',
+        customQuotationPOLID: FeeCustomsPOL
+          ? selectedRowKeysCustomsPOL[0] || ''
+          : '',
+        customQuotationPODID: FeeCustomsPOD
+          ? selectedRowKeysCustomsPOD[0] || ''
+          : '',
         customQuotationPOLDetailRegisterRequests: FeeCustomsPOL || [],
         customQuotationPODDetailRegisterRequests: FeeCustomsPOD || [],
       },
@@ -168,6 +175,7 @@ export default function ServiceStep3({
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOL}
+                  setSelectedRowKey={setSelectedRowKeysCustomsPOL}
                 />
               </Col>
               <Col span={24}>
@@ -175,6 +183,7 @@ export default function ServiceStep3({
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOD}
+                  setSelectedRowKey={setSelectedRowKeysCustomsPOD}
                 />
               </Col>
             </Row>

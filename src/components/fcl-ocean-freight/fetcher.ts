@@ -23,6 +23,7 @@ import {
   TypeUnitData,
   IRequireDetailBooking,
   IDetailBooking,
+  IRequireConfirmBooking,
 } from './interface';
 import {
   API_BOOKING,
@@ -112,7 +113,7 @@ export const getListTypeTransport = () => {
 };
 //Booking
 export const createBooking = (data: IBooking) => {
-  return post<IBooking, ResponseWithPayload<IQuotationCustomsRequire>>({
+  return post<IBooking, ResponseWithPayload<string>>({
     data,
   })(API_BOOKING.CREATE_BOOKING);
 };
@@ -126,4 +127,10 @@ export const getListTypeUnit = (data: IRequireTypeUnit) => {
   return post<IRequireTypeUnit, ResponseWithPayload<TypeUnitData[]>>({ data })(
     API_UNIT.GET_ALL
   );
+};
+//confirm booking
+export const confirmBooking = (data: IRequireConfirmBooking) => {
+  return post<IRequireConfirmBooking, ResponseWithPayload<string>>({
+    data,
+  })(API_BOOKING.CONFIRM_BOOKING_BY_USER);
 };

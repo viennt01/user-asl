@@ -8,33 +8,24 @@ import {
   Row,
   Image,
   Modal,
-  ConfigProvider,
   Form,
   Select,
   SelectProps,
-  Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
-import CustomerInformation from './components/customer-information';
-import ShipmentDetail from './components/shipment-details';
-import QuotationDetail from './components/quotation-detail';
-import TermsConditions from './components/terms-conditions';
-import OtherServiceCharges from './components/other-service-charges';
-import Finish from './components/finish';
 import { MailOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import ROUTERS from '@/constants/router';
-// @ts-ignore
-import html2pdf from 'html2pdf.js';
+import FormBooking from '../../form-booking';
+import { IDataBookingProps } from '../..';
 interface Props {
   displayStep: number;
-  setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
+  dataPropsBooking: IDataBookingProps;
 }
 
-export default function Step5({ displayStep, setDisplayStep }: Props) {
+export default function Step5({ displayStep, dataPropsBooking }: Props) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -55,7 +46,6 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
     };
   }, []);
 
-
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -72,44 +62,42 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
     setIsModalOpen(false);
     form.resetFields();
   };
-  const onChange = () => {
-    setIsChecked(!isChecked);
-  };
+
   const handlePrint = async () => {
     // Ensure html2pdf is available in the window object
     if (window.html2pdf) {
       // Get the HTML element to print
       const element = document.getElementById('content-to-print');
-  
+
       if (!element) {
         console.error('Element not found.');
         return;
       }
-  
+
       // Specify the parameters for html2pdf
       const parameters = {
         filename: 'Booking.pdf',
       };
-  
+
       const pdf = window.html2pdf(element, parameters);
-  
+
       // Output the PDF as a data URL
       const dataUrl = await pdf.output('datauristring');
-  
+
       // Create a Blob from the data URL
       const blob = await fetch(dataUrl).then((res) => res.blob());
-  
+
       // Create a FormData object to send the file
       const formData = new FormData();
       formData.append('pdfFile', blob, 'Booking.pdf');
-  
+
       // Make an HTTP request to your server
       try {
         const response = await fetch('YOUR_SERVER_UPLOAD_ENDPOINT', {
           method: 'POST',
           body: formData,
         });
-  
+
         // Handle the server response as needed
         console.log('Server Response:', response);
       } catch (error) {
@@ -119,7 +107,6 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
       console.error('html2pdf is not available.');
     }
   };
-
 
   return (
     <div
@@ -155,55 +142,17 @@ export default function Step5({ displayStep, setDisplayStep }: Props) {
                 padding: '0 16px',
               }}
             >
-              <Col
-                span={24}
-                style={{
-                  marginBottom: '24px',
-                }}
-              >
-                <Image
-                  src={'/images/oceanFreight/contactAsl.png'}
-                  preview={false}
-                  style={{
-                    width: '100%',
-                  }}
-                />
-              </Col>
-              <CustomerInformation />
-              <ShipmentDetail />
-              <QuotationDetail />
-              <TermsConditions />
-              <OtherServiceCharges />
-              <Finish />
+              <FormBooking dataPropsBooking={dataPropsBooking} />
             </div>
 
             <Col span={24} style={{ marginTop: '16px' }}>
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Checkbox: {
-                      fontSize: 16,
-                      controlInteractiveSize: 20,
-                    },
-                  },
-                }}
-              >
-                <Checkbox
-                  value={isChecked}
-                  onChange={onChange}
-                  style={{ marginBottom: '16px', fontWeight: 600 }}
-                >
-                  I confirm the accuracy of the information provided above.
-                </Checkbox>
-              </ConfigProvider>
               <Flex justify="center">
                 <Button
-                  style={{ width: '150px', height: '40px' }}
+                  style={{ width: '190px', height: '40px' }}
                   type="primary"
                   onClick={() => router.push(ROUTERS.BOOKINGS_HISTORY)}
-                  disabled={!isChecked}
                 >
-                  Submit booking
+                  Go to booking history
                 </Button>
               </Flex>
             </Col>
