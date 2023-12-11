@@ -176,6 +176,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ) || []
     );
   }, [dataPropsBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -200,6 +201,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         className={style.cardCustomer}
         style={{
           marginBottom: '16px',
+          display: data.length === 0 ? 'none' : '',
         }}
       >
         <div

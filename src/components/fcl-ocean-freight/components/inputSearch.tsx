@@ -48,6 +48,7 @@ interface Props {
   setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
   pagination: IPaginationOfAntd;
   handlePaginationChange: (page: number, pageSize: number) => void;
+  showError: boolean;
 }
 
 export default function InputFclOceanFreight({
@@ -63,6 +64,7 @@ export default function InputFclOceanFreight({
   setDataPropsBooking,
   pagination,
   handlePaginationChange,
+  showError,
 }: Props) {
   const router = useRouter();
   const trafficPol = Form.useWatch('trafficPol', form);
@@ -640,6 +642,7 @@ export default function InputFclOceanFreight({
         setDataPropsBooking={setDataPropsBooking}
         pagination={pagination}
         handlePaginationChange={handlePaginationChange}
+        showError={showError}
       />
     </div>
   );

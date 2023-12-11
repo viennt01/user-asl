@@ -109,7 +109,12 @@ export default function Finish({ dataPropsBooking }: Props) {
           }}
         >
           <Descriptions
-            style={{ width: '100%' }}
+            style={{
+              width: '100%',
+              display: dataPropsBooking?.detailBooking?.aslContactBooking
+                ? ''
+                : 'none',
+            }}
             bordered
             column={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }}
             items={items}

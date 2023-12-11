@@ -9,6 +9,8 @@ import {
   Space,
   ConfigProvider,
   Tag,
+  Flex,
+  Result,
 } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { IPaginationOfAntd, IQuotationTable } from '../interface';
@@ -26,6 +28,7 @@ interface Props {
   setDataPropsBooking: React.Dispatch<React.SetStateAction<IDataBookingProps>>;
   pagination: IPaginationOfAntd;
   handlePaginationChange: (page: number, pageSize: number) => void;
+  showError: boolean;
 }
 
 export default function TableReturn({
@@ -35,6 +38,7 @@ export default function TableReturn({
   setDataPropsBooking,
   pagination,
   handlePaginationChange,
+  showError,
 }: Props) {
   const containerReturn = useMemo(() => {
     const result = [];
@@ -120,9 +124,13 @@ export default function TableReturn({
   return (
     <div
       className={style.tableReturn}
-      style={{ display: data?.length !== 0 && displayStep === 1 ? '' : 'none' }}
+      style={{ display: displayStep === 1 ? '' : 'none' }}
     >
-      <Row>
+      <Row
+        style={{
+          display: data?.length === 0 ? 'none' : '',
+        }}
+      >
         <Col span={24}>
           <ConfigProvider
             theme={{
@@ -155,6 +163,22 @@ export default function TableReturn({
           </ConfigProvider>
         </Col>
       </Row>
+      <Flex
+        style={{
+          padding: '0 8px',
+          backgroundColor: '#FFF',
+          borderRadius: '12px',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            display: showError ? '' : 'none',
+          }}
+        >
+          <Result title="Please contact ASL's staff to receive a quotation" />
+        </div>
+      </Flex>
     </div>
   );
 }

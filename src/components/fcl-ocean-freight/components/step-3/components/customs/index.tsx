@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import style from '../../index.module.scss';
-import { Collapse, ConfigProvider, Flex, Typography, Table } from 'antd';
+import {
+  Collapse,
+  ConfigProvider,
+  Flex,
+  Typography,
+  Table,
+  Result,
+} from 'antd';
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
@@ -192,21 +199,48 @@ export default function Customs({
           }
           key="1"
         >
-          <Flex style={{ padding: '0 8px 16px 0' }}>
-            <Table
-              scroll={{
-                x: 'max-content',
-              }}
-              style={{ width: '100%' }}
-              columns={columns}
-              dataSource={dataAPIResearch?.customQuotationFCLDetailForBookings}
-              pagination={false}
+          <div
+            style={{
+              display: dataAPIResearch?.customQuotationFCLDetailForBookings
+                ? ''
+                : 'none',
+            }}
+          >
+            <Flex style={{ padding: '0 8px 16px 0' }}>
+              <Table
+                scroll={{
+                  x: 'max-content',
+                }}
+                style={{ width: '100%' }}
+                columns={columns}
+                dataSource={
+                  dataAPIResearch?.customQuotationFCLDetailForBookings
+                }
+                pagination={false}
+              />
+            </Flex>
+            <FeeOfCustoms
+              dataAPIResearch={dataAPIResearch}
+              setSubmitFeeCustoms={setSubmitFeeCustoms}
             />
-          </Flex>
-          <FeeOfCustoms
-            dataAPIResearch={dataAPIResearch}
-            setSubmitFeeCustoms={setSubmitFeeCustoms}
-          />
+          </div>
+          <div
+            style={{
+              display: !dataAPIResearch?.customQuotationFCLDetailForBookings
+                ? ''
+                : 'none',
+            }}
+          >
+            <Flex style={{ padding: '0 8px' }}>
+              <div
+                style={{
+                  width: '100%',
+                }}
+              >
+                <Result title="Please contact ASL's staff to receive a quotation" />
+              </div>
+            </Flex>
+          </div>
         </Panel>
       </Collapse>
     </ConfigProvider>

@@ -86,6 +86,7 @@ export default function FclOceanFreight() {
     useState<IDataStep2Props>();
   const [pagination, setPagination] =
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
+  const [showError, setShowError] = useState<boolean>(false);
 
   const getContainerType = useQuery({
     queryKey: [API_CONTAINER_TYPE.GET_ALL],
@@ -113,7 +114,7 @@ export default function FclOceanFreight() {
       const { currentPage, pageSize, totalPages } = data.data;
       data.status
         ? data.data.data.length === 0
-          ? warning()
+          ? (setShowError(true), setDataTableResearch([]))
           : (setDataTableResearch(
               data.data.data.map((data) => ({
                 key: data.seaQuotationID,
@@ -130,12 +131,16 @@ export default function FclOceanFreight() {
               current: currentPage,
               pageSize: pageSize,
               total: totalPages,
-            }))
-        : (errorToast(data.message), warning());
+            }),
+            setShowError(false))
+        : (errorToast(data.message),
+          setShowError(true),
+          setDataTableResearch([]));
     },
     onError() {
       errorToast(API_MESSAGE.ERROR);
-      warning();
+      setShowError(true);
+      setDataTableResearch([]);
     },
   });
 
@@ -201,12 +206,6 @@ export default function FclOceanFreight() {
     form.resetFields();
   };
 
-  const warning = () => {
-    Modal.warning({
-      title: 'Your request did not match any existing records.',
-    });
-  };
-
   return (
     <div className={style.wrapper}>
       <div className={style.bg}>
@@ -242,6 +241,7 @@ export default function FclOceanFreight() {
             setDataPropsBooking={setDataPropsBooking}
             pagination={pagination}
             handlePaginationChange={handlePaginationChange}
+            showError={showError}
           />
           <Step2
             displayStep={displayStep}

@@ -16,6 +16,7 @@ import {
   Modal,
   Table,
   Tag,
+  Result,
 } from 'antd';
 import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
@@ -69,6 +70,8 @@ export default function Trucking({
   const [dataTableResearch, setDataTableResearch] = useState<
     IQuotationTruckingTable[]
   >([]);
+  const [showError, setShowError] = useState<boolean>(false);
+
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
   const onFinish = (formValues: IRequireSearchTrucking) => {
@@ -110,7 +113,7 @@ export default function Trucking({
     onSuccess: (data: ResponseWithPayload<IQuotationTrucking>) => {
       data.status
         ? data.data
-          ? setDataTableResearch([
+          ? (setDataTableResearch([
               {
                 key: data.data.truckingQuotationID,
                 pickupID: data.data.pickupID,
@@ -122,12 +125,18 @@ export default function Trucking({
                 truckingQuotationDetailDTOs:
                   data.data.truckingQuotationDetailDTOs,
               },
-            ])
-          : warning()
-        : warning();
+            ]),
+            setShowError(false),
+            setSelectedRowKeys([]))
+          : (setShowError(true),
+            setDataTableResearch([]),
+            setSelectedRowKeys([]))
+        : (setShowError(true),
+          setDataTableResearch([]),
+          setSelectedRowKeys([]));
     },
     onError() {
-      warning();
+      setShowError(true), setDataTableResearch([]), setSelectedRowKeys([]);
     },
   });
 
@@ -151,12 +160,6 @@ export default function Trucking({
       router.back();
     },
   });
-
-  const warning = () => {
-    Modal.warning({
-      title: 'Your request did not match any existing records.',
-    });
-  };
 
   const containerReturn = useMemo(() => {
     const result = [];
@@ -388,6 +391,16 @@ export default function Trucking({
                   pagination={false}
                   rowSelection={rowSelection}
                 />
+              </div>
+            </Flex>
+            <Flex style={{ padding: '0 8px' }}>
+              <div
+                style={{
+                  width: '100%',
+                  display: showError ? '' : 'none',
+                }}
+              >
+                <Result title="Please contact ASL's staff to receive a quotation" />
               </div>
             </Flex>
           </Panel>

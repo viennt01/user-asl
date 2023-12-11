@@ -180,6 +180,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         className={style.cardCustomer}
         style={{
           marginBottom: '16px',
+          display: data.length === 0 ? 'none' : '',
         }}
       >
         <div
