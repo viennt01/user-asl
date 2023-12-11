@@ -1,33 +1,25 @@
-import React from 'react';
-import { ConfigProvider, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
+import TotalPrice from './totalPrice';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { formatNumber } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
 }
-
-export default function OtherServiceCharges({ dataPropsBooking }: Props) {
-  interface DataType {
-    key: string;
-    description?: string;
-    quantity?: string;
-    price?: string;
-    currency?: string;
-    total?: string;
-    remark?: string;
-  }
-
-  const sharedOnCell = (_: DataType, index: number | undefined) => {
-    if (index === 1) {
-      return { colSpan: 0 };
-    }
-
-    return {};
-  };
-
+interface DataType {
+  key: number;
+  description: string;
+  quantity: string;
+  price: string;
+  currency: string;
+  total: string;
+}
+export default function QuotationDetail({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -105,6 +97,9 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'price',
       key: 'price',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -141,66 +136,26 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'total',
       key: 'total',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Remark
-        </div>
-      ),
-      dataIndex: 'remark',
-      key: 'remark',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '2',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '3',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-  ];
-
+  useEffect(() => {
+    setData(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking.seaQuotationFCLDetails.map(
+        (item, index) => ({
+          key: index,
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          currency: item.currency,
+          total: item.totalAmount,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
   return (
     <ConfigProvider
       theme={{
@@ -225,10 +180,10 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
         className={style.cardCustomer}
         style={{
           marginBottom: '16px',
+          display: data.length === 0 ? 'none' : '',
         }}
       >
         <div
-          className={style.cardCustomerHeader}
           style={{
             paddingLeft: '16px',
             backgroundColor: COLORS.GREY_COLOR_HOVER,
@@ -242,19 +197,19 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          OTHER SERVICE CHARGES (IF REQUEST)
+          Quotation details
         </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}
           pagination={false}
           bordered
-          // scroll={{
-          //   x: 'max-content',
-          // }}
+          scroll={{
+            x: 'max-content',
+          }}
         />
+        <TotalPrice />
       </div>
     </ConfigProvider>
   );

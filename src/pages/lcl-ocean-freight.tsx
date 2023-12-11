@@ -2,7 +2,7 @@ import Head from 'next/head';
 import getAppLayout from '@/layout';
 import { APP_NAME, LAYOUT_TYPES } from '@/constants/common';
 import withAuthentication from '@/hook/useAuthentication';
-import LclOceanFreight from '@/components/lcl-ocean-freigh';
+import LclOceanFreight from '@/components/lcl-ocean-freight';
 
 function FclOceanFreightPage() {
   return (
