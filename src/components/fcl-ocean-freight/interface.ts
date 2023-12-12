@@ -186,6 +186,11 @@ export interface RequestFee {
   id: string[];
 }
 
+export interface RequestFeeOption {
+  id: string[];
+  options: string[];
+}
+
 // search trucking
 export interface IRequireSearchTrucking {
   pickupID: string;

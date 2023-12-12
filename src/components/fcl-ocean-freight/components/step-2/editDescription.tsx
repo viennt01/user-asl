@@ -22,6 +22,7 @@ interface Props {
 export interface IQuantity {
   key: string;
   quantity: string;
+  name: string;
 }
 
 export default function EditDescription({

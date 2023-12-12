@@ -24,6 +24,7 @@ import {
   IRequireDetailBooking,
   IDetailBooking,
   IRequireConfirmBooking,
+  RequestFeeOption,
 } from './interface';
 import {
   API_BOOKING,
@@ -81,6 +82,12 @@ export const getSeaQuotationDetail = (id: string) => {
 export const getFeeWithFeeGroup = (data: RequestFee) => {
   return post<RequestFee, ResponseWithPayload<FeeTable[]>>({ data })(
     API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP
+  );
+};
+
+export const getFeeWithFeeGroupOption = (data: RequestFeeOption) => {
+  return post<RequestFeeOption, ResponseWithPayload<FeeTable[]>>({ data })(
+    API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP_OPTION
   );
 };
 

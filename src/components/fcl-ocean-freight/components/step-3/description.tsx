@@ -37,12 +37,10 @@ export default function ServiceStep3({
 }: Props) {
   const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<string>('');
   const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<string>('');
-  const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] = useState<
-    string[]
-  >([]);
-  const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] = useState<
-    string[]
-  >([]);
+  const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] =
+    useState<string>('');
+  const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] =
+    useState<string>('');
   const [submitFeeCustomsPOL, setSubmitFeeCustomsPOL] = useState<
     ISubmitFeeCustoms[]
   >([]);
@@ -119,10 +117,10 @@ export default function ServiceStep3({
         truckingQuotationPOLID: selectedRowKeysPOL || '',
         truckingQuotationPODID: selectedRowKeysPOD || '',
         customQuotationPOLID: FeeCustomsPOL
-          ? selectedRowKeysCustomsPOL[0] || ''
+          ? selectedRowKeysCustomsPOL || ''
           : '',
         customQuotationPODID: FeeCustomsPOD
-          ? selectedRowKeysCustomsPOD[0] || ''
+          ? selectedRowKeysCustomsPOD || ''
           : '',
         customQuotationPOLDetailRegisterRequests: FeeCustomsPOL || [],
         customQuotationPODDetailRegisterRequests: FeeCustomsPOD || [],
@@ -176,6 +174,8 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOL}
                   setSelectedRowKey={setSelectedRowKeysCustomsPOL}
+                  selectedRowKey={selectedRowKeysCustomsPOL}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
               <Col span={24}>
@@ -184,6 +184,8 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOD}
                   setSelectedRowKey={setSelectedRowKeysCustomsPOD}
+                  selectedRowKey={selectedRowKeysCustomsPOD}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
             </Row>

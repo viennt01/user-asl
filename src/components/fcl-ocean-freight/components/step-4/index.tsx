@@ -8,6 +8,7 @@ import {
   Row,
   ConfigProvider,
   Checkbox,
+  Spin,
 } from 'antd';
 import { IDataBookingProps } from '../..';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
@@ -64,9 +65,36 @@ export default function Step4({
       }}
     >
       <Card className={style.cardMain} title="Review Booking">
-        <Row gutter={26}>
-          <FormBooking dataPropsBooking={dataPropsBooking}/>
-          <Col span={24} style={{ marginTop: '16px' }}>
+        <ConfigProvider
+          theme={{
+            components: {
+              Spin: {
+                dotSize: 100,
+                dotSizeLG: 100,
+                dotSizeSM: 100,
+              },
+            },
+          }}
+        >
+          <Spin
+            tip="Loading"
+            size="small"
+            style={{
+              display: confirmBookingMutation.isLoading ? '' : 'none',
+              marginTop: '50px',
+            }}
+          >
+            <div className="content" />
+          </Spin>
+        </ConfigProvider>
+
+        <div
+          style={{
+            display: !confirmBookingMutation.isLoading ? '' : 'none',
+          }}
+        >
+          <FormBooking dataPropsBooking={dataPropsBooking} />
+          <div style={{ width: '100%', marginTop: '16px' }}>
             <ConfigProvider
               theme={{
                 components: {
@@ -109,8 +137,8 @@ export default function Step4({
                 Submit booking
               </Button>
             </Flex>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Card>
     </div>
   );

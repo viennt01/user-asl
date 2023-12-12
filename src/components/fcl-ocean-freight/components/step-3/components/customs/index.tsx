@@ -7,9 +7,13 @@ import {
   Typography,
   Table,
   Result,
+  Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import {
+  IDataBookingProps,
+  IDataStep2Props,
+} from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING, API_UNIT } from '@/fetcherAxios/endpoint';
 import {
@@ -36,7 +40,9 @@ interface Props {
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
-  setSelectedRowKey: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedRowKey: React.Dispatch<React.SetStateAction<string>>;
+  selectedRowKey: string;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 const initalValueForm = {
   cargoReady: 22222222222222,
@@ -48,6 +54,8 @@ export default function Customs({
   dataPropsBooking,
   setSubmitFeeCustoms,
   setSelectedRowKey,
+  selectedRowKey,
+  dataStep2PropsBooking,
 }: Props) {
   const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
   const [dataResearch, setDataResearch] =
@@ -55,6 +63,15 @@ export default function Customs({
   const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
     []
   );
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (dataAPIResearch?.customQuotationID) {
+      setSelectedRowKey(
+        componentDisabled ? dataAPIResearch?.customQuotationID : ''
+      );
+    }
+  }, [componentDisabled]);
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
@@ -101,12 +118,23 @@ export default function Customs({
           customQuotationFCLDetailForBookings:
             data.data.customQuotationFCLDetailForBookings,
         });
-        setSelectedRowKey([data.data.customQuotationID]);
+        setSelectedRowKey('');
       }
     },
   });
 
   const columns: ColumnsType<ICustomQuotationFCLDetailForBookings> = [
+    {
+      title: (
+        <Checkbox
+          checked={componentDisabled}
+          onChange={(e) => setComponentDisabled(e.target.checked)}
+        />
+      ),
+      dataIndex: 'key',
+      width: 50,
+      render: (_, record) => <></>,
+    },
     {
       title: 'Unit',
       dataIndex: 'unitID',
@@ -214,15 +242,22 @@ export default function Customs({
                 style={{ width: '100%' }}
                 columns={columns}
                 dataSource={
-                  dataAPIResearch?.customQuotationFCLDetailForBookings
+                  dataAPIResearch?.customQuotationFCLDetailForBookings || []
                 }
                 pagination={false}
               />
             </Flex>
-            <FeeOfCustoms
-              dataAPIResearch={dataAPIResearch}
-              setSubmitFeeCustoms={setSubmitFeeCustoms}
-            />
+            <div
+              style={{
+                display: selectedRowKey === '' ? 'none' : '',
+              }}
+            >
+              <FeeOfCustoms
+                dataAPIResearch={dataAPIResearch}
+                setSubmitFeeCustoms={setSubmitFeeCustoms}
+                dataStep2PropsBooking={dataStep2PropsBooking}
+              />
+            </div>
           </div>
           <div
             style={{

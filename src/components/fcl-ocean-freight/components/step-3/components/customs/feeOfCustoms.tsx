@@ -6,6 +6,7 @@ import {
   IQuotationCustomsTable,
 } from '@/components/fcl-ocean-freight/interface';
 import TableFeeOfCustoms from './tableFeeCustoms';
+import { IDataStep2Props } from '@/components/fcl-ocean-freight';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
@@ -14,6 +15,7 @@ interface Props {
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
+  dataStep2PropsBooking: IDataStep2Props | undefined
 }
 
 export interface ISeaQuotationFeeFormValue {
@@ -29,6 +31,7 @@ export interface ISubmitFeeCustoms {
 export default function FeeOfCustoms({
   dataAPIResearch,
   setSubmitFeeCustoms,
+  dataStep2PropsBooking,
 }: Props) {
   const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
 
@@ -43,6 +46,7 @@ export default function FeeOfCustoms({
           <TableFeeOfCustoms
             idFeeGroup={value.feeGroupID}
             setSubmitFeeCustoms={setSubmitFeeCustoms}
+            dataStep2PropsBooking={dataStep2PropsBooking}
           />
         ),
         key: `${value.feeGroupID}`,

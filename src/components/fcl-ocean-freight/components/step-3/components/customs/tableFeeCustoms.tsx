@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Flex, Table, InputRef, Input, Space, Button } from 'antd';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getFeeWithFeeGroup } from '@/components/fcl-ocean-freight/fetcher';
 import {
-  FeeTable,
-} from '@/components/fcl-ocean-freight/interface';
+  getFeeWithFeeGroup,
+  getFeeWithFeeGroupOption,
+} from '@/components/fcl-ocean-freight/fetcher';
+import { FeeTable } from '@/components/fcl-ocean-freight/interface';
 import {
   ColumnType,
   ColumnsType,
@@ -16,12 +16,14 @@ import { formatNumber } from '@/utils/format-number';
 import { SearchOutlined } from '@ant-design/icons';
 import Highlighter from 'react-highlight-words';
 import { ISubmitFeeCustoms } from './feeOfCustoms';
+import { IDataStep2Props } from '@/components/fcl-ocean-freight';
 
 interface Props {
   idFeeGroup: string;
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 
 type DataIndex = keyof FeeTable;
@@ -29,24 +31,61 @@ type DataIndex = keyof FeeTable;
 export default function TableFeeOfCustoms({
   idFeeGroup,
   setSubmitFeeCustoms,
+  dataStep2PropsBooking,
 }: Props) {
   const [dataFeeTable, setDataFeeTable] = useState<FeeTable[]>([]);
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef<InputRef>(null);
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [listContainerQuotation, setListContainerQuotation] = useState<
+    string[]
+  >([]);
+
+  useEffect(() => {
+    if (dataStep2PropsBooking?.listQuantityType) {
+      setListContainerQuotation(
+        dataStep2PropsBooking?.listQuantityType
+          ?.filter((value) => Number(value.quantity) > 0)
+          .map((value) => value.name) || []
+      );
+    }
+  }, [dataStep2PropsBooking]);
 
   useEffect(() => {
     setSubmitFeeCustoms((pre) => {
       const filteredData = pre.filter(function (item) {
         return item.feeGroupID !== idFeeGroup;
       });
-      return [...filteredData, { feeGroupID: idFeeGroup, listFee: selectedRowKeys }];
+      return [
+        ...filteredData,
+        { feeGroupID: idFeeGroup, listFee: selectedRowKeys },
+      ];
+    });
+  }, [selectedRowKeys]);
+
+  useEffect(() => {
+    setSubmitFeeCustoms((pre) => {
+      const filteredData = pre.filter(function (item) {
+        return item.feeGroupID !== idFeeGroup;
+      });
+      return [
+        ...filteredData,
+        { feeGroupID: idFeeGroup, listFee: selectedRowKeys },
+      ];
     });
   }, [selectedRowKeys]);
   useQuery({
-    queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, idFeeGroup],
-    queryFn: () => getFeeWithFeeGroup({ id: [idFeeGroup] }),
+    queryKey: [
+      API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP_OPTION,
+      idFeeGroup,
+      listContainerQuotation,
+    ],
+    queryFn: () =>
+      getFeeWithFeeGroupOption({
+        id: [idFeeGroup],
+        options: [...listContainerQuotation, 'SETS', 'shipment'],
+      }),
     enabled: idFeeGroup !== undefined,
     onSuccess(data) {
       setDataFeeTable([]);

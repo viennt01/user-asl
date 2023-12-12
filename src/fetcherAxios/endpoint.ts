@@ -48,6 +48,7 @@ export const API_SEA_QUOTATION = {
 
 export const API_FEE_GROUP = {
   GET_ALL_FEE_WITH_FEE_GROUP: '/get-all-fee-with-fee-group',
+  GET_ALL_FEE_WITH_FEE_GROUP_OPTION: '/get-all-fee-with-fee-group-and-options',
 };
 
 export const API_LOAD_CAPACITY = {

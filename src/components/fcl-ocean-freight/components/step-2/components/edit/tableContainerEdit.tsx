@@ -70,6 +70,7 @@ export default function TableContainerEdit({
       {
         key: value.key,
         quantity: inputRef?.current?.value || 1,
+        name: value.containerType,
       },
     ];
     setDataStep2PropsBooking((pre) => ({
@@ -150,6 +151,7 @@ export default function TableContainerEdit({
         );
         return {
           key: matchedContainer?.value || '', // ID của container từ mảng B
+          name: itemA.containerType,
           quantity: itemA.quantity, // Số lượng từ mảng A
         };
       }),
