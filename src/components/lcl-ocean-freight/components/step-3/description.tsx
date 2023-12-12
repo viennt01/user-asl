@@ -35,8 +35,8 @@ export default function ServiceStep3({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
-  const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<React.Key[]>([]);
-  const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<React.Key[]>([]);
+  const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<string>('');
+  const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<string>('');
   const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] = useState<
     string[]
   >([]);
@@ -104,7 +104,7 @@ export default function ServiceStep3({
       typeOfPODID: dataPropsBooking.step1?.trafficPod?.typeOfTransportID || '',
       commodityID: dataPropsBooking.dataQuotation?.commodityID || '',
       currencyID: dataPropsBooking.dataQuotation?.currencyID || '',
-      typeSeaService: TYPE_SERVICE.FCL,
+      typeSeaService: TYPE_SERVICE.LCL,
       typeOfService: 'SEA',
       cargoReadyDated: dataPropsBooking.step1?.cargoReady?.valueOf() || 1,
       cargoCutOffDated:
@@ -156,7 +156,6 @@ export default function ServiceStep3({
                 <Trucking
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysPOL}
                   setSelectedRowKeys={setSelectedRowKeysPOL}
                 />
               </Col>
@@ -168,7 +167,6 @@ export default function ServiceStep3({
                 <Trucking
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysPOD}
                   setSelectedRowKeys={setSelectedRowKeysPOD}
                 />
               </Col>

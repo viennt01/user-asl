@@ -205,19 +205,11 @@ export interface IQuotationTrucking {
   abbreviations: string;
   fclTruckingQuotationDetails: IFclTruckingQuotationDetails[];
 }
-export interface IQuotationTruckingTable
-  extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
-  key: React.Key;
-}
 export interface IFclTruckingQuotationDetails {
   containerTypeCode: string;
   containerTypeID: string;
   price: string;
   vat: string;
-}
-export interface IFclTruckingQuotationDetailsTable
-  extends IFclTruckingQuotationDetails {
-  key: React.Key;
 }
 // get all type capacity
 export interface RequireTypeLoadCapacity {

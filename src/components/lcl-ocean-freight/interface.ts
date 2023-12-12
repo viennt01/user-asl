@@ -189,11 +189,8 @@ export interface RequestFee {
 export interface IRequireSearchTrucking {
   pickupID: string;
   deliveryID: string;
-  typeSeaService: string;
   cargoReady: number;
   commodityID: string;
-  containers: string[];
-  // loadCapacities: string[];
 }
 export interface IQuotationTrucking {
   truckingQuotationID: string;
@@ -203,10 +200,17 @@ export interface IQuotationTrucking {
   deliveryName: string;
   commodityID: string;
   commodityName: string;
-  truckingQuotationDetailDTOs: { [key: string]: string };
+  abbreviations: string;
+  lclTruckingQuotationDetails: ILclTruckingQuotationDetails[];
 }
-export interface IQuotationTruckingTable
-  extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
+export interface ILclTruckingQuotationDetails {
+  loadCapacityID: string;
+  loadCapacityCode: string;
+  price: string;
+  vat: string;
+}
+export interface ILclTruckingQuotationDetailsTable
+  extends ILclTruckingQuotationDetails {
   key: React.Key;
 }
 // get all type capacity

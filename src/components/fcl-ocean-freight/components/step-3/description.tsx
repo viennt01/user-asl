@@ -153,7 +153,6 @@ export default function ServiceStep3({
                 <Trucking
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysPOL}
                   setSelectedRowKeys={setSelectedRowKeysPOL}
                   dataStep2PropsBooking={dataStep2PropsBooking}
                 />
@@ -166,7 +165,6 @@ export default function ServiceStep3({
                 <Trucking
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
-                  selectedRowKeys={selectedRowKeysPOD}
                   setSelectedRowKeys={setSelectedRowKeysPOD}
                   dataStep2PropsBooking={dataStep2PropsBooking}
                 />

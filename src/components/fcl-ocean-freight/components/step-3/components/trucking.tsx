@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../index.module.scss';
 import {
   Button,
@@ -42,7 +42,6 @@ import { TYPE_POL_POD } from '../description';
 import { formatNumber } from '@/utils/format-number';
 interface Props {
   dataPropsBooking: IDataBookingProps;
-  selectedRowKeys: string;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
   type: TYPE_POL_POD;
   dataStep2PropsBooking: IDataStep2Props | undefined;
@@ -63,7 +62,6 @@ const initalValueForm = {
 
 export default function Trucking({
   dataPropsBooking,
-  selectedRowKeys,
   setSelectedRowKeys,
   type,
   dataStep2PropsBooking,

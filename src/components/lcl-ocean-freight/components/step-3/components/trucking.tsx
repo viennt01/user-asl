@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from '../index.module.scss';
 import {
   Button,
@@ -13,38 +13,34 @@ import {
   Select,
   DatePicker,
   Input,
-  Modal,
   Table,
   Tag,
   Result,
+  Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING, API_LOCATION } from '@/fetcherAxios/endpoint';
+import { getAllLocation } from '@/components/fcl-ocean-freight/fetcher';
 import {
-  getAllLocation,
-  getPriceTrucking,
-} from '@/components/fcl-ocean-freight/fetcher';
-import {
-  IRequireSearchTrucking,
   TYPE_LOCATION,
   TYPE_SERVICE,
 } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
-import { ITypeDTOs } from '../../tableReturn';
-import { TableRowSelection } from 'antd/lib/table/interface';
 import { TYPE_POL_POD } from '../description';
 import {
+  ILclTruckingQuotationDetails,
   IQuotationTrucking,
-  IQuotationTruckingTable,
+  IRequireSearchTrucking,
 } from '@/components/lcl-ocean-freight/interface';
+import { getPriceTrucking } from '@/components/lcl-ocean-freight/fetcher';
+import { formatNumber } from '@/utils/format-number';
 interface Props {
   dataPropsBooking: IDataBookingProps;
-  selectedRowKeys: React.Key[];
-  setSelectedRowKeys: React.Dispatch<React.SetStateAction<React.Key[]>>;
+  setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
   type: TYPE_POL_POD;
 }
 const { Panel } = Collapse;
@@ -63,16 +59,23 @@ const initalValueForm = {
 
 export default function Trucking({
   dataPropsBooking,
-  selectedRowKeys,
   setSelectedRowKeys,
   type,
 }: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
-  const [dataTableResearch, setDataTableResearch] = useState<
-    IQuotationTruckingTable[]
-  >([]);
+  const [dataTableResearch, setDataTableResearch] =
+    useState<IQuotationTrucking>();
   const [showError, setShowError] = useState<boolean>(false);
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (dataTableResearch?.truckingQuotationID) {
+      setSelectedRowKeys(
+        componentDisabled ? dataTableResearch?.truckingQuotationID : ''
+      );
+    }
+  }, [componentDisabled]);
 
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
@@ -82,17 +85,13 @@ export default function Trucking({
         ? {
             deliveryID: formValues.deliveryID || '',
             pickupID: dataPropsBooking.dataQuotation?.podid || '',
-            typeSeaService: TYPE_SERVICE.FCL,
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
-            containers: dataPropsBooking?.step1?.containers || [],
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
           }
         : {
             pickupID: formValues.pickupID || '',
             deliveryID: dataPropsBooking?.dataQuotation?.polid || '',
-            typeSeaService: TYPE_SERVICE.FCL,
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
-            containers: dataPropsBooking?.step1?.containers || [],
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
           };
     setDataResearch(_requestData);
@@ -106,7 +105,7 @@ export default function Trucking({
 
   const getPrice = useQuery({
     queryKey: [
-      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_FCL,
+      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_LCL,
       dataResearch,
     ],
     queryFn: () => getPriceTrucking(dataResearch),
@@ -114,30 +113,25 @@ export default function Trucking({
     onSuccess: (data: ResponseWithPayload<IQuotationTrucking>) => {
       data.status
         ? data.data
-          ? (setDataTableResearch([
-              {
-                key: data.data.truckingQuotationID,
-                pickupID: data.data.pickupID,
-                pickupName: data.data.pickupName,
-                deliveryID: data.data.deliveryID,
-                deliveryName: data.data.deliveryName,
-                commodityID: data.data.commodityID,
-                commodityName: data.data.commodityName,
-                truckingQuotationDetailDTOs:
-                  data.data.truckingQuotationDetailDTOs,
-              },
-            ]),
+          ? (setDataTableResearch({
+              truckingQuotationID: data.data.truckingQuotationID,
+              pickupID: data.data.pickupID,
+              pickupName: data.data.pickupName,
+              deliveryID: data.data.deliveryID,
+              deliveryName: data.data.deliveryName,
+              commodityID: data.data.commodityID,
+              commodityName: data.data.commodityName,
+              abbreviations: data.data.abbreviations,
+              lclTruckingQuotationDetails:
+                data.data.lclTruckingQuotationDetails,
+            }),
             setShowError(false),
-            setSelectedRowKeys([]))
-          : (setShowError(true),
-            setDataTableResearch([]),
-            setSelectedRowKeys([]))
-        : (setShowError(true),
-          setDataTableResearch([]),
-          setSelectedRowKeys([]));
+            setSelectedRowKeys(''))
+          : (setShowError(true), setSelectedRowKeys(''))
+        : (setShowError(true), setSelectedRowKeys(''));
     },
     onError() {
-      setShowError(true), setDataTableResearch([]), setSelectedRowKeys([]);
+      setShowError(true), setSelectedRowKeys('');
     },
   });
 
@@ -162,52 +156,60 @@ export default function Trucking({
     },
   });
 
-  const containerReturn = useMemo(() => {
-    const result = [];
-    if (dataTableResearch) {
-      for (const key in dataTableResearch[0]?.truckingQuotationDetailDTOs) {
-        if (
-          dataTableResearch[0].truckingQuotationDetailDTOs.hasOwnProperty(key)
-        ) {
-          const obj = {
-            title: (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {key}
-              </div>
-            ),
-            dataIndex: 'truckingQuotationDetailDTOs',
-            render: (value: ITypeDTOs) => {
-              return (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Tag
-                    color="#F2F48E"
-                    style={{ color: '#000', fontWeight: '450' }}
-                  >{`${value[key]}`}</Tag>
-                </div>
-              );
-            },
-          };
-          result.push(obj);
-        }
-      }
-    }
-    return result;
-  }, [dataTableResearch]);
-
-  const columns: ColumnsType<IQuotationTruckingTable> = [...containerReturn];
-
-  const rowSelection: TableRowSelection<IQuotationTruckingTable> = {
-    type: 'checkbox',
-    columnWidth: 48,
-    selectedRowKeys,
-    onChange: (
-      selectedRowKeys: React.Key[],
-      selectedRows: IQuotationTruckingTable[]
-    ) => {
-      setSelectedRowKeys(selectedRowKeys);
+  const columns: ColumnsType<ILclTruckingQuotationDetails> = [
+    {
+      title: (
+        <Checkbox
+          checked={componentDisabled}
+          onChange={(e) => setComponentDisabled(e.target.checked)}
+        />
+      ),
+      dataIndex: 'key',
+      width: 50,
+      render: (_, record) => <></>,
     },
-    hideSelectAll: true,
-  };
+    {
+      title: (
+        <Flex align="center" justify="center">
+          Container
+        </Flex>
+      ),
+      dataIndex: 'loadCapacityCode',
+      key: 'loadCapacityCode',
+    },
+    {
+      title: (
+        <Flex align="center" justify="center">
+          Price
+        </Flex>
+      ),
+      dataIndex: 'price',
+      key: 'price',
+      align: 'right',
+      render: (value) => {
+        return (
+          <Tag color="#F2F48E" style={{ color: '#000', fontWeight: '450' }}>
+            {value
+              ? `${formatNumber(value)} ${dataTableResearch?.abbreviations}`
+              : '-'}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: (
+        <Flex align="center" justify="center">
+          VAT
+        </Flex>
+      ),
+      dataIndex: 'vat',
+      key: 'vat',
+      align: 'right',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+  ];
 
   return (
     <ConfigProvider
@@ -380,7 +382,7 @@ export default function Trucking({
               <div
                 style={{
                   width: '100%',
-                  display: dataTableResearch.length === 0 ? 'none' : '',
+                  display: dataTableResearch ? 'none' : '',
                 }}
               >
                 <Table
@@ -388,9 +390,10 @@ export default function Trucking({
                     x: 'max-content',
                   }}
                   columns={columns}
-                  dataSource={dataTableResearch}
+                  dataSource={
+                    dataTableResearch?.lclTruckingQuotationDetails || []
+                  }
                   pagination={false}
-                  rowSelection={rowSelection}
                 />
               </div>
             </Flex>

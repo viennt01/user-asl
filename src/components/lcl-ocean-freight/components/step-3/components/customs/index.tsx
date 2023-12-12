@@ -23,7 +23,7 @@ import {
   IRequireSearchCustoms,
   TYPE_UNIT,
 } from '@/components/fcl-ocean-freight/interface';
-import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
+import { ColumnsType } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
 import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
 import { TYPE_POL_POD } from '../../description';
