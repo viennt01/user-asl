@@ -26,8 +26,6 @@ import {
   getPriceTrucking,
 } from '@/components/fcl-ocean-freight/fetcher';
 import {
-  IQuotationTrucking,
-  IQuotationTruckingTable,
   IRequireSearchTrucking,
   TYPE_LOCATION,
   TYPE_SERVICE,
@@ -39,6 +37,10 @@ import { ColumnsType } from 'antd/lib/table';
 import { ITypeDTOs } from '../../tableReturn';
 import { TableRowSelection } from 'antd/lib/table/interface';
 import { TYPE_POL_POD } from '../description';
+import {
+  IQuotationTrucking,
+  IQuotationTruckingTable,
+} from '@/components/lcl-ocean-freight/interface';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   selectedRowKeys: React.Key[];
@@ -96,7 +98,6 @@ export default function Trucking({
     setDataResearch(_requestData);
     if (
       _requestData.pickupID === dataResearch.pickupID &&
-      // _requestData.loadCapacities === dataResearch.loadCapacities &&
       _requestData.cargoReady === dataResearch.cargoReady
     ) {
       getPrice.refetch();
@@ -105,7 +106,7 @@ export default function Trucking({
 
   const getPrice = useQuery({
     queryKey: [
-      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING,
+      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_FCL,
       dataResearch,
     ],
     queryFn: () => getPriceTrucking(dataResearch),

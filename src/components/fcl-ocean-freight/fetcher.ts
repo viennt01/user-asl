@@ -88,7 +88,7 @@ export const getFeeWithFeeGroup = (data: RequestFee) => {
 export const getPriceTrucking = (data: IRequireSearchTrucking) => {
   return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking>>({
     data,
-  })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING);
+  })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_FCL);
 };
 
 //Get all Load Capacity

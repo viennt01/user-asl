@@ -190,11 +190,9 @@ export interface RequestFee {
 export interface IRequireSearchTrucking {
   pickupID: string;
   deliveryID: string;
-  typeSeaService: string;
   cargoReady: number;
   commodityID: string;
   containers: string[];
-  // loadCapacities: string[];
 }
 export interface IQuotationTrucking {
   truckingQuotationID: string;
@@ -204,10 +202,21 @@ export interface IQuotationTrucking {
   deliveryName: string;
   commodityID: string;
   commodityName: string;
-  truckingQuotationDetailDTOs: { [key: string]: string };
+  abbreviations: string;
+  fclTruckingQuotationDetails: IFclTruckingQuotationDetails[];
 }
 export interface IQuotationTruckingTable
   extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
+  key: React.Key;
+}
+export interface IFclTruckingQuotationDetails {
+  containerTypeCode: string;
+  containerTypeID: string;
+  price: string;
+  vat: string;
+}
+export interface IFclTruckingQuotationDetailsTable
+  extends IFclTruckingQuotationDetails {
   key: React.Key;
 }
 // get all type capacity
@@ -271,7 +280,7 @@ export interface IBooking {
   typeOfPODID: string;
   commodityID: string;
   currencyID: string;
-  typeSeaService: string; 
+  typeSeaService: string;
   typeOfService: string; // SEA
   cargoReadyDated: number;
   cargoCutOffDated: number;

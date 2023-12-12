@@ -35,8 +35,8 @@ export default function ServiceStep3({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
-  const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<React.Key[]>([]);
-  const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<React.Key[]>([]);
+  const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<string>('');
+  const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<string>('');
   const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] = useState<
     string[]
   >([]);
@@ -116,8 +116,8 @@ export default function ServiceStep3({
       isManualBooking: false,
       quotationBookingDetailRegisterRequest: {
         seaQuotationID: dataPropsBooking.idQuotation || '',
-        truckingQuotationPOLID: selectedRowKeysPOL[0] || '',
-        truckingQuotationPODID: selectedRowKeysPOD[0] || '',
+        truckingQuotationPOLID: selectedRowKeysPOL || '',
+        truckingQuotationPODID: selectedRowKeysPOD || '',
         customQuotationPOLID: FeeCustomsPOL
           ? selectedRowKeysCustomsPOL[0] || ''
           : '',
@@ -155,6 +155,7 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   selectedRowKeys={selectedRowKeysPOL}
                   setSelectedRowKeys={setSelectedRowKeysPOL}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
               <Col
@@ -167,6 +168,7 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   selectedRowKeys={selectedRowKeysPOD}
                   setSelectedRowKeys={setSelectedRowKeysPOD}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
 

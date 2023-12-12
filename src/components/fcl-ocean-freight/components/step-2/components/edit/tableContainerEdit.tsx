@@ -114,7 +114,7 @@ export default function TableContainerEdit({
         return (
           <InputNumber
             ref={inputRef}
-            defaultValue={1}
+            defaultValue={0}
             onPressEnter={() => save(recode, inputRef)}
             onBlur={() => save(recode, inputRef)}
           />
@@ -138,7 +138,7 @@ export default function TableContainerEdit({
   }, [dataPropsBooking]);
 
   useEffect(() => {
-    setDataTable(dataTableS);
+    setDataTable(dataTableS.filter((item) => item.oceanFreight !== ''));
   }, [dataTableS]);
 
   useEffect(() => {
