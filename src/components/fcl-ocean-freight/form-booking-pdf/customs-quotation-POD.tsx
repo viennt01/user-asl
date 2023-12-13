@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
 
@@ -12,20 +11,23 @@ interface Props {
 }
 interface DataType {
   key: number;
-  description: string;
-  quantity: string;
-  price: string;
-  currency: string;
-  unit: string;
+  basePriceRedLane: string;
+  basePriceYellowLane: string;
+  basePriceGreenLane: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
   vat: string;
-  total: string;
+  unit: string;
+  quantity: string;
+  totalRedLane: string;
+  totalYellowLane: string;
+  totalGreenLane: string;
 }
 
-export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
+export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
-  const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
-    []
-  );
+
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -49,24 +51,6 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
       render: (_, record, index) => {
         return index + 1;
       },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Description of charges
-        </div>
-      ),
-      dataIndex: 'description',
-      key: 'description',
     },
     {
       title: (
@@ -116,45 +100,6 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Price
-        </div>
-      ),
-      dataIndex: 'price',
-      key: 'price',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Currency
-        </div>
-      ),
-      dataIndex: 'currency',
-      key: 'currency',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
           VAT
         </div>
       ),
@@ -173,11 +118,179 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Amount
+          Base Green Lane
         </div>
       ),
-      dataIndex: 'total',
-      key: 'total',
+      dataIndex: 'basePriceGreenLane',
+      key: 'basePriceGreenLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Base Yellow Lane
+        </div>
+      ),
+      dataIndex: 'basePriceYellowLane',
+      key: 'basePriceYellowLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Base Red Lane
+        </div>
+      ),
+      dataIndex: 'basePriceRedLane',
+      key: 'basePriceRedLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Green Lane
+        </div>
+      ),
+      dataIndex: 'priceGreenLane',
+      key: 'priceGreenLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Yellow Lane
+        </div>
+      ),
+      dataIndex: 'priceYellowLane',
+      key: 'priceYellowLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Red Lane
+        </div>
+      ),
+      dataIndex: 'priceRedLane',
+      key: 'priceRedLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Green Lane
+        </div>
+      ),
+      dataIndex: 'totalGreenLane',
+      key: 'totalGreenLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Yellow Lane
+        </div>
+      ),
+      dataIndex: 'totalYellowLane',
+      key: 'totalYellowLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+         Total Red Lane
+        </div>
+      ),
+      dataIndex: 'totalGreenLane',
+      key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -186,32 +299,25 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
         (item, index) => ({
           key: index,
-          description: item.description,
-          quantity: item.quantity,
-          price: item.price,
-          currency: item.currency,
-          unit: item.unit,
+          basePriceRedLane: item.basePriceRedLane,
+          basePriceYellowLane: item.basePriceYellowLane,
+          basePriceGreenLane: item.basePriceGreenLane,
+          priceRedLane: item.priceRedLane,
+          priceYellowLane: item.priceYellowLane,
+          priceGreenLane: item.priceGreenLane,
           vat: item.vat,
-          total: item.totalAmount,
+          unit: item.unit,
+          quantity: item.quantity,
+          totalRedLane: item.totalRedLane,
+          totalYellowLane: item.totalYellowLane,
+          totalGreenLane: item.totalGreenLane,
         })
       ) || []
     );
   }, [dataPropsBooking]);
-
-  useEffect(() => {
-    setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
-        (item, index) => ({
-          key: index,
-          price: `${item.item2} ${item.item1}`,
-        })
-      ) || []
-    );
-  }, [dataPropsBooking]);
-
   return (
     <ConfigProvider
       theme={{
@@ -253,20 +359,18 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-         Trucking service other charges (ORIGIN)
+          Customs service (DESTINATION)
         </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
-        <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
     </ConfigProvider>
   );

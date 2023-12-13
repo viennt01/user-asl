@@ -50,7 +50,6 @@ export interface IDataBookingProps {
 
 export const initalValueProps = {
   idQuotation: '',
-  // idBooking: '07bb42ce-00cf-498b-ae88-9b56a8307460',
   idBooking: '',
 };
 
@@ -207,7 +206,7 @@ export default function FclOceanFreight() {
   };
 
   return (
-    <div className={style.wrapper}>
+    <section className={style.wrapper}>
       <div className={style.bg}>
         <Flex justify="center" className={style.welcome}>
           <Flex align="center" justify="center" className={style.container}>
@@ -271,6 +270,6 @@ export default function FclOceanFreight() {
         </div>
       </Flex>
       <Service />
-    </div>
+    </section>
   );
 }

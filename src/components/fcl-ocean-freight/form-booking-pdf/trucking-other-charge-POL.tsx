@@ -262,9 +262,9 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

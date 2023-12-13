@@ -20,7 +20,7 @@ interface Props {
   dataPropsBooking: IDataBookingProps;
 }
 
-export default function FormBooking({ dataPropsBooking }: Props) {
+export default function FormBookingPDF({ dataPropsBooking }: Props) {
   return (
     <div>
       <div
@@ -50,7 +50,6 @@ export default function FormBooking({ dataPropsBooking }: Props) {
       <CustomsOtherChargesPOL dataPropsBooking={dataPropsBooking} />
       <CustomsQuotationPOD dataPropsBooking={dataPropsBooking} />
       <CustomsOtherChargesPOD dataPropsBooking={dataPropsBooking} />
-      {/* <OtherServiceCharges dataPropsBooking={dataPropsBooking} /> */}
       <Finish dataPropsBooking={dataPropsBooking} />
     </div>
   );

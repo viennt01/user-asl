@@ -1,33 +1,31 @@
-import React from 'react';
-import { ConfigProvider, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
+import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { formatNumber } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
 }
+interface DataType {
+  key: number;
+  description: string;
+  quantity: string;
+  price: string;
+  currency: string;
+  unit: string;
+  vat: string;
+  total: string;
+}
 
-export default function OtherServiceCharges({ dataPropsBooking }: Props) {
-  interface DataType {
-    key: string;
-    description?: string;
-    quantity?: string;
-    price?: string;
-    currency?: string;
-    total?: string;
-    remark?: string;
-  }
-
-  const sharedOnCell = (_: DataType, index: number | undefined) => {
-    if (index === 1) {
-      return { colSpan: 0 };
-    }
-
-    return {};
-  };
-
+export default function SeaOtherCharges({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
+  const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
+    []
+  );
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -82,6 +80,24 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
+          Unit
+        </div>
+      ),
+      dataIndex: 'unit',
+      key: 'unit',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
           Quantity
         </div>
       ),
@@ -105,6 +121,9 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'price',
       key: 'price',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -136,11 +155,11 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Amount
+          VAT
         </div>
       ),
-      dataIndex: 'total',
-      key: 'total',
+      dataIndex: 'vat',
+      key: 'vat',
     },
     {
       title: (
@@ -154,52 +173,44 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Remark
+          Total Amount
         </div>
       ),
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'total',
+      key: 'total',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '2',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '3',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-  ];
+  useEffect(() => {
+    setData(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.ortherChargeDetailForBookings?.map(
+        (item, index) => ({
+          key: index,
+          description: item.description,
+          quantity: item.quantity,
+          price: item.price,
+          currency: item.currency,
+          unit: item.unit,
+          vat: item.vat,
+          total: item.totalAmount,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
+
+  useEffect(() => {
+    setDataTotalPrice(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking?.map(
+        (item, index) => ({
+          key: index,
+          price: `${item.item2} ${item.item1}`,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
 
   return (
     <ConfigProvider
@@ -225,10 +236,10 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
         className={style.cardCustomer}
         style={{
           marginBottom: '16px',
+          display: data.length === 0 ? 'none' : '',
         }}
       >
         <div
-          className={style.cardCustomerHeader}
           style={{
             paddingLeft: '16px',
             backgroundColor: COLORS.GREY_COLOR_HOVER,
@@ -242,7 +253,7 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          OTHER SERVICE CHARGES (IF REQUEST)
+          Other charges
         </div>
         <Table
           className={style.table}
@@ -255,6 +266,7 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
           //   x: 'max-content',
           // }}
         />
+        <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
     </ConfigProvider>
   );

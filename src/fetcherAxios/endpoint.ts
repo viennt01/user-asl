@@ -40,6 +40,8 @@ export const API_BOOKING = {
   RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING: '/recommend-custom-quotation-for-booking',
   GET_SEA_BOOKING_BY_ID: '/get-sea-booking-by-id',
   CONFIRM_BOOKING_BY_USER: '/comfirm-booking-by-user',
+  UPLOAD_FILE_BOOKING_BY_USER: '/upload-file-booking',
+  SEND_FILE_IN_EMAIL_BOOKING_BY_USER: '/send-file-in-email-booking',
 };
 
 export const API_SEA_QUOTATION = {

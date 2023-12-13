@@ -18,6 +18,7 @@ import { useRouter } from 'next/router';
 import ROUTERS from '@/constants/router';
 import FormBooking from '../../form-booking';
 import { IDataBookingProps } from '../..';
+import { sendFilePdfBooking } from '../../fetcher';
 interface Props {
   displayStep: number;
   dataPropsBooking: IDataBookingProps;
@@ -90,19 +91,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
       // Create a FormData object to send the file
       const formData = new FormData();
       formData.append('pdfFile', blob, 'Booking.pdf');
-
-      // Make an HTTP request to your server
-      try {
-        const response = await fetch('YOUR_SERVER_UPLOAD_ENDPOINT', {
-          method: 'POST',
-          body: formData,
-        });
-
-        // Handle the server response as needed
-        console.log('Server Response:', response);
-      } catch (error) {
-        console.error('Error uploading file:', error);
-      }
+      sendFilePdfBooking(formData)
     } else {
       console.error('html2pdf is not available.');
     }

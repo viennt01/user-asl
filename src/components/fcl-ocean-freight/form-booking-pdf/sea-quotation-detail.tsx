@@ -15,13 +15,12 @@ interface DataType {
   description: string;
   quantity: string;
   price: string;
-  currency: string;
   unit: string;
-  vat: string;
+  currency: string;
   total: string;
 }
 
-export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
+export default function QuotationDetail({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
   const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
     []
@@ -155,24 +154,6 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          VAT
-        </div>
-      ),
-      dataIndex: 'vat',
-      key: 'vat',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
           Total Amount
         </div>
       ),
@@ -186,15 +167,14 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
           quantity: item.quantity,
           price: item.price,
-          currency: item.currency,
           unit: item.unit,
-          vat: item.vat,
+          currency: item.currency,
           total: item.totalAmount,
         })
       ) || []
@@ -203,7 +183,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,18 +233,17 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-         Trucking service other charges (ORIGIN)
+          Quotation details
         </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

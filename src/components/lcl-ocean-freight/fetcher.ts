@@ -1,4 +1,4 @@
-import { ResponseWithPayload, get, post } from '@/fetcherAxios';
+import { ResponseWithPayload, get, post, uploadFile } from '@/fetcherAxios';
 import {
   IDataLocation,
   IRequireLocation,
@@ -133,4 +133,11 @@ export const confirmBooking = (data: IRequireConfirmBooking) => {
   return post<IRequireConfirmBooking, ResponseWithPayload<string>>({
     data,
   })(API_BOOKING.CONFIRM_BOOKING_BY_USER);
+};
+
+//upload form booking
+export const sendFilePdfBooking = (data: FormData) => {
+  return uploadFile({
+    data,
+  })(API_BOOKING.UPLOAD_FILE_BOOKING_BY_USER);
 };

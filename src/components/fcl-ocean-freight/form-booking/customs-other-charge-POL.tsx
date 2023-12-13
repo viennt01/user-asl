@@ -186,7 +186,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.ortherChargeDetailForBookings.map(
+      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.sumOrtherChargeDetailForBooking.map(
+      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,

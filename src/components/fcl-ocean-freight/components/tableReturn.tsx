@@ -16,6 +16,7 @@ import { ColumnsType } from 'antd/lib/table';
 import { IPaginationOfAntd, IQuotationTable } from '../interface';
 import { IDataBookingProps } from '..';
 import { formatCurrencyHasCurrency } from '@/utils/format-number';
+import { useRouter } from 'next/router';
 
 export interface ITypeDTOs {
   [key: string]: string;
@@ -40,6 +41,7 @@ export default function TableReturn({
   handlePaginationChange,
   showError,
 }: Props) {
+  const router = useRouter();
   const containerReturn = useMemo(() => {
     const result = [];
     if (data) {
@@ -107,6 +109,7 @@ export default function TableReturn({
             style={{ width: '120px' }}
             onClick={() => (
               setDisplayStep(2.2),
+              router.push('/fcl-ocean-freight/#headerStep'),
               setDataPropsBooking((pre) => ({
                 ...pre,
                 idQuotation: record.key,

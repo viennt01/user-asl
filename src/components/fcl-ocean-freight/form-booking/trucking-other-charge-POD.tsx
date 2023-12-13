@@ -186,7 +186,7 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.ortherChargeDetailForBookings.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumOrtherChargeDetailForBooking.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,

@@ -186,7 +186,7 @@ export default function CustomsOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.ortherChargeDetailForBookings.map(
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function CustomsOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.sumOrtherChargeDetailForBooking.map(
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,7 +253,7 @@ export default function CustomsOtherChargesPOD({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-         Customs service other charges (ORIGIN)
+         Customs service other charges (DESTINATION)
         </div>
         <Table
           className={style.table}

@@ -299,7 +299,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds.map(
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
         (item, index) => ({
           key: index,
           basePriceRedLane: item.basePriceRedLane,
@@ -359,7 +359,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Customs service (ORIGIN)
+          Customs service (DESTINATION)
         </div>
         <Table
           style={{ width: '100%' }}

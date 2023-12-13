@@ -25,6 +25,7 @@ import {
   IDetailBooking,
   IRequireConfirmBooking,
   RequestFeeOption,
+  IRequireSendListEmail,
 } from './interface';
 import {
   API_BOOKING,
@@ -140,4 +141,10 @@ export const confirmBooking = (data: IRequireConfirmBooking) => {
   return post<IRequireConfirmBooking, ResponseWithPayload<string>>({
     data,
   })(API_BOOKING.CONFIRM_BOOKING_BY_USER);
+};
+//send email
+export const sendListEmail = (data: IRequireSendListEmail) => {
+  return post<IRequireSendListEmail, ResponseWithPayload<string>>({
+    data,
+  })(API_BOOKING.SEND_FILE_IN_EMAIL_BOOKING_BY_USER);
 };

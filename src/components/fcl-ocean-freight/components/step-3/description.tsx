@@ -16,6 +16,7 @@ import {
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import { ISubmitFeeCustoms } from './components/customs/feeOfCustoms';
+import { useRouter } from 'next/router';
 
 export enum TYPE_POL_POD {
   'POL' = 'POL',
@@ -47,6 +48,7 @@ export default function ServiceStep3({
   const [submitFeeCustomsPOD, setSubmitFeeCustomsPOD] = useState<
     ISubmitFeeCustoms[]
   >([]);
+  const router = useRouter();
 
   const FeeCustomsPOL: ICustomQuotationPOL[] = submitFeeCustomsPOL
     .map((itemA) => {
@@ -200,14 +202,19 @@ export default function ServiceStep3({
                 width: '120px',
                 height: '40px',
               }}
-              onClick={() => setDisplayStep(2.2)}
+              onClick={() => (
+                setDisplayStep(2.2),
+                router.push('/fcl-ocean-freight/#headerStep')
+              )}
             >
               Pervious
             </Button>
             <Button
               style={{ width: '120px', height: '40px' }}
               type="primary"
-              onClick={() => submitBooking()}
+              onClick={() => (
+                submitBooking(), router.push('/fcl-ocean-freight/#headerStep')
+              )}
             >
               Next
             </Button>

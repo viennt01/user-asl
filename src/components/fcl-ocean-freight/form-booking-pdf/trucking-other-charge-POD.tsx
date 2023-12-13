@@ -21,7 +21,7 @@ interface DataType {
   total: string;
 }
 
-export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
+export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
   const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
     []
@@ -186,7 +186,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,7 +253,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-         Trucking service other charges (ORIGIN)
+         Trucking service other charges (DESTINATION)
         </div>
         <Table
           className={style.table}
@@ -262,9 +262,9 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

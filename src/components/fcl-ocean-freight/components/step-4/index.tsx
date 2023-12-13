@@ -19,6 +19,7 @@ import { IDetailBooking, IRequireDetailBooking } from '../../interface';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import FormBooking from '../../form-booking';
+import { useRouter } from 'next/router';
 
 interface Props {
   displayStep: number;
@@ -33,11 +34,12 @@ export default function Step4({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
+  const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
   const onChange = () => {
     setIsChecked(!isChecked);
   };
-  useQuery({
+  const getDataBooking = useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, dataPropsBooking.idBooking],
     queryFn: () => getDetailBooking({ id: dataPropsBooking.idBooking }),
     enabled: dataPropsBooking.idBooking !== '',
@@ -80,7 +82,7 @@ export default function Step4({
             tip="Loading"
             size="small"
             style={{
-              display: confirmBookingMutation.isLoading ? '' : 'none',
+              display: getDataBooking.isFetching ? '' : 'none',
               marginTop: '50px',
             }}
           >
@@ -90,7 +92,7 @@ export default function Step4({
 
         <div
           style={{
-            display: !confirmBookingMutation.isLoading ? '' : 'none',
+            display: !getDataBooking.isFetching ? '' : 'none',
           }}
         >
           <FormBooking dataPropsBooking={dataPropsBooking} />
@@ -123,7 +125,8 @@ export default function Step4({
                     {
                       onSuccess: (data) => {
                         data.status
-                          ? setDisplayStep(5)
+                          ? (setDisplayStep(5),
+                            router.push('/fcl-ocean-freight/#headerStep'))
                           : errorToast(data.message);
                       },
                       onError() {

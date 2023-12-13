@@ -16,6 +16,7 @@ interface DataType {
   quantity: string;
   price: string;
   unit: string;
+  vat: string;
   currency: string;
   total: string;
 }
@@ -154,6 +155,24 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
+          VAT
+        </div>
+      ),
+      dataIndex: 'vat',
+      key: 'vat',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
           Total Amount
         </div>
       ),
@@ -167,13 +186,14 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.truckingQuotationFCLDetails.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.truckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
           quantity: item.quantity,
           price: item.price,
           unit: item.unit,
+          vat: item.vat,
           currency: item.currency,
           total: item.totalAmount,
         })
@@ -183,7 +203,7 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumTruckingQuotationFCLDetails.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumTruckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,

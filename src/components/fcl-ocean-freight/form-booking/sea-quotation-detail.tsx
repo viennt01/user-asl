@@ -167,7 +167,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails.map(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -183,7 +183,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails.map(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,

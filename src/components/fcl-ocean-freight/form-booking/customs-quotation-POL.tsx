@@ -299,7 +299,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.customQuotationFCLDetailSelecteds.map(
+      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.customQuotationFCLDetailSelecteds?.map(
         (item, index) => ({
           key: index,
           basePriceRedLane: item.basePriceRedLane,

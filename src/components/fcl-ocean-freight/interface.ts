@@ -345,14 +345,14 @@ export interface IDetailBooking {
   };
   truckingQuotationPOLSelected: {
     quotationNo: string;
-    truckingQuotationFCLDetails: IDetailPrice[];
+    truckingQuotationFCLDetails: IDetailPriceVAT[];
     sumTruckingQuotationFCLDetails: ITotalPrice[];
     ortherChargeDetailForBookings: IDetailPriceVAT[];
     sumOrtherChargeDetailForBooking: ITotalPrice[];
   };
   truckingQuotationPODSelected: {
     quotationNo: string;
-    truckingQuotationFCLDetails: IDetailPrice[];
+    truckingQuotationFCLDetails: IDetailPriceVAT[];
     sumTruckingQuotationFCLDetails: ITotalPrice[];
     ortherChargeDetailForBookings: IDetailPriceVAT[];
     sumOrtherChargeDetailForBooking: ITotalPrice[];
@@ -422,4 +422,8 @@ export interface IRequireDetailBooking {
 }
 export interface IRequireConfirmBooking {
   id?: string;
+}
+export interface IRequireSendListEmail {
+  bookingID: string;
+  listEmail: string[];
 }
