@@ -226,7 +226,11 @@ export interface IRequireTypeLoadCapacity {
 }
 export interface IRequireSearchCustoms {
   cargoReady: number;
+  typeDeclarationName?: string;
   commodityID?: string;
+  polid?: string;
+  podid?: string;
+  customsService?: string;
 }
 export interface IQuotationCustoms {
   customQuotationID: string;

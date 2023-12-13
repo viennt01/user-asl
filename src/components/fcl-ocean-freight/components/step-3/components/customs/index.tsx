@@ -8,6 +8,12 @@ import {
   Table,
   Result,
   Checkbox,
+  Row,
+  Col,
+  Input,
+  Form,
+  Image,
+  Button,
 } from 'antd';
 import COLORS from '@/constants/color';
 import {
@@ -57,6 +63,7 @@ export default function Customs({
   selectedRowKey,
   dataStep2PropsBooking,
 }: Props) {
+  const [form] = Form.useForm();
   const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
@@ -64,6 +71,7 @@ export default function Customs({
     []
   );
   const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
 
   useEffect(() => {
     if (dataAPIResearch?.customQuotationID) {
@@ -87,39 +95,36 @@ export default function Customs({
     },
   });
 
-  useEffect(() => {
-    const _requestData = {
-      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
-    };
-    setDataResearch(_requestData);
-  }, [dataPropsBooking]);
-
-  useQuery({
+  const getPrice = useQuery({
     queryKey: [
       API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING,
       dataResearch,
     ],
     queryFn: () => getPriceCustom(dataResearch),
     enabled: dataResearch.commodityID !== '',
-    onSuccess: (data: ResponseWithPayload<IQuotationCustoms>) => {
-      if (data.status) {
-        setDataAPIResearch({
-          customQuotationID: data.data.customQuotationID,
-          typeDelaracrionID: data.data.typeDelaracrionID,
-          typeDelaracrionCode: data.data.typeDelaracrionCode,
-          transactionTypeID: data.data.transactionTypeID,
-          transactionTypeName: data.data.transactionTypeName,
-          currencyID: data.data.currencyID,
-          abbreviations: data.data.abbreviations,
-          commodityID: data.data.commodityID,
-          commodityName: data.data.commodityName,
-          listFeeGroup: data.data.listFeeGroup,
-          customQuotationFCLDetailForBookings:
-            data.data.customQuotationFCLDetailForBookings,
-        });
-        setSelectedRowKey('');
-      }
+    onSuccess: (data) => {
+      data.status
+        ? data.data
+          ? (setDataAPIResearch({
+              customQuotationID: data.data.customQuotationID,
+              typeDelaracrionID: data.data.typeDelaracrionID,
+              typeDelaracrionCode: data.data.typeDelaracrionCode,
+              transactionTypeID: data.data.transactionTypeID,
+              transactionTypeName: data.data.transactionTypeName,
+              currencyID: data.data.currencyID,
+              abbreviations: data.data.abbreviations,
+              commodityID: data.data.commodityID,
+              commodityName: data.data.commodityName,
+              listFeeGroup: data.data.listFeeGroup,
+              customQuotationFCLDetailForBookings:
+                data.data.customQuotationFCLDetailForBookings,
+            }),
+            setShowError(false))
+          : setShowError(true)
+        : setShowError(true);
+    },
+    onError() {
+      setShowError(true);
     },
   });
 
@@ -197,6 +202,21 @@ export default function Customs({
     },
   ];
 
+  const onFinish = (formValues: IRequireSearchCustoms) => {
+    const _requestData = {
+      polid: dataPropsBooking.dataQuotation?.polid || '',
+      podid: dataPropsBooking.dataQuotation?.podid || '',
+      customsService: type,
+      typeDeclarationName: formValues.typeDeclarationName || '',
+      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+    };
+    setDataResearch(_requestData);
+    if (_requestData.cargoReady === dataResearch.cargoReady) {
+      getPrice.refetch();
+    }
+  };
+
   return (
     <ConfigProvider
       theme={{
@@ -206,78 +226,143 @@ export default function Customs({
             colorBorder: 'rgba(0, 0, 0, 0.5)',
             fontSizeIcon: 16,
           },
-          Table: {
-            // headerBg: COLORS.GREY_COLOR_HOVER,
-            // headerColor: COLORS.WHITE,
-          },
         },
       }}
     >
-      <Collapse
-        defaultActiveKey={['1']}
-        style={{ width: '100%', marginBottom: '24px' }}
+      <Form
+        form={form}
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
       >
-        <Panel
-          className={style.panel}
-          forceRender
-          header={
-            <Title level={4} style={{ margin: '4px 0' }}>
-              Customs ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'})
-            </Title>
-          }
-          key="1"
+        <Collapse
+          defaultActiveKey={['1']}
+          style={{ width: '100%', marginBottom: '24px' }}
         >
-          <div
-            style={{
-              display: dataAPIResearch?.customQuotationFCLDetailForBookings
-                ? ''
-                : 'none',
-            }}
-          >
-            <Flex style={{ padding: '0 8px 16px 0' }}>
-              <Table
-                scroll={{
-                  x: 'max-content',
-                }}
-                style={{ width: '100%' }}
-                columns={columns}
-                dataSource={
-                  dataAPIResearch?.customQuotationFCLDetailForBookings || []
-                }
-                pagination={false}
-              />
-            </Flex>
-            <div
-              style={{
-                display: selectedRowKey === '' ? 'none' : '',
-              }}
-            >
-              <FeeOfCustoms
-                dataAPIResearch={dataAPIResearch}
-                setSubmitFeeCustoms={setSubmitFeeCustoms}
-                dataStep2PropsBooking={dataStep2PropsBooking}
-              />
-            </div>
-          </div>
-          <div
-            style={{
-              display: !dataAPIResearch?.customQuotationFCLDetailForBookings
-                ? ''
-                : 'none',
-            }}
-          >
-            <Flex style={{ padding: '0 8px' }}>
-              <div
-                style={{
-                  width: '100%',
+          <Panel
+            className={style.panel}
+            forceRender
+            header={
+              <Title level={4} style={{ margin: '4px 0' }}>
+                Customs ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'})
+              </Title>
+            }
+            extra={
+              <Button
+                type="primary"
+                htmlType="submit"
+                onClick={(event) => {
+                  event.stopPropagation();
                 }}
               >
-                <Result title="Please contact ASL's staff to receive a quotation" />
+                Search
+              </Button>
+            }
+            key="1"
+          >
+            <Row>
+              <Col className={style.input} span={24}>
+                <Flex align={'center'}>
+                  <Flex align={'center'} className={style.headerInput}>
+                    <Image
+                      src={'/images/oceanFreight/location.svg'}
+                      alt="logo"
+                      preview={false}
+                      width={25}
+                    />
+                    <div className={style.titleInput}>{'Type Declaration'}</div>
+                  </Flex>
+                  <div className={style.contentInput}>
+                    <Form.Item name={'typeDeclarationName'}>
+                      <Input
+                        style={{ margin: '0px' }}
+                        placeholder={'Please enter type declaration'}
+                        size="large"
+                      />
+                    </Form.Item>
+                  </div>
+                </Flex>
+              </Col>
+              <Col className={style.input} span={24}>
+                <Flex align={'center'}>
+                  <Flex align={'center'} className={style.headerInput}>
+                    <Image
+                      src={'/images/oceanFreight/note.svg'}
+                      alt="logo"
+                      preview={false}
+                      width={25}
+                    />
+                    <div className={style.titleInput}>Note</div>
+                  </Flex>
+                  <div className={style.contentInput}>
+                    <Form.Item name="note">
+                      <Input.TextArea
+                        style={{ margin: '0px' }}
+                        placeholder={'Please enter note'}
+                        size="large"
+                      />
+                    </Form.Item>
+                  </div>
+                </Flex>
+              </Col>
+            </Row>
+            <div
+              style={{
+                display: !showError ? '' : 'none',
+              }}
+            >
+              <div
+                style={{
+                  display: dataAPIResearch?.customQuotationFCLDetailForBookings
+                    ? ''
+                    : 'none',
+                }}
+              >
+                <Flex style={{ padding: '0 8px 16px 0' }}>
+                  <Table
+                    scroll={{
+                      x: 'max-content',
+                    }}
+                    style={{ width: '100%' }}
+                    columns={columns}
+                    dataSource={
+                      dataAPIResearch?.customQuotationFCLDetailForBookings || []
+                    }
+                    pagination={false}
+                  />
+                </Flex>
+                <div
+                  style={{
+                    display: selectedRowKey === '' ? 'none' : '',
+                  }}
+                >
+                  <FeeOfCustoms
+                    dataAPIResearch={dataAPIResearch}
+                    setSubmitFeeCustoms={setSubmitFeeCustoms}
+                    dataStep2PropsBooking={dataStep2PropsBooking}
+                  />
+                </div>
               </div>
-            </Flex>
-          </div>
-        </Panel>
-      </Collapse>
+            </div>
+
+            <div
+              style={{
+                display: showError ? '' : 'none',
+              }}
+            >
+              <Flex style={{ padding: '0 8px' }}>
+                <div
+                  style={{
+                    width: '100%',
+                  }}
+                >
+                  <Result title="Please contact ASL's staff to receive a quotation" />
+                </div>
+              </Flex>
+            </div>
+          </Panel>
+        </Collapse>
+      </Form>
     </ConfigProvider>
   );
 }
