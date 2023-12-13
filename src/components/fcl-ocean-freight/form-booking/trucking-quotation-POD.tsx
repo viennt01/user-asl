@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -15,13 +15,12 @@ interface DataType {
   description: string;
   quantity: string;
   price: string;
-  currency: string;
   unit: string;
-  vat: string;
+  currency: string;
   total: string;
 }
 
-export default function SeaOtherCharges({ dataPropsBooking }: Props) {
+export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
   const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
     []
@@ -155,24 +154,6 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          VAT
-        </div>
-      ),
-      dataIndex: 'vat',
-      key: 'vat',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
           Total Amount
         </div>
       ),
@@ -186,15 +167,14 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.ortherChargeDetailForBookings.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.truckingQuotationFCLDetails.map(
         (item, index) => ({
           key: index,
           description: item.description,
           quantity: item.quantity,
           price: item.price,
-          currency: item.currency,
           unit: item.unit,
-          vat: item.vat,
+          currency: item.currency,
           total: item.totalAmount,
         })
       ) || []
@@ -203,7 +183,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumTruckingQuotationFCLDetails.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,10 +233,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Other charges
+          Trucking service (DESTINATION)
         </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}

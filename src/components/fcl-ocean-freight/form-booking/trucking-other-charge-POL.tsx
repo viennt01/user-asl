@@ -21,7 +21,7 @@ interface DataType {
   total: string;
 }
 
-export default function SeaOtherCharges({ dataPropsBooking }: Props) {
+export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
   const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
     []
@@ -186,7 +186,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.ortherChargeDetailForBookings.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.ortherChargeDetailForBookings.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking.map(
+      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumOrtherChargeDetailForBooking.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,7 +253,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Other charges
+         Trucking service other charges (ORIGIN)
         </div>
         <Table
           className={style.table}

@@ -50,7 +50,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
     customer,
     companyName,
     email,
-    addresss,
+    address,
     addressCompany,
     tel,
     mobil,
@@ -137,7 +137,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
       {
         key: '2',
         right: 'Address',
-        Address: addresss || '',
+        Address: address || '',
         left: 'Mobile',
         Mobile: mobil || '',
       },

@@ -9,7 +9,7 @@ import {
   Result,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING, API_UNIT } from '@/fetcherAxios/endpoint';
 import {

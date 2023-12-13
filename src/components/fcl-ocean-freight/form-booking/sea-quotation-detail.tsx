@@ -3,7 +3,7 @@ import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import TotalPrice from './totalPrice';
+import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
 
@@ -15,11 +15,16 @@ interface DataType {
   description: string;
   quantity: string;
   price: string;
+  unit: string;
   currency: string;
   total: string;
 }
+
 export default function QuotationDetail({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+  const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
+    []
+  );
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -61,6 +66,24 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Unit
+        </div>
+      ),
+      dataIndex: 'unit',
+      key: 'unit',
     },
     {
       title: (
@@ -144,18 +167,31 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking.seaQuotationFCLDetails.map(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails.map(
         (item, index) => ({
           key: index,
           description: item.description,
           quantity: item.quantity,
           price: item.price,
+          unit: item.unit,
           currency: item.currency,
           total: item.totalAmount,
         })
       ) || []
     );
   }, [dataPropsBooking]);
+
+  useEffect(() => {
+    setDataTotalPrice(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails.map(
+        (item, index) => ({
+          key: index,
+          price: `${item.item2} ${item.item1}`,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -209,7 +245,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             x: 'max-content',
           }}
         />
-        <TotalPrice />
+        <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
     </ConfigProvider>
   );

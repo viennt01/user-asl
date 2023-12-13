@@ -6,9 +6,9 @@ const appEnv = process.env.APP_ENV || 'dev';
 const version = process.env.VERSION || '0.1.0';
 
 const API_MAIN_GW = {
-  dev: 'http://192.168.1.41:5191',
-  staging: 'http://192.168.1.41:5191',
-  production: 'http://192.168.1.41:5191',
+  dev: 'https://asl.softek.com.vn',
+  staging: 'https://asl.softek.com.vn',
+  production: 'https://asl.softek.com.vn',
 };
 
 const env = {
