@@ -2,14 +2,19 @@ import { Button, Col, Flex, Row, Image, Typography } from 'antd';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format-number';
 import { STATUS_COLORS, STATUS_LABELS } from '../..';
+import { IDetailBookingLCL } from '../../interface';
+import { useRouter } from 'next/router';
+import { ROUTERS_DYNAMIC } from '@/constants/router';
 
 const { Text } = Typography;
 
 interface Props {
-  data: any;
+  data: IDetailBookingLCL;
 }
 
-export default function Box({data}: Props) {
+export default function Box({ data }: Props) {
+  const router = useRouter();
+
   return (
     <div className={style.box}>
       <div className={style.idBox}>Booking No: ABC12345</div>
@@ -22,22 +27,28 @@ export default function Box({data}: Props) {
                   className={style.titleStatus}
                   style={{
                     backgroundColor:
-                      STATUS_COLORS[data.status as keyof typeof STATUS_COLORS],
+                      STATUS_COLORS[
+                        data.statusBooking as keyof typeof STATUS_COLORS
+                      ],
                   }}
                 >
-                  {STATUS_LABELS[data.status as keyof typeof STATUS_LABELS]}
+                  {
+                    STATUS_LABELS[
+                      data.statusBooking as keyof typeof STATUS_LABELS
+                    ]
+                  }
                 </Text>
               </div>
             </Col>
             <Col sm={12} span={24} style={{ paddingBottom: '16px' }}>
               <div>From</div>
-              <div className={style.nameFrom}>{data?.pol}</div>
-              <div>{formatDate(Number(data?.etd))}</div>
+              <div className={style.nameFrom}>{data?.polName}</div>
+              <div>{formatDate(Number(data?.cargoReadyDated))}</div>
             </Col>
             <Col sm={12} span={24}>
               <div>To</div>
-              <div className={style.nameFrom}>{data?.pod}</div>
-              <div>{formatDate(Number(data?.eta))}</div>
+              <div className={style.nameFrom}>{data?.podName}</div>
+              <div>{formatDate(Number(data?.cargoCutOffDated))}</div>
             </Col>
           </Row>
         </Col>
@@ -54,7 +65,7 @@ export default function Box({data}: Props) {
                 </div>
                 <div>
                   <div className={style.nameFrom}>Place of Receipt</div>
-                  <div>{data?.finalDestination}</div>
+                  <div>{data?.placeOfRecipt}</div>
                 </div>
               </Flex>
             </Col>
@@ -84,7 +95,9 @@ export default function Box({data}: Props) {
                 </div>
                 <div>
                   <div className={style.nameFrom}>Traffic Mode</div>
-                  <div>Door - Door</div>
+                  <div>
+                    {data?.typeOfPOLName} - {data?.typeOfPODName}
+                  </div>
                 </div>
               </Flex>
             </Col>
@@ -93,7 +106,16 @@ export default function Box({data}: Props) {
       </Row>
       <div className={style.bottomBox}>
         <Flex justify="flex-end">
-          <Button type="primary">View detail</Button>
+          <Button
+            type="primary"
+            onClick={() =>
+              data.typeOfSeaService === 'FCL'
+                ? router.push(ROUTERS_DYNAMIC.FCL_DETAIL(data.bookingID))
+                : router.push(ROUTERS_DYNAMIC.LCL_DETAIL(data.bookingID))
+            }
+          >
+            View detail
+          </Button>
         </Flex>
       </div>
     </div>

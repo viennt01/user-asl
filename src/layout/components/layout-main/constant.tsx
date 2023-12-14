@@ -51,6 +51,16 @@ const SHOW_ROUTER_HEADER = () => {
       { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
     ],
 
+    '/fcl-detail/[id]': [
+      { title: <Link href={ROUTERS.HOME}>Home</Link> },
+      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
+    ],
+
+    '/lcl-detail/[id]': [
+      { title: <Link href={ROUTERS.HOME}>Home</Link> },
+      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
+    ],
+
     '/track-trace': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
       { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>Track & Trace</Link> },

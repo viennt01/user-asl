@@ -1,21 +1,28 @@
 import { Button, Col, Input, List, Row, Space, Image } from 'antd';
 import style from '../index.module.scss';
 import Box from './box';
-
-const data = [
-  {
-    key: 4,
-    pol: 'Ho Chi Minh, Vietnam',
-    etd: 1698512400000,
-    eta: 1700586000000,
-    pod: 'LOS ANGELES, CA  USA',
-    finalDestination: 'LOS ANGELES, CA  USA',
-    placeOfDelivery: 'LOS ANGELES, CA  USA',
-    status: 'COMPLETED',
-  },
-];
+import { useState } from 'react';
+import { IDetailBookingLCL, TYPE_STATUS } from '../interface';
+import { useQuery } from '@tanstack/react-query';
+import { API_BOOKING } from '@/fetcherAxios/endpoint';
+import { getHistoryBooking } from '../fetcher';
 
 export default function Completed() {
+  const [dataHistory, setDataHistory] = useState<IDetailBookingLCL[]>([]);
+  useQuery({
+    queryKey: [API_BOOKING.GET_HISTORY_BOOKING_BY_USER],
+    queryFn: () =>
+      getHistoryBooking({
+        statusBooking: [TYPE_STATUS.COMPLETED],
+      }),
+    onSuccess(data) {
+      if (data.status) {
+        if (data.data) {
+          setDataHistory(data.data || []);
+        }
+      }
+    },
+  });
   return (
     <div className={style.all}>
       <div className={style.search}>
@@ -32,7 +39,7 @@ export default function Completed() {
       </div>
       <div className={style.result}>
         <List
-          dataSource={data}
+          dataSource={dataHistory}
           renderItem={(item: any) => <Box data={item} />}
         />
       </div>

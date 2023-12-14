@@ -19,3 +19,8 @@ enum ROUTERS {
 }
 
 export default ROUTERS;
+
+export const ROUTERS_DYNAMIC = {
+  LCL_DETAIL: (id: string) => `/lcl-detail/${id}`,
+  FCL_DETAIL: (id: string) => `/fcl-detail/${id}`,
+};
