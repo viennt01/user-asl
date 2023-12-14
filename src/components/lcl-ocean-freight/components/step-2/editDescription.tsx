@@ -6,6 +6,7 @@ import LocalChargesEdit from './components/edit/localChargesEdit';
 import TableContainerEdit from './components/edit/tableContainerEdit';
 import { IDataBookingProps, IDataStep2Props } from '../..';
 import { FeeTable, ISeaPricingDetail } from '../../interface';
+import { useRouter } from 'next/router';
 
 interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
@@ -27,6 +28,8 @@ export default function EditDescription({
   setDataStep2PropsBooking,
   dataStep2PropsBooking,
 }: Props) {
+  const router = useRouter();
+
   return (
     <div className={style.description}>
       <Row gutter={16}>
@@ -53,6 +56,7 @@ export default function EditDescription({
               }}
               onClick={() => (
                 setDisplayStep(1),
+                router.push(`/lcl-ocean-freight/#headerStep`),
                 setDataPropsBooking((pre) => ({ ...pre, idQuotation: '' }))
               )}
             >
@@ -61,7 +65,9 @@ export default function EditDescription({
             <Button
               style={{ width: '120px', height: '40px' }}
               type="primary"
-              onClick={() => setDisplayStep(3)}
+              onClick={() => (
+                router.push('/lcl-ocean-freight/#headerStep'), setDisplayStep(3)
+              )}
             >
               Next
             </Button>

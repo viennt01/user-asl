@@ -3,9 +3,9 @@ import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import TotalPrice from './totalPrice';
 import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -21,6 +21,9 @@ interface DataType {
 }
 export default function SeaOtherCharges({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+  const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
+    []
+  );
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -177,6 +180,17 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
     );
   }, [dataPropsBooking]);
 
+  useEffect(() => {
+    setDataTotalPrice(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumOrtherChargeDetailForBooking?.map(
+        (item, index) => ({
+          key: index,
+          price: `${item.item2} ${item.item1}`,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -218,7 +232,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Other charges
         </div>
         <Table
           className={style.table}
@@ -231,7 +245,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             x: 'max-content',
           }}
         />
-        <TotalPrice />
+        <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
     </ConfigProvider>
   );

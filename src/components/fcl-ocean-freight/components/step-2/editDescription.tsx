@@ -73,7 +73,9 @@ export default function EditDescription({
             <Button
               style={{ width: '120px', height: '40px' }}
               type="primary"
-              onClick={() => setDisplayStep(3)}
+              onClick={() => (
+                router.push('/fcl-ocean-freight/#headerStep'), setDisplayStep(3)
+              )}
             >
               Next
             </Button>

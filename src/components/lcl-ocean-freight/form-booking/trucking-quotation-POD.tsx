@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -11,17 +11,18 @@ interface Props {
 }
 interface DataType {
   key: number;
-  package: string;
-  quantityPackage: string;
-  price: string;
-  gw: string;
-  cbm: string;
+  description: string;
   quantity: string;
+  price: string;
+  unit: string;
+  vat: string;
   currency: string;
-  totalAmount: string;
+  total: string;
 }
-export default function QuotationDetail({ dataPropsBooking }: Props) {
+
+export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -58,11 +59,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Package
+          Description of charges
         </div>
       ),
-      dataIndex: 'package',
-      key: 'package',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: (
@@ -76,11 +77,29 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity Package
+          Unit
         </div>
       ),
-      dataIndex: 'quantityPackage',
-      key: 'quantityPackage',
+      dataIndex: 'unit',
+      key: 'unit',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Quantity
+        </div>
+      ),
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
     {
       title: (
@@ -133,56 +152,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          CBM
+          VAT
         </div>
       ),
-      dataIndex: 'cbm',
-      key: 'cbm',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          GW
-        </div>
-      ),
-      dataIndex: 'gw',
-      key: 'gw',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Quantity
-        </div>
-      ),
-      dataIndex: 'quantity',
-      key: 'quantity',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
+      dataIndex: 'vat',
+      key: 'vat',
     },
     {
       title: (
@@ -199,8 +173,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
+      dataIndex: 'total',
+      key: 'total',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -208,22 +182,27 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
   ];
 
   useEffect(() => {
-    setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationLCLDetails?.map(
-        (item, index) => ({
-          key: index,
-          package: item.package,
-          quantityPackage: item.quantityPackage,
-          price: item.price,
-          gw: item.gw,
-          cbm: item.cbm,
-          quantity: item.quantity,
-          currency: item.currency,
-          totalAmount: item.totalAmount,
-        })
-      ) || []
-    );
+    if (
+      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected
+        ?.truckingQuotationLCLDetails
+    ) {
+      setData(
+        dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.truckingQuotationLCLDetails?.map(
+          (item, index) => ({
+            key: index,
+            description: item.description,
+            quantity: item.quantity,
+            price: item.price,
+            unit: item.unit,
+            vat: item.vat,
+            currency: item.currency,
+            total: item.totalAmount,
+          })
+        ) || []
+      );
+    }
   }, [dataPropsBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -265,7 +244,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Trucking service (DESTINATION)
         </div>
         <Table
           style={{ width: '100%' }}

@@ -3,10 +3,11 @@ import { Flex, Table, InputRef, Input, Space, Button } from 'antd';
 import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_FEE_GROUP } from '@/fetcherAxios/endpoint';
-import { getFeeWithFeeGroup } from '@/components/fcl-ocean-freight/fetcher';
 import {
-  FeeTable,
-} from '@/components/fcl-ocean-freight/interface';
+  getFeeWithFeeGroup,
+  getFeeWithFeeGroupOption,
+} from '@/components/fcl-ocean-freight/fetcher';
+import { FeeTable } from '@/components/fcl-ocean-freight/interface';
 import {
   ColumnType,
   ColumnsType,
@@ -41,12 +42,19 @@ export default function TableFeeOfCustoms({
       const filteredData = pre.filter(function (item) {
         return item.feeGroupID !== idFeeGroup;
       });
-      return [...filteredData, { feeGroupID: idFeeGroup, listFee: selectedRowKeys }];
+      return [
+        ...filteredData,
+        { feeGroupID: idFeeGroup, listFee: selectedRowKeys },
+      ];
     });
   }, [selectedRowKeys]);
   useQuery({
     queryKey: [API_FEE_GROUP.GET_ALL_FEE_WITH_FEE_GROUP, idFeeGroup],
-    queryFn: () => getFeeWithFeeGroup({ id: [idFeeGroup] }),
+    queryFn: () =>
+      getFeeWithFeeGroupOption({
+        id: [idFeeGroup],
+        options: ['CBMS', 'SETS', 'shipment'],
+      }),
     enabled: idFeeGroup !== undefined,
     onSuccess(data) {
       setDataFeeTable([]);

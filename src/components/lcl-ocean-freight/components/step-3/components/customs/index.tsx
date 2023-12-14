@@ -7,22 +7,28 @@ import {
   Typography,
   Table,
   Result,
+  Form,
+  Button,
+  Row,
+  Col,
+  Image,
+  Input,
+  Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import {
+  IDataBookingProps,
+  IDataStep2Props,
+} from '@/components/lcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING, API_UNIT } from '@/fetcherAxios/endpoint';
+import { API_BOOKING } from '@/fetcherAxios/endpoint';
+import { getPriceCustom } from '@/components/lcl-ocean-freight/fetcher';
 import {
-  getListTypeUnit,
-  getPriceCustom,
-} from '@/components/fcl-ocean-freight/fetcher';
-import { ResponseWithPayload } from '@/fetcherAxios';
-import {
-  ICustomQuotationFCLDetailForBookings,
+  ICustomQuotationLCLDetailForBooking,
   IQuotationCustoms,
   IRequireSearchCustoms,
   TYPE_UNIT,
-} from '@/components/fcl-ocean-freight/interface';
+} from '@/components/lcl-ocean-freight/interface';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
 import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
@@ -36,108 +42,89 @@ interface Props {
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
-  setSelectedRowKey: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedRowKey: React.Dispatch<React.SetStateAction<string>>;
+  selectedRowKey: string;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 const initalValueForm = {
   cargoReady: 22222222222222,
   commodityID: '',
 };
 
+interface DataType {
+  key: React.Key;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
+}
+
 export default function Customs({
   type,
   dataPropsBooking,
   setSubmitFeeCustoms,
   setSelectedRowKey,
+  selectedRowKey,
+  dataStep2PropsBooking,
 }: Props) {
+  const [form] = Form.useForm();
   const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
-  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
-    []
-  );
-
-  useQuery({
-    queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
-    onSuccess: (data) => {
-      if (data.status) {
-        const newData = data.data.map((unit) => ({
-          label: unit.internationalCode,
-          value: unit.unitID,
-        }));
-        setDataUnit(newData);
-      }
-    },
-  });
-
+  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
+  const [showError, setShowError] = useState<boolean>(false);
+  const [dataSource, setDataSource] = useState<DataType[]>([]);
   useEffect(() => {
-    const _requestData = {
-      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
-    };
-    setDataResearch(_requestData);
-  }, [dataPropsBooking]);
+    if (dataAPIResearch?.customQuotationID) {
+      setSelectedRowKey(
+        componentDisabled ? dataAPIResearch?.customQuotationID : ''
+      );
+    }
+  }, [componentDisabled]);
 
-  useQuery({
+  const getPrice = useQuery({
     queryKey: [
       API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING,
       dataResearch,
     ],
     queryFn: () => getPriceCustom(dataResearch),
-    enabled: dataResearch.commodityID !== '',
-    onSuccess: (data: ResponseWithPayload<IQuotationCustoms>) => {
-      if (data.status) {
-        setDataAPIResearch({
-          customQuotationID: data.data.customQuotationID,
-          typeDelaracrionID: data.data.typeDelaracrionID,
-          typeDelaracrionCode: data.data.typeDelaracrionCode,
-          transactionTypeID: data.data.transactionTypeID,
-          transactionTypeName: data.data.transactionTypeName,
-          currencyID: data.data.currencyID,
-          abbreviations: data.data.abbreviations,
-          commodityID: data.data.commodityID,
-          commodityName: data.data.commodityName,
-          listFeeGroup: data.data.listFeeGroup,
-          customQuotationFCLDetailForBookings:
-            data.data.customQuotationFCLDetailForBookings,
-        });
-        setSelectedRowKey([data.data.customQuotationID]);
-      }
+    enabled: dataResearch.typeDeclarationName !== undefined,
+    onSuccess: (data) => {
+      data.status
+        ? data.data
+          ? (setDataAPIResearch({
+              customQuotationID: data.data.customQuotationID,
+              typeDelaracrionID: data.data.typeDelaracrionID,
+              typeDelaracrionCode: data.data.typeDelaracrionCode,
+              transactionTypeID: data.data.transactionTypeID,
+              transactionTypeName: data.data.transactionTypeName,
+              currencyID: data.data.currencyID,
+              abbreviations: data.data.abbreviations,
+              commodityID: data.data.commodityID,
+              commodityName: data.data.commodityName,
+              listFeeGroup: data.data.listFeeGroup,
+              customQuotationLCLDetailForBooking:
+                data.data.customQuotationLCLDetailForBooking,
+            }),
+            setShowError(false))
+          : setShowError(true)
+        : setShowError(true);
+    },
+    onError() {
+      setShowError(true);
     },
   });
 
-  const columns: ColumnsType<ICustomQuotationFCLDetailForBookings> = [
+  const columns: ColumnsType<ICustomQuotationLCLDetailForBooking> = [
     {
-      title: 'Unit',
-      dataIndex: 'unitID',
-      align: 'center',
-      render: (value) => {
-        return dataUnit.find((item) => item.value === value)?.label;
-      },
-    },
-    {
-      title: <Text style={{ color: 'green' }}>Base Green Lane</Text>,
-      dataIndex: 'basePriceGreenLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <Text style={{ color: '#d4b106' }}>Base Yellow Lane</Text>,
-      dataIndex: 'basePriceYellowLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <Text style={{ color: '#cf1322' }}>Base Red Lane</Text>,
-      dataIndex: 'basePriceRedLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
+      title: (
+        <Checkbox
+          checked={componentDisabled}
+          onChange={(e) => setComponentDisabled(e.target.checked)}
+        />
+      ),
+      dataIndex: 'key',
+      width: 50,
+      render: (_, record) => <></>,
     },
     {
       title: (
@@ -169,6 +156,37 @@ export default function Customs({
     },
   ];
 
+  const onFinish = (formValues: IRequireSearchCustoms) => {
+    const _requestData = {
+      polid: dataPropsBooking.dataQuotation?.polid || '',
+      podid: dataPropsBooking.dataQuotation?.podid || '',
+      customsService: type,
+      typeDeclarationName: formValues.typeDeclarationName || '',
+      cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+    };
+    setDataResearch(_requestData);
+    if (_requestData.cargoReady === dataResearch.cargoReady) {
+      getPrice.refetch();
+    }
+  };
+
+  useEffect(() => {
+    if (dataAPIResearch?.customQuotationLCLDetailForBooking) {
+      setDataSource([
+        {
+          key: 1,
+          priceRedLane:
+            dataAPIResearch?.customQuotationLCLDetailForBooking.priceRedLane,
+          priceYellowLane:
+            dataAPIResearch?.customQuotationLCLDetailForBooking.priceYellowLane,
+          priceGreenLane:
+            dataAPIResearch?.customQuotationLCLDetailForBooking.priceGreenLane,
+        },
+      ]);
+    }
+  }, [dataAPIResearch?.customQuotationLCLDetailForBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -178,71 +196,140 @@ export default function Customs({
             colorBorder: 'rgba(0, 0, 0, 0.5)',
             fontSizeIcon: 16,
           },
-          Table: {
-            // headerBg: COLORS.GREY_COLOR_HOVER,
-            // headerColor: COLORS.WHITE,
-          },
         },
       }}
     >
-      <Collapse
-        defaultActiveKey={['1']}
-        style={{ width: '100%', marginBottom: '24px' }}
+      <Form
+        form={form}
+        onFinish={onFinish}
+        autoComplete="off"
+        layout="vertical"
       >
-        <Panel
-          className={style.panel}
-          forceRender
-          header={
-            <Title level={4} style={{ margin: '4px 0' }}>
-              Customs ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'})
-            </Title>
-          }
-          key="1"
+        <Collapse
+          defaultActiveKey={['1']}
+          style={{ width: '100%', marginBottom: '24px' }}
         >
-          <div
-            style={{
-              display: dataAPIResearch?.customQuotationFCLDetailForBookings
-                ? ''
-                : 'none',
-            }}
-          >
-            <Flex style={{ padding: '0 8px 16px 0' }}>
-              <Table
-                scroll={{
-                  x: 'max-content',
-                }}
-                style={{ width: '100%' }}
-                columns={columns}
-                dataSource={
-                  dataAPIResearch?.customQuotationFCLDetailForBookings
-                }
-                pagination={false}
-              />
-            </Flex>
-            <FeeOfCustoms
-              dataAPIResearch={dataAPIResearch}
-              setSubmitFeeCustoms={setSubmitFeeCustoms}
-            />
-          </div>
-          <div
-            style={{
-              display: !dataAPIResearch?.customQuotationFCLDetailForBookings
-                ? ''
-                : 'none',
-            }}
-          >
-            <Flex style={{ padding: '0 8px' }}>
-              <div
-                style={{
-                  width: '100%',
+          <Panel
+            className={style.panel}
+            forceRender
+            header={
+              <Title level={4} style={{ margin: '4px 0' }}>
+                Customs ({type === TYPE_POL_POD.POD ? 'DESTINATION' : 'ORIGIN'})
+              </Title>
+            }
+            extra={
+              <Button
+                type="primary"
+                htmlType="submit"
+                onClick={(event) => {
+                  event.stopPropagation();
                 }}
               >
-                <Result title="Please contact ASL's staff to receive a quotation" />
+                Search
+              </Button>
+            }
+            key="1"
+          >
+            <Row>
+              <Col className={style.input} span={24}>
+                <Flex align={'center'}>
+                  <Flex align={'center'} className={style.headerInput}>
+                    <Image
+                      src={'/images/oceanFreight/location.svg'}
+                      alt="logo"
+                      preview={false}
+                      width={25}
+                    />
+                    <div className={style.titleInput}>{'Type Declaration'}</div>
+                  </Flex>
+                  <div className={style.contentInput}>
+                    <Form.Item name={'typeDeclarationName'}>
+                      <Input
+                        style={{ margin: '0px' }}
+                        placeholder={'Please enter type declaration'}
+                        size="large"
+                      />
+                    </Form.Item>
+                  </div>
+                </Flex>
+              </Col>
+              <Col className={style.input} span={24}>
+                <Flex align={'center'}>
+                  <Flex align={'center'} className={style.headerInput}>
+                    <Image
+                      src={'/images/oceanFreight/note.svg'}
+                      alt="logo"
+                      preview={false}
+                      width={25}
+                    />
+                    <div className={style.titleInput}>Note</div>
+                  </Flex>
+                  <div className={style.contentInput}>
+                    <Form.Item name="note">
+                      <Input.TextArea
+                        style={{ margin: '0px' }}
+                        placeholder={'Please enter note'}
+                        size="large"
+                      />
+                    </Form.Item>
+                  </div>
+                </Flex>
+              </Col>
+            </Row>
+            <div
+              style={{
+                display: !showError ? '' : 'none',
+              }}
+            >
+              <div
+                style={{
+                  display: dataAPIResearch?.customQuotationLCLDetailForBooking
+                    ? ''
+                    : 'none',
+                }}
+              >
+                <Flex style={{ padding: '0 8px 16px 0' }}>
+                  <Table
+                    scroll={{
+                      x: 'max-content',
+                    }}
+                    style={{ width: '100%' }}
+                    columns={columns}
+                    dataSource={dataSource || []}
+                    pagination={false}
+                  />
+                </Flex>
+                <div
+                  style={{
+                    display: selectedRowKey === '' ? 'none' : '',
+                  }}
+                >
+                  <FeeOfCustoms
+                    dataAPIResearch={dataAPIResearch}
+                    setSubmitFeeCustoms={setSubmitFeeCustoms}
+                  />
+                </div>
               </div>
-            </Flex>
-          </div>
-        </Panel>
-      </Collapse>
+            </div>
+
+            <div
+              style={{
+                display: showError ? '' : 'none',
+              }}
+            >
+              <Flex style={{ padding: '0 8px' }}>
+                <div
+                  style={{
+                    width: '100%',
+                  }}
+                >
+                  <Result title="Please contact ASL's staff to receive a quotation" />
+                </div>
+              </Flex>
+            </div>
+          </Panel>
+        </Collapse>
+      </Form>
     </ConfigProvider>
   );
 }

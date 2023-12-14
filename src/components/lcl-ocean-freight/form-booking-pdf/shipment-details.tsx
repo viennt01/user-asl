@@ -25,6 +25,7 @@ interface DataType {
 }
 export default function ShipmentDetail({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+  const [dataQuantity, setDataQuantity] = useState<string>('');
   const {
     modeOfTransportation,
     pol,
@@ -98,6 +99,9 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
   ];
 
   useEffect(() => {
+    setDataQuantity(
+      `${seaBookingLCLDetailDTO?.quantity} x ${seaBookingLCLDetailDTO?.internationalCode}`
+    );
     setData([
       {
         key: '1',
@@ -132,9 +136,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         right: 'CBM',
         CBM: seaBookingLCLDetailDTO?.gw || '',
         left: 'Quantity',
-        Quantity:
-          `${seaBookingLCLDetailDTO?.quantity} x ${seaBookingLCLDetailDTO?.internationalCode}` ||
-          '',
+        Quantity: dataQuantity || '',
       },
     ]);
   }, [dataPropsBooking]);

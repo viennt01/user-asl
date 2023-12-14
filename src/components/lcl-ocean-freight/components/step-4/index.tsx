@@ -8,6 +8,7 @@ import {
   Row,
   ConfigProvider,
   Checkbox,
+  Spin,
 } from 'antd';
 import { IDataBookingProps } from '../..';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
@@ -18,6 +19,7 @@ import { IDetailBooking, IRequireDetailBooking } from '../../interface';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import FormBooking from '../../form-booking';
+import { useRouter } from 'next/router';
 
 interface Props {
   displayStep: number;
@@ -32,11 +34,13 @@ export default function Step4({
   dataPropsBooking,
   setDataPropsBooking,
 }: Props) {
+  const router = useRouter();
+
   const [isChecked, setIsChecked] = useState(false);
   const onChange = () => {
     setIsChecked(!isChecked);
   };
-  useQuery({
+  const getDataBooking = useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, dataPropsBooking.idBooking],
     queryFn: () => getDetailBooking({ id: dataPropsBooking.idBooking }),
     enabled: dataPropsBooking.idBooking !== '',
@@ -64,9 +68,36 @@ export default function Step4({
       }}
     >
       <Card className={style.cardMain} title="Review Booking">
-        <Row gutter={26}>
-          <FormBooking dataPropsBooking={dataPropsBooking}/>
-          <Col span={24} style={{ marginTop: '16px' }}>
+        <ConfigProvider
+          theme={{
+            components: {
+              Spin: {
+                dotSize: 100,
+                dotSizeLG: 100,
+                dotSizeSM: 100,
+              },
+            },
+          }}
+        >
+          <Spin
+            tip="Loading"
+            size="small"
+            style={{
+              display: getDataBooking.isFetching ? '' : 'none',
+              marginTop: '50px',
+            }}
+          >
+            <div className="content" />
+          </Spin>
+        </ConfigProvider>
+
+        <div
+          style={{
+            display: !getDataBooking.isFetching ? '' : 'none',
+          }}
+        >
+          <FormBooking dataPropsBooking={dataPropsBooking} />
+          <div style={{ width: '100%', marginTop: '16px' }}>
             <ConfigProvider
               theme={{
                 components: {
@@ -95,7 +126,8 @@ export default function Step4({
                     {
                       onSuccess: (data) => {
                         data.status
-                          ? setDisplayStep(5)
+                          ? (setDisplayStep(5),
+                            router.push('/lcl-ocean-freight/#headerStep'))
                           : errorToast(data.message);
                       },
                       onError() {
@@ -109,8 +141,8 @@ export default function Step4({
                 Submit booking
               </Button>
             </Flex>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Card>
     </div>
   );

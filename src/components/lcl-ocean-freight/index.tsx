@@ -23,8 +23,6 @@ import {
 } from './interface';
 import { useQuery } from '@tanstack/react-query';
 import { getListTypeTransport, searchQuotation } from './fetcher';
-import { errorToast } from '@/hook/toast';
-import { API_MESSAGE } from '@/constants/message';
 import { API_BOOKING, API_TYPE_OF_TRANSPORT } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
 
@@ -168,7 +166,7 @@ export default function LclOceanFreight() {
   };
 
   return (
-    <div className={style.wrapper}>
+    <section className={style.wrapper}>
       <div className={style.bg}>
         <Flex justify="center" className={style.welcome}>
           <Flex align="center" justify="center" className={style.container}>
@@ -231,6 +229,6 @@ export default function LclOceanFreight() {
         </div>
       </Flex>
       <Service />
-    </div>
+    </section>
   );
 }

@@ -18,7 +18,13 @@ import { useRouter } from 'next/router';
 import ROUTERS from '@/constants/router';
 import FormBooking from '../../form-booking';
 import { IDataBookingProps } from '../..';
-import { sendFilePdfBooking } from '../../fetcher';
+import { sendFilePdfBooking } from '@/components/lcl-ocean-freight/fetcher';
+import { useMutation } from '@tanstack/react-query';
+import { errorToast, successToast } from '@/hook/toast';
+import { API_MESSAGE } from '@/constants/message';
+import FormBookingPDF from '../../form-booking-pdf';
+import { sendListEmail } from '@/components/fcl-ocean-freight/fetcher';
+import { IRequireSendListEmail } from '@/components/fcl-ocean-freight/interface';
 interface Props {
   displayStep: number;
   dataPropsBooking: IDataBookingProps;
@@ -27,7 +33,14 @@ interface Props {
 export default function Step5({ displayStep, dataPropsBooking }: Props) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isCheckSendPdf, setCheckSendPdf] = useState(true);
   const [form] = Form.useForm();
+
+  const sendListEmailMutation = useMutation({
+    mutationFn: (body: IRequireSendListEmail) => {
+      return sendListEmail(body);
+    },
+  });
 
   useEffect(() => {
     // Dynamically import html2pdf only on the client side
@@ -59,12 +72,25 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
   const options: SelectProps['options'] = [];
 
   const onFinish = (formValues: any) => {
-    console.log(formValues);
-    setIsModalOpen(false);
-    form.resetFields();
+    const _requestData = {
+      bookingID: dataPropsBooking.idBooking || '',
+      listEmail: formValues.email || [],
+    };
+    sendListEmailMutation.mutate(_requestData, {
+      onSuccess: () => {
+        successToast('Send Email Successfully');
+        setIsModalOpen(false);
+        form.resetFields();
+      },
+      onError() {
+        errorToast(API_MESSAGE.ERROR);
+      },
+    });
   };
 
-  const handlePrint = async () => {
+  const handlePrint = async (send: boolean) => {
+    console.log(send);
+
     // Ensure html2pdf is available in the window object
     if (window.html2pdf) {
       // Get the HTML element to print
@@ -90,13 +116,21 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
 
       // Create a FormData object to send the file
       const formData = new FormData();
-      formData.append('pdfFile', blob, 'Booking.pdf');
-      sendFilePdfBooking(formData)
+      formData.append('bookingId', dataPropsBooking.idBooking || '');
+      formData.append('file', blob, 'Booking.pdf');
+
+      if (send) {
+        sendFilePdfBooking(formData).then((data) => console.log(data));
+      }
     } else {
       console.error('html2pdf is not available.');
     }
   };
-
+  useEffect(() => {
+    if (displayStep === 5) {
+      (() => handlePrint(true))();
+    }
+  }, [dataPropsBooking, displayStep]);
   return (
     <div
       className={style.step5}
@@ -116,7 +150,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
 
           <Button
             icon={<FilePdfOutlined />}
-            onClick={handlePrint}
+            onClick={() => handlePrint(false)}
             style={{ background: '#DE231B', color: COLORS.WHITE }}
           >
             Download PDF
@@ -125,13 +159,28 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
         <Card className={style.cardMain} title="Review Booking">
           <Row gutter={26}>
             <div
-              id="content-to-print"
+              // id="content-to-print"
               style={{
                 width: '100%',
                 padding: '0 16px',
               }}
             >
               <FormBooking dataPropsBooking={dataPropsBooking} />
+            </div>
+            <div
+              style={{
+                display: 'none',
+              }}
+            >
+              <div
+                id="content-to-print"
+                style={{
+                  width: '100%',
+                  padding: '0 16px',
+                }}
+              >
+                <FormBookingPDF dataPropsBooking={dataPropsBooking} />
+              </div>
             </div>
 
             <Col span={24} style={{ marginTop: '16px' }}>
@@ -183,7 +232,11 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                   >
                     Cancel
                   </Button>
-                  <Button type="primary" htmlType="submit">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={sendListEmailMutation.isLoading}
+                  >
                     Send
                   </Button>
                 </Flex>

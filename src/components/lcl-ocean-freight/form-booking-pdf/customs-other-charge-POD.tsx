@@ -3,6 +3,7 @@ import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
+import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
 import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
 
@@ -11,17 +12,20 @@ interface Props {
 }
 interface DataType {
   key: number;
-  package: string;
-  quantityPackage: string;
-  price: string;
-  gw: string;
-  cbm: string;
+  description: string;
   quantity: string;
+  price: string;
   currency: string;
-  totalAmount: string;
+  unit: string;
+  vat: string;
+  total: string;
 }
-export default function QuotationDetail({ dataPropsBooking }: Props) {
+
+export default function CustomsOtherChargesPOD({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+  const [dataToTalPrice, setDataTotalPrice] = useState<DataTypeTotalPrice[]>(
+    []
+  );
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -58,11 +62,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Package
+          Description of charges
         </div>
       ),
-      dataIndex: 'package',
-      key: 'package',
+      dataIndex: 'description',
+      key: 'description',
     },
     {
       title: (
@@ -76,11 +80,29 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity Package
+          Unit
         </div>
       ),
-      dataIndex: 'quantityPackage',
-      key: 'quantityPackage',
+      dataIndex: 'unit',
+      key: 'unit',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Quantity
+        </div>
+      ),
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
     {
       title: (
@@ -133,56 +155,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          CBM
+          VAT
         </div>
       ),
-      dataIndex: 'cbm',
-      key: 'cbm',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          GW
-        </div>
-      ),
-      dataIndex: 'gw',
-      key: 'gw',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Quantity
-        </div>
-      ),
-      dataIndex: 'quantity',
-      key: 'quantity',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
+      dataIndex: 'vat',
+      key: 'vat',
     },
     {
       title: (
@@ -199,8 +176,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
+      dataIndex: 'total',
+      key: 'total',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -208,22 +185,43 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
   ];
 
   useEffect(() => {
-    setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationLCLDetails?.map(
-        (item, index) => ({
-          key: index,
-          package: item.package,
-          quantityPackage: item.quantityPackage,
-          price: item.price,
-          gw: item.gw,
-          cbm: item.cbm,
-          quantity: item.quantity,
-          currency: item.currency,
-          totalAmount: item.totalAmount,
-        })
-      ) || []
-    );
+    if (
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected
+        ?.ortherChargeDetailForBookings
+    ) {
+      setData(
+        dataPropsBooking?.detailBooking?.customQuotationPODSelected?.ortherChargeDetailForBookings?.map(
+          (item, index) => ({
+            key: index,
+            description: item.description,
+            quantity: item.quantity,
+            price: item.price,
+            currency: item.currency,
+            unit: item.unit,
+            vat: item.vat,
+            total: item.totalAmount,
+          })
+        ) || []
+      );
+    }
   }, [dataPropsBooking]);
+
+  useEffect(() => {
+    if (
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected
+        ?.sumOrtherChargeDetailForBooking
+    ) {
+      setDataTotalPrice(
+        dataPropsBooking?.detailBooking?.customQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
+          (item, index) => ({
+            key: index,
+            price: `${item.item2} ${item.item1}`,
+          })
+        ) || []
+      );
+    }
+  }, [dataPropsBooking]);
+
   return (
     <ConfigProvider
       theme={{
@@ -265,18 +263,20 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Customs service other charges (DESTINATION)
         </div>
         <Table
+          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
+        <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>
     </ConfigProvider>
   );

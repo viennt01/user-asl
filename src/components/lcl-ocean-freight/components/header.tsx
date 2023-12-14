@@ -25,7 +25,7 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
   };
 
   return (
-    <div className={style.header}>
+    <section id="headerStep" className={style.header}>
       <Flex
         className={style.contentHeader}
         justify={'space-between'}
@@ -221,6 +221,6 @@ export default function HeaderFclOceanFreight({ displayStep }: Props) {
           </Flex>
         </Flex>
       </Flex>
-    </div>
+    </section>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import { Flex, Form, Modal, PaginationProps } from 'antd';
+import { Flex, Form, PaginationProps } from 'antd';
 import HeaderFclOceanFreight from './components/header';
 import InputFclOceanFreight from './components/inputSearch';
 import Step2 from './components/step-2';

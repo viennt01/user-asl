@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
-import {
-  FeeTable,
-  IQuotationCustoms,
-  IQuotationCustomsTable,
-} from '@/components/fcl-ocean-freight/interface';
+import { IQuotationCustoms } from '@/components/fcl-ocean-freight/interface';
 import TableFeeOfCustoms from './tableFeeCustoms';
 import { IDataStep2Props } from '@/components/fcl-ocean-freight';
 
@@ -15,7 +11,7 @@ interface Props {
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
-  dataStep2PropsBooking: IDataStep2Props | undefined
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 
 export interface ISeaQuotationFeeFormValue {

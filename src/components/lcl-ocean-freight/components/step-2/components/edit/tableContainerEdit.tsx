@@ -75,7 +75,16 @@ export default function TableContainerEdit({
       >
         <Row gutter={24}>
           <Col span={12}>
-            <Form.Item label={'Package'} name="packageID">
+            <Form.Item
+              label={'Package'}
+              name="packageID"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select package',
+                },
+              ]}
+            >
               <Select
                 placeholder="Please select package"
                 showSearch
@@ -94,7 +103,16 @@ export default function TableContainerEdit({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label={'Quantity Package'} name="quantityPackage">
+            <Form.Item
+              label={'Quantity Package'}
+              name="quantityPackage"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter quantity package',
+                },
+              ]}
+            >
               <InputNumber
                 placeholder="Please enter quantity package"
                 style={{ width: '100%' }}
@@ -104,7 +122,16 @@ export default function TableContainerEdit({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label={'CBM'} name="cbm">
+            <Form.Item
+              label={'CBM'}
+              name="cbm"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter CBM',
+                },
+              ]}
+            >
               <InputNumber
                 placeholder="Please enter CBM"
                 style={{ width: '100%' }}
@@ -114,7 +141,16 @@ export default function TableContainerEdit({
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item label={'GW'} name="gw">
+            <Form.Item
+              label={'GW'}
+              name="gw"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter GW',
+                },
+              ]}
+            >
               <InputNumber
                 placeholder="Please enter GW"
                 style={{ width: '100%' }}

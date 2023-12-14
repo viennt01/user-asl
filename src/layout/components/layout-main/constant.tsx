@@ -28,7 +28,7 @@ const SHOW_ROUTER_HEADER = () => {
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
       { title: <Link href={ROUTERS.BOOKING}>Booking</Link> },
       { title: <Link href={ROUTERS.OCEAN_FREIGHT}>Ocean Freight</Link> },
-      { title: <Link href={ROUTERS.LCL_OCEAN_FREIGHT}>FCL Shipping</Link> },
+      { title: <Link href={ROUTERS.LCL_OCEAN_FREIGHT}>LCL Shipping</Link> },
     ],
     '/air-freight': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },

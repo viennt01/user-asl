@@ -5,9 +5,16 @@ import ShipmentDetail from './shipment-details';
 import QuotationDetail from './sea-quotation-detail';
 import SeaOtherCharges from './sea-other-charge';
 import TermsConditions from './terms-conditions';
-import OtherServiceCharges from './other-service-charges';
 import Finish from './finish';
 import { Image } from 'antd';
+import TuckingQuotationPOL from './trucking-quotation-POL';
+import TruckingOtherChargesPOL from './trucking-other-charge-POL';
+import TuckingQuotationPOD from './trucking-quotation-POD';
+import TruckingOtherChargesPOD from './trucking-other-charge-POD';
+import CustomsQuotationPOL from './customs-quotation-POL';
+import CustomsOtherChargesPOL from './customs-other-charge-POL';
+import CustomsQuotationPOD from './customs-quotation-POD';
+import CustomsOtherChargesPOD from './customs-other-charge-POD';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -36,7 +43,14 @@ export default function FormBooking({ dataPropsBooking }: Props) {
       <QuotationDetail dataPropsBooking={dataPropsBooking} />
       <SeaOtherCharges dataPropsBooking={dataPropsBooking} />
       <TermsConditions />
-      <OtherServiceCharges dataPropsBooking={dataPropsBooking} />
+      <TuckingQuotationPOL dataPropsBooking={dataPropsBooking} />
+      <TruckingOtherChargesPOL dataPropsBooking={dataPropsBooking} />
+      <TuckingQuotationPOD dataPropsBooking={dataPropsBooking} />
+      <TruckingOtherChargesPOD dataPropsBooking={dataPropsBooking} />
+      <CustomsQuotationPOL dataPropsBooking={dataPropsBooking} />
+      <CustomsOtherChargesPOL dataPropsBooking={dataPropsBooking} />
+      <CustomsQuotationPOD dataPropsBooking={dataPropsBooking} />
+      <CustomsOtherChargesPOD dataPropsBooking={dataPropsBooking} />
       <Finish dataPropsBooking={dataPropsBooking} />
     </div>
   );

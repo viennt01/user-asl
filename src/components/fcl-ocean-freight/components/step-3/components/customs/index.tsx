@@ -26,7 +26,6 @@ import {
   getListTypeUnit,
   getPriceCustom,
 } from '@/components/fcl-ocean-freight/fetcher';
-import { ResponseWithPayload } from '@/fetcherAxios';
 import {
   ICustomQuotationFCLDetailForBookings,
   IQuotationCustoms,
@@ -101,7 +100,7 @@ export default function Customs({
       dataResearch,
     ],
     queryFn: () => getPriceCustom(dataResearch),
-    enabled: dataResearch.commodityID !== '',
+    enabled: dataResearch.typeDeclarationName !== undefined,
     onSuccess: (data) => {
       data.status
         ? data.data

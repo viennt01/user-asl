@@ -50,10 +50,9 @@ const dateFormat = 'YYYY-MM-DD';
 const initalValueForm = {
   pickupID: '',
   deliveryID: '',
-  typeSeaService: TYPE_SERVICE.FCL,
+  typeSeaService: TYPE_SERVICE.LCL,
   cargoReady: 1,
   commodityID: '',
-  containers: [''],
   loadCapacities: [''],
 };
 
@@ -378,11 +377,16 @@ export default function Trucking({
                 margin: '12px 0',
               }}
             />
-            <Flex style={{ padding: '0 8px' }}>
+            <Flex
+              style={{
+                padding: '0 8px',
+                display: !showError ? '' : 'none',
+              }}
+            >
               <div
                 style={{
                   width: '100%',
-                  display: dataTableResearch ? 'none' : '',
+                  display: dataTableResearch ? '' : 'none',
                 }}
               >
                 <Table

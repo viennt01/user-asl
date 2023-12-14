@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -11,17 +11,32 @@ interface Props {
 }
 interface DataType {
   key: number;
-  package: string;
-  quantityPackage: string;
-  price: string;
+  priceRedLane: string;
+  priceYellowLane: string;
+  priceGreenLane: string;
+  vat: string;
   gw: string;
   cbm: string;
-  quantity: string;
-  currency: string;
-  totalAmount: string;
+  totalRedLane: string;
+  totalYellowLane: string;
+  totalGreenLane: string;
 }
-export default function QuotationDetail({ dataPropsBooking }: Props) {
+
+export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
+  const {
+    priceRedLane,
+    priceYellowLane,
+    priceGreenLane,
+    vat,
+    gw,
+    cbm,
+    totalRedLane,
+    totalYellowLane,
+    totalGreenLane,
+  } =
+    dataPropsBooking?.detailBooking?.customQuotationPODSelected
+      .customQuotationLCLDetailSelecteds || {};
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -58,89 +73,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Package
-        </div>
-      ),
-      dataIndex: 'package',
-      key: 'package',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Quantity Package
-        </div>
-      ),
-      dataIndex: 'quantityPackage',
-      key: 'quantityPackage',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Price
-        </div>
-      ),
-      dataIndex: 'price',
-      key: 'price',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
-          Currency
-        </div>
-      ),
-      dataIndex: 'currency',
-      key: 'currency',
-    },
-    {
-      title: (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '14px',
-            fontWeight: '720',
-            textAlign: 'center',
-          }}
-        >
           CBM
         </div>
       ),
       dataIndex: 'cbm',
       key: 'cbm',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
     },
     {
       title: (
@@ -159,6 +96,42 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'gw',
       key: 'gw',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          VAT
+        </div>
+      ),
+      dataIndex: 'vat',
+      key: 'vat',
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Green Lane
+        </div>
+      ),
+      dataIndex: 'priceGreenLane',
+      key: 'priceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -175,11 +148,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity
+          Yellow Lane
         </div>
       ),
-      dataIndex: 'quantity',
-      key: 'quantity',
+      dataIndex: 'priceYellowLane',
+      key: 'priceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -196,11 +169,74 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Amount
+          Red Lane
         </div>
       ),
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
+      dataIndex: 'priceRedLane',
+      key: 'priceRedLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Green Lane
+        </div>
+      ),
+      dataIndex: 'totalGreenLane',
+      key: 'totalGreenLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Yellow Lane
+        </div>
+      ),
+      dataIndex: 'totalYellowLane',
+      key: 'totalYellowLane',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Red Lane
+        </div>
+      ),
+      dataIndex: 'totalGreenLane',
+      key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -208,21 +244,25 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
   ];
 
   useEffect(() => {
-    setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationLCLDetails?.map(
-        (item, index) => ({
-          key: index,
-          package: item.package,
-          quantityPackage: item.quantityPackage,
-          price: item.price,
-          gw: item.gw,
-          cbm: item.cbm,
-          quantity: item.quantity,
-          currency: item.currency,
-          totalAmount: item.totalAmount,
-        })
-      ) || []
-    );
+    if (
+      dataPropsBooking?.detailBooking?.customQuotationPODSelected
+        ?.customQuotationLCLDetailSelecteds
+    ) {
+      setData([
+        {
+          key: 1,
+          priceRedLane: priceRedLane || '',
+          priceYellowLane: priceYellowLane || '',
+          priceGreenLane: priceGreenLane || '',
+          vat: vat || '',
+          gw: gw || '',
+          cbm: cbm || '',
+          totalRedLane: totalRedLane || '',
+          totalYellowLane: totalYellowLane || '',
+          totalGreenLane: totalGreenLane || '',
+        },
+      ]);
+    }
   }, [dataPropsBooking]);
   return (
     <ConfigProvider
@@ -265,7 +305,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Customs service (ORIGIN)
         </div>
         <Table
           style={{ width: '100%' }}
@@ -273,9 +313,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          scroll={{
-            x: 'max-content',
-          }}
+          // scroll={{
+          //   x: 'max-content',
+          // }}
         />
       </div>
     </ConfigProvider>

@@ -16,6 +16,7 @@ import {
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import { ISubmitFeeCustoms } from './components/customs/feeOfCustoms';
+import { useRouter } from 'next/router';
 
 export enum TYPE_POL_POD {
   'POL' = 'POL',
@@ -37,18 +38,17 @@ export default function ServiceStep3({
 }: Props) {
   const [selectedRowKeysPOL, setSelectedRowKeysPOL] = useState<string>('');
   const [selectedRowKeysPOD, setSelectedRowKeysPOD] = useState<string>('');
-  const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] = useState<
-    string[]
-  >([]);
-  const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] = useState<
-    string[]
-  >([]);
+  const [selectedRowKeysCustomsPOL, setSelectedRowKeysCustomsPOL] =
+    useState<string>('');
+  const [selectedRowKeysCustomsPOD, setSelectedRowKeysCustomsPOD] =
+    useState<string>('');
   const [submitFeeCustomsPOL, setSubmitFeeCustomsPOL] = useState<
     ISubmitFeeCustoms[]
   >([]);
   const [submitFeeCustomsPOD, setSubmitFeeCustomsPOD] = useState<
     ISubmitFeeCustoms[]
   >([]);
+  const router = useRouter();
 
   const FeeCustomsPOL: ICustomQuotationPOL[] = submitFeeCustomsPOL
     .map((itemA) => {
@@ -116,13 +116,13 @@ export default function ServiceStep3({
       isManualBooking: false,
       quotationBookingDetailRegisterRequest: {
         seaQuotationID: dataPropsBooking.idQuotation || '',
-        truckingQuotationPOLID: selectedRowKeysPOL[0] || '',
-        truckingQuotationPODID: selectedRowKeysPOD[0] || '',
+        truckingQuotationPOLID: selectedRowKeysPOL || '',
+        truckingQuotationPODID: selectedRowKeysPOD || '',
         customQuotationPOLID: FeeCustomsPOL
-          ? selectedRowKeysCustomsPOL[0] || ''
+          ? selectedRowKeysCustomsPOL || ''
           : '',
         customQuotationPODID: FeeCustomsPOD
-          ? selectedRowKeysCustomsPOD[0] || ''
+          ? selectedRowKeysCustomsPOD || ''
           : '',
         customQuotationPOLDetailRegisterRequests: FeeCustomsPOL || [],
         customQuotationPODDetailRegisterRequests: FeeCustomsPOD || [],
@@ -177,6 +177,8 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOL}
                   setSelectedRowKey={setSelectedRowKeysCustomsPOL}
+                  selectedRowKey={selectedRowKeysCustomsPOL}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
               <Col span={24}>
@@ -185,6 +187,8 @@ export default function ServiceStep3({
                   dataPropsBooking={dataPropsBooking}
                   setSubmitFeeCustoms={setSubmitFeeCustomsPOD}
                   setSelectedRowKey={setSelectedRowKeysCustomsPOD}
+                  selectedRowKey={selectedRowKeysCustomsPOL}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
             </Row>
@@ -199,14 +203,19 @@ export default function ServiceStep3({
                 width: '120px',
                 height: '40px',
               }}
-              onClick={() => setDisplayStep(2.2)}
+              onClick={() => (
+                setDisplayStep(2.2),
+                router.push('/lcl-ocean-freight/#headerStep')
+              )}
             >
               Pervious
             </Button>
             <Button
               style={{ width: '120px', height: '40px' }}
               type="primary"
-              onClick={() => submitBooking()}
+              onClick={() => (
+                submitBooking(), router.push('/lcl-ocean-freight/#headerStep')
+              )}
             >
               Next
             </Button>

@@ -1,33 +1,27 @@
-import React from 'react';
-import { ConfigProvider, Table } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { formatNumber } from '@/utils/format-number';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
 }
-
-export default function OtherServiceCharges({ dataPropsBooking }: Props) {
-  interface DataType {
-    key: string;
-    description?: string;
-    quantity?: string;
-    price?: string;
-    currency?: string;
-    total?: string;
-    remark?: string;
-  }
-
-  const sharedOnCell = (_: DataType, index: number | undefined) => {
-    if (index === 1) {
-      return { colSpan: 0 };
-    }
-
-    return {};
-  };
-
+interface DataType {
+  key: number;
+  package: string;
+  quantityPackage: string;
+  price: string;
+  gw: string;
+  cbm: string;
+  quantity: string;
+  currency: string;
+  totalAmount: string;
+}
+export default function QuotationDetail({ dataPropsBooking }: Props) {
+  const [data, setData] = useState<DataType[]>([]);
   const columns: ColumnsType<DataType> = [
     {
       title: (
@@ -64,11 +58,11 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Description of charges
+          Package
         </div>
       ),
-      dataIndex: 'description',
-      key: 'description',
+      dataIndex: 'package',
+      key: 'package',
     },
     {
       title: (
@@ -82,11 +76,11 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity
+          Quantity Package
         </div>
       ),
-      dataIndex: 'quantity',
-      key: 'quantity',
+      dataIndex: 'quantityPackage',
+      key: 'quantityPackage',
     },
     {
       title: (
@@ -105,6 +99,9 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'price',
       key: 'price',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -136,11 +133,14 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Amount
+          CBM
         </div>
       ),
-      dataIndex: 'total',
-      key: 'total',
+      dataIndex: 'cbm',
+      key: 'cbm',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -154,53 +154,76 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Remark
+          GW
         </div>
       ),
-      dataIndex: 'remark',
-      key: 'remark',
+      dataIndex: 'gw',
+      key: 'gw',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Quantity
+        </div>
+      ),
+      dataIndex: 'quantity',
+      key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          Total Amount
+        </div>
+      ),
+      dataIndex: 'totalAmount',
+      key: 'totalAmount',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
   ];
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '2',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '3',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-    {
-      key: '4',
-      description: 'Import customs clearance fee',
-      quantity: '1',
-      price: '100,000,000',
-      currency: 'VND',
-      total: '100,000,000',
-      remark: 'Additional CDS is VND 300,000',
-    },
-  ];
-
+  useEffect(() => {
+    setData(
+      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationLCLDetails?.map(
+        (item, index) => ({
+          key: index,
+          package: item.package,
+          quantityPackage: item.quantityPackage,
+          price: item.price,
+          gw: item.gw,
+          cbm: item.cbm,
+          quantity: item.quantity,
+          currency: item.currency,
+          totalAmount: item.totalAmount,
+        })
+      ) || []
+    );
+  }, [dataPropsBooking]);
   return (
     <ConfigProvider
       theme={{
@@ -225,10 +248,10 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
         className={style.cardCustomer}
         style={{
           marginBottom: '16px',
+          display: data.length === 0 ? 'none' : '',
         }}
       >
         <div
-          className={style.cardCustomerHeader}
           style={{
             paddingLeft: '16px',
             backgroundColor: COLORS.GREY_COLOR_HOVER,
@@ -242,10 +265,9 @@ export default function OtherServiceCharges({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          OTHER SERVICE CHARGES (IF REQUEST)
+          Quotation details
         </div>
         <Table
-          className={style.table}
           style={{ width: '100%' }}
           columns={columns}
           dataSource={data}

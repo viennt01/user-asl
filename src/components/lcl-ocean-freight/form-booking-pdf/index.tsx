@@ -9,8 +9,8 @@ import Finish from './finish';
 import { Image } from 'antd';
 import TuckingQuotationPOL from './trucking-quotation-POL';
 import TruckingOtherChargesPOL from './trucking-other-charge-POL';
-import TruckingOtherChargesPOD from './trucking-other-charge-POD';
 import TuckingQuotationPOD from './trucking-quotation-POD';
+import TruckingOtherChargesPOD from './trucking-other-charge-POD';
 import CustomsQuotationPOL from './customs-quotation-POL';
 import CustomsOtherChargesPOL from './customs-other-charge-POL';
 import CustomsQuotationPOD from './customs-quotation-POD';
@@ -20,10 +20,11 @@ interface Props {
   dataPropsBooking: IDataBookingProps;
 }
 
-export default function FormBooking({ dataPropsBooking }: Props) {
+export default function FormBookingPDF({ dataPropsBooking }: Props) {
   return (
     <div>
       <div
+        // span={24}
         style={{
           marginBottom: '24px',
           width: '100%',

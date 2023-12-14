@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tabs } from 'antd';
-import {
-  FeeTable,
-  IQuotationCustoms,
-  IQuotationCustomsTable,
-} from '@/components/fcl-ocean-freight/interface';
+import { IQuotationCustoms } from '@/components/lcl-ocean-freight/interface';
 import TableFeeOfCustoms from './tableFeeCustoms';
 
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
