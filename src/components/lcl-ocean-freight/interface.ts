@@ -292,6 +292,7 @@ export interface IBooking {
     customQuotationPODDetailRegisterRequests: ICustomQuotationPOD[];
   };
   seaBookingLCLDetailRegisterRequest: ISeaBookingLCLDetailRegisterRequest;
+  truckBookingLCLDetailRegisterRequests: ITruckBookingLCLDetailRegisterRequests[];
 }
 export interface ICustomQuotationPOL {
   feeGroupID: string;
@@ -309,6 +310,12 @@ export interface ICustomQuotationPOD {
 export interface ISeaBookingLCLDetailRegisterRequest {
   packageID: string;
   quantityPackage: string;
+  gw: string;
+  cbm: string;
+}
+export interface ITruckBookingLCLDetailRegisterRequests {
+  loadCapacityID: string;
+  quantityLoadCapacity: string;
   gw: string;
   cbm: string;
 }

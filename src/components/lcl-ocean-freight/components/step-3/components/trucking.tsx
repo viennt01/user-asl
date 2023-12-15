@@ -170,7 +170,7 @@ export default function Trucking({
     {
       title: (
         <Flex align="center" justify="center">
-          Container
+          Load Capacity
         </Flex>
       ),
       dataIndex: 'loadCapacityCode',

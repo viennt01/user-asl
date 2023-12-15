@@ -135,6 +135,13 @@ export default function ServiceStep3({
         gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
         cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
       },
+      truckBookingLCLDetailRegisterRequests:
+        dataStep2PropsBooking?.listQuantityTypeLoadCapacity?.map((item) => ({
+          loadCapacityID: item.loadCapacityID || '',
+          quantityLoadCapacity: item.quantity || '',
+          gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
+          cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
+        })) || [],
     };
     createBookingMutation.mutate(_requestData);
   };
