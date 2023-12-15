@@ -127,7 +127,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Green Lane
+          Green Router
         </div>
       ),
       dataIndex: 'priceGreenLane',
@@ -148,7 +148,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Yellow Lane
+          Yellow Router
         </div>
       ),
       dataIndex: 'priceYellowLane',
@@ -169,7 +169,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Red Lane
+          Red Router
         </div>
       ),
       dataIndex: 'priceRedLane',
@@ -190,7 +190,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Green Lane
+          Total Green Router
         </div>
       ),
       dataIndex: 'totalGreenLane',
@@ -211,7 +211,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Yellow Lane
+          Total Yellow Router
         </div>
       ),
       dataIndex: 'totalYellowLane',
@@ -232,7 +232,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Red Lane
+          Total Red Router
         </div>
       ),
       dataIndex: 'totalGreenLane',

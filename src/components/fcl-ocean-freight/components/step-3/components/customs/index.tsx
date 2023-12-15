@@ -148,7 +148,7 @@ export default function Customs({
       },
     },
     {
-      title: <Text style={{ color: 'green' }}>Base Green Lane</Text>,
+      title: <Text style={{ color: 'green' }}>Base Green Router</Text>,
       dataIndex: 'basePriceGreenLane',
       align: 'center',
       render: (value) => {
@@ -156,7 +156,7 @@ export default function Customs({
       },
     },
     {
-      title: <Text style={{ color: '#d4b106' }}>Base Yellow Lane</Text>,
+      title: <Text style={{ color: '#d4b106' }}>Base Yellow Router</Text>,
       dataIndex: 'basePriceYellowLane',
       align: 'center',
       render: (value) => {
@@ -164,7 +164,7 @@ export default function Customs({
       },
     },
     {
-      title: <Text style={{ color: '#cf1322' }}>Base Red Lane</Text>,
+      title: <Text style={{ color: '#cf1322' }}>Base Red Router</Text>,
       dataIndex: 'basePriceRedLane',
       align: 'center',
       render: (value) => {
@@ -174,7 +174,7 @@ export default function Customs({
     {
       title: (
         <Text color={'green'} style={{ color: 'green' }}>
-          Green Lane
+          Green Router
         </Text>
       ),
       dataIndex: 'priceGreenLane',
@@ -184,7 +184,7 @@ export default function Customs({
       },
     },
     {
-      title: <Text style={{ color: '#d4b106' }}>Yellow Lane</Text>,
+      title: <Text style={{ color: '#d4b106' }}>Yellow Router</Text>,
       dataIndex: 'priceYellowLane',
       align: 'center',
       render: (value) => {
@@ -192,7 +192,7 @@ export default function Customs({
       },
     },
     {
-      title: <Text style={{ color: '#cf1322' }}>Red Lane</Text>,
+      title: <Text style={{ color: '#cf1322' }}>Red Router</Text>,
       dataIndex: 'priceRedLane',
       align: 'center',
       render: (value) => {

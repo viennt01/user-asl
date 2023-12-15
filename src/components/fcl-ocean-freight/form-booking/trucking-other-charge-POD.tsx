@@ -80,11 +80,11 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Unit
+          Quantity
         </div>
       ),
-      dataIndex: 'unit',
-      key: 'unit',
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
     {
       title: (
@@ -98,11 +98,11 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity
+          Unit
         </div>
       ),
-      dataIndex: 'quantity',
-      key: 'quantity',
+      dataIndex: 'unit',
+      key: 'unit',
     },
     {
       title: (
@@ -253,7 +253,7 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-         Trucking service other charges (DESTINATION)
+          Trucking service other charges (DESTINATION)
         </div>
         <Table
           className={style.table}

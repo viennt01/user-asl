@@ -134,6 +134,10 @@ export default function ServiceStep3({
           dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage || '',
         gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
         cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
+        loadcapacity:
+          dataStep2PropsBooking?.listQuantityTypeLoadCapacity?.map(
+            (item) => item.loadCapacityID
+          ) || [],
       },
       truckBookingLCLDetailRegisterRequests:
         dataStep2PropsBooking?.listQuantityTypeLoadCapacity?.map((item) => ({

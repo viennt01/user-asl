@@ -204,6 +204,17 @@ export default function TableFeeOfCustoms({
     {
       title: (
         <Flex align="center" justify="center">
+          Unit
+        </Flex>
+      ),
+      dataIndex: 'unitInternationalCode',
+      key: 'unitInternationalCode',
+      fixed: 'left',
+      ...getColumnSearchProps('unitInternationalCode'),
+    },
+    {
+      title: (
+        <Flex align="center" justify="center">
           Price
         </Flex>
       ),
@@ -215,6 +226,17 @@ export default function TableFeeOfCustoms({
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
+    },
+    {
+      title: (
+        <Flex align="center" justify="center">
+          Currency
+        </Flex>
+      ),
+      dataIndex: 'currencyName',
+      key: 'currencyName',
+      fixed: 'left',
+      ...getColumnSearchProps('currencyName'),
     },
     {
       title: (
@@ -241,28 +263,6 @@ export default function TableFeeOfCustoms({
       key: 'typeFeeName',
       fixed: 'left',
       ...getColumnSearchProps('typeFeeName'),
-    },
-    {
-      title: (
-        <Flex align="center" justify="center">
-          Currency
-        </Flex>
-      ),
-      dataIndex: 'currencyName',
-      key: 'currencyName',
-      fixed: 'left',
-      ...getColumnSearchProps('currencyName'),
-    },
-    {
-      title: (
-        <Flex align="center" justify="center">
-          Unit
-        </Flex>
-      ),
-      dataIndex: 'unitInternationalCode',
-      key: 'unitInternationalCode',
-      fixed: 'left',
-      ...getColumnSearchProps('unitInternationalCode'),
     },
   ];
 

@@ -64,11 +64,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Unit
+          Quantity
         </div>
       ),
-      dataIndex: 'unit',
-      key: 'unit',
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
     {
       title: (
@@ -82,11 +82,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity
+          Unit
         </div>
       ),
-      dataIndex: 'quantity',
-      key: 'quantity',
+      dataIndex: 'unit',
+      key: 'unit',
     },
     {
       title: (
@@ -286,7 +286,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-         Total Red Lane
+          Total Red Lane
         </div>
       ),
       dataIndex: 'totalGreenLane',

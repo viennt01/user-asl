@@ -79,11 +79,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Unit
+          Quantity
         </div>
       ),
-      dataIndex: 'unit',
-      key: 'unit',
+      dataIndex: 'quantity',
+      key: 'quantity',
     },
     {
       title: (
@@ -97,11 +97,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity
+          Unit
         </div>
       ),
-      dataIndex: 'quantity',
-      key: 'quantity',
+      dataIndex: 'unit',
+      key: 'unit',
     },
     {
       title: (

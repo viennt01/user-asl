@@ -58,11 +58,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Package
+          Quantity Package
         </div>
       ),
-      dataIndex: 'package',
-      key: 'package',
+      dataIndex: 'quantityPackage',
+      key: 'quantityPackage',
     },
     {
       title: (
@@ -76,11 +76,11 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Quantity Package
+          Package
         </div>
       ),
-      dataIndex: 'quantityPackage',
-      key: 'quantityPackage',
+      dataIndex: 'package',
+      key: 'package',
     },
     {
       title: (
