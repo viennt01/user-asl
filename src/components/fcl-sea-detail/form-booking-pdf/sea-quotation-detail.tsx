@@ -4,8 +4,8 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDataBookingProps } from '..';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -233,7 +233,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Quotation details
+          Freight charges
         </div>
         <Table
           style={{ width: '100%' }}

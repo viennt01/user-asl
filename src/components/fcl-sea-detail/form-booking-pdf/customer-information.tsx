@@ -3,7 +3,7 @@ import { Card, Flex, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
+import { IDataBookingProps } from '..';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;

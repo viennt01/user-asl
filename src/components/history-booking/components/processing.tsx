@@ -2,13 +2,13 @@ import { Button, Col, Input, List, Row, Space, Image } from 'antd';
 import style from '../index.module.scss';
 import Box from './box';
 import { useQuery } from '@tanstack/react-query';
-import { IDetailBookingLCL, TYPE_STATUS } from '../interface';
+import { IDetailBooking, TYPE_STATUS } from '../interface';
 import { useState } from 'react';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getHistoryBooking } from '../fetcher';
 
 export default function Processing() {
-  const [dataHistory, setDataHistory] = useState<IDetailBookingLCL[]>([]);
+  const [dataHistory, setDataHistory] = useState<IDetailBooking[]>([]);
   useQuery({
     queryKey: [API_BOOKING.GET_HISTORY_BOOKING_BY_USER],
     queryFn: () =>

@@ -5,8 +5,9 @@ export enum TYPE_STATUS {
   'CANCELLED' = 'CANCELLED',
 }
 
-export interface IDetailBookingLCL {
+export interface IDetailBooking {
   bookingID: string;
+  bookingNo: string;
   cancelDated: string;
   cargoCutOffDated: string;
   cargoReadyDated: string;

@@ -2,14 +2,14 @@ import { Button, Col, Flex, Row, Image, Typography } from 'antd';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format-number';
 import { STATUS_COLORS, STATUS_LABELS } from '../..';
-import { IDetailBookingLCL } from '../../interface';
+import { IDetailBooking } from '../../interface';
 import { useRouter } from 'next/router';
 import { ROUTERS_DYNAMIC } from '@/constants/router';
 
 const { Text } = Typography;
 
 interface Props {
-  data: IDetailBookingLCL;
+  data: IDetailBooking;
 }
 
 export default function Box({ data }: Props) {
@@ -17,7 +17,7 @@ export default function Box({ data }: Props) {
 
   return (
     <div className={style.box}>
-      <div className={style.idBox}>Booking No: ABC12345</div>
+      <div className={style.idBox}>Booking No: {data.bookingNo}</div>
       <Row gutter={24} style={{ padding: '24px 16px' }}>
         <Col span={24} lg={16} style={{ paddingBottom: '24px' }}>
           <Row>

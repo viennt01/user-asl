@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Card, Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatDate } from '@/utils/format-number';
 import COLORS from '@/constants/color';
+import { IDataBookingProps } from '..';
 interface Props {
   dataPropsBooking: IDataBookingProps;
 }
@@ -34,6 +34,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     valitidyTo,
     commodity,
     seaBookingFCLDetailDTOs,
+    bookingNo,
   } = dataPropsBooking?.detailBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
@@ -96,7 +97,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       },
     },
   ];
-
 
   useEffect(() => {
     setData([
@@ -176,7 +176,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Shipment details
+          Booking details - {bookingNo}
         </div>
         <Table
           style={{ width: '100%' }}
