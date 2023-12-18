@@ -47,6 +47,7 @@ export const DEFAULT_PAGINATION = {
 export interface IDataLocation {
   locationID: string;
   locationName: string;
+  typeLocation: string[];
 }
 
 export interface IRequireLocation {
