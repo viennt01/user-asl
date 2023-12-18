@@ -87,6 +87,7 @@ export default function EditDescription({
                   setDataStep2PropsBooking={setDataStep2PropsBooking}
                   dataLoadCapacity={dataLoadCapacity}
                   form={form}
+                  dataPropsBooking={dataPropsBooking}
                 />
               </Col>
               <Col span={24}>
@@ -95,6 +96,7 @@ export default function EditDescription({
                   dataStep2PropsBooking={dataStep2PropsBooking}
                   dataLoadCapacity={dataLoadCapacity}
                   form={form}
+                  dataPropsBooking={dataPropsBooking}
                 />
               </Col>
               <Col span={24}>

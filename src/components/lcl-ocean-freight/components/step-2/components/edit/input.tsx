@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { InputNumber, Row, Col, Form, Select, FormInstance } from 'antd';
-import { IDataStep2Props } from '@/components/lcl-ocean-freight';
+import {
+  IDataBookingProps,
+  IDataStep2Props,
+} from '@/components/lcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { getListTypeUnit } from '@/components/fcl-ocean-freight/fetcher';
@@ -15,16 +18,19 @@ interface Props {
     value: string;
   }[];
   form: FormInstance<any>;
+  dataPropsBooking: IDataBookingProps;
 }
 
 export default function TableContainerEdit({
   setDataStep2PropsBooking,
   dataLoadCapacity,
   form,
+  dataPropsBooking,
 }: Props) {
   const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
     []
   );
+  console.log(dataPropsBooking?.step1?.trafficPol?.name);
 
   const packageID = Form.useWatch('packageID', form);
   const quantityPackage = Form.useWatch('quantityPackage', form);
@@ -157,7 +163,14 @@ export default function TableContainerEdit({
           </Form.Item>
         </Col>
 
-        <Col span={12}>
+        <Col
+          span={
+            dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
+            dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
+              ? 12
+              : 0
+          }
+        >
           <Form.Item
             label={'Load Capacity'}
             name="loadCapacityID"

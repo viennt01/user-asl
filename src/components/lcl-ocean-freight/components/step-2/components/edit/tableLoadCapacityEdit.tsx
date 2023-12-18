@@ -9,7 +9,7 @@ import {
 } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
-import { IDataStep2Props } from '@/components/lcl-ocean-freight';
+import { IDataBookingProps, IDataStep2Props } from '@/components/lcl-ocean-freight';
 export interface IQuantity {
   loadCapacityID: string;
   quantity: string;
@@ -25,6 +25,7 @@ interface Props {
     value: string;
   }[];
   form: FormInstance<any>;
+  dataPropsBooking: IDataBookingProps;
 }
 
 export interface DataType {
@@ -42,6 +43,7 @@ export default function TableLoadCapacityEdit({
   dataStep2PropsBooking,
   dataLoadCapacity,
   form,
+  dataPropsBooking,
 }: Props) {
   const [dataTable, setDataTable] = useState<DataType[]>([]);
   const inputRefs = useRef<Array<React.MutableRefObject<any>>>([]);
@@ -131,7 +133,15 @@ export default function TableLoadCapacityEdit({
   }, [dataTable]);
 
   return (
-    <div>
+    <div
+      style={{
+        display:
+          dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
+          dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
+            ? ''
+            : 'none',
+      }}
+    >
       <ConfigProvider
         theme={{
           components: {
