@@ -14,7 +14,6 @@ import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import { getAllLoadCapacity } from '../../fetcher';
 import { API_LOAD_CAPACITY } from '@/fetcherAxios/endpoint';
-import TableLoadCapacityEdit from './components/edit/tableLoadCapacityEdit';
 
 interface Props {
   setDisplayStep: React.Dispatch<React.SetStateAction<number>>;
@@ -90,15 +89,15 @@ export default function EditDescription({
                   dataPropsBooking={dataPropsBooking}
                 />
               </Col>
-              <Col span={24}>
-                <TableLoadCapacityEdit
+              {/* <Col span={24}> */}
+                {/* <TableLoadCapacityEdit
                   setDataStep2PropsBooking={setDataStep2PropsBooking}
                   dataStep2PropsBooking={dataStep2PropsBooking}
                   dataLoadCapacity={dataLoadCapacity}
                   form={form}
                   dataPropsBooking={dataPropsBooking}
                 />
-              </Col>
+              </Col> */}
               <Col span={24}>
                 <LocalChargesEdit dataFeeTable={dataFeeTable} />
               </Col>

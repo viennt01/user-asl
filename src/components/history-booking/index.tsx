@@ -8,14 +8,14 @@ import Pending from './components/pending';
 import Completed from './components/completed';
 import Cancelled from './components/cancelled';
 export const STATUS_COLORS = {
-  'PENDING CONFIRMATION': COLORS.STATUS_CODE.PENDING,
+  'PENDING': COLORS.STATUS_CODE.PENDING,
   PROCESSING: COLORS.STATUS_CODE.PROCESSING,
   COMPLETED: COLORS.STATUS_CODE.COMPLETED,
   CANCELLED: COLORS.STATUS_CODE.CANCELLED,
 };
 
 export const STATUS_LABELS = {
-  'PENDING CONFIRMATION': 'Pending Confirmation',
+  'PENDING': 'Pending Confirmation',
   PROCESSING: 'Processing',
   COMPLETED: 'Completed',
   CANCELLED: 'Cancelled',

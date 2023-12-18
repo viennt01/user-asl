@@ -42,7 +42,7 @@ export default function Register() {
   const handleSubmitVerifyOtp = (values: RegisterForm) => {
     setLoadingButtonRegister(true);
     const data = {
-      roleID: values.roleID,
+      roleID: '8dfcfbc7-e2bf-44f0-8cab-8109bb5d21fe',
       email: values.email,
       fullName: values.fullName,
 
@@ -169,7 +169,7 @@ export default function Register() {
               }}
             >
               <Row gutter={24}>
-                <Col
+                {/* <Col
                   span={24}
                   style={{ paddingLeft: '18px', paddingRight: '18px' }}
                 >
@@ -189,7 +189,7 @@ export default function Register() {
                       size="large"
                     />
                   </Form.Item>
-                </Col>
+                </Col> */}
 
                 <Col
                   span={24}

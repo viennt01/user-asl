@@ -25,7 +25,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getListTypeTransport, searchQuotation } from './fetcher';
 import { API_BOOKING, API_TYPE_OF_TRANSPORT } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
-import { IQuantity } from './components/step-2/components/edit/tableLoadCapacityEdit';
 
 export interface IDataBookingProps {
   idBooking?: string;
@@ -43,7 +42,6 @@ export const initalValueProps = {
 
 export interface IDataStep2Props {
   packageBookingLCLDetail?: ISeaBookingLCLDetailRegisterRequest;
-  listQuantityTypeLoadCapacity?: IQuantity[];
 }
 
 export const initalValueForm = {

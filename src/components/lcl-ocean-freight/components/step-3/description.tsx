@@ -135,17 +135,21 @@ export default function ServiceStep3({
         gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
         cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
         loadcapacity:
-          dataStep2PropsBooking?.listQuantityTypeLoadCapacity?.map(
-            (item) => item.loadCapacityID
+          dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.map(
+            (item) => item
           ) || [],
       },
-      truckBookingLCLDetailRegisterRequests:
-        dataStep2PropsBooking?.listQuantityTypeLoadCapacity?.map((item) => ({
-          loadCapacityID: item.loadCapacityID || '',
-          quantityLoadCapacity: item.quantity || '',
+      truckBookingLCLDetailRegisterRequests: [
+        {
+          packageID:
+            dataStep2PropsBooking?.packageBookingLCLDetail?.packageID || '',
+          quantityPackage:
+            dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage ||
+            '',
           gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
           cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
-        })) || [],
+        },
+      ],
     };
     createBookingMutation.mutate(_requestData);
   };
@@ -168,6 +172,7 @@ export default function ServiceStep3({
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
                   setSelectedRowKeys={setSelectedRowKeysPOL}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
               <Col
@@ -179,6 +184,7 @@ export default function ServiceStep3({
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}
                   setSelectedRowKeys={setSelectedRowKeysPOD}
+                  dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
 

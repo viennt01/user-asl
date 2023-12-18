@@ -27,7 +27,10 @@ import {
   TYPE_SERVICE,
 } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import {
+  IDataBookingProps,
+  IDataStep2Props,
+} from '@/components/lcl-ocean-freight';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
 import { TYPE_POL_POD } from '../description';
@@ -42,6 +45,7 @@ interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
   type: TYPE_POL_POD;
+  dataStep2PropsBooking: IDataStep2Props | undefined;
 }
 const { Panel } = Collapse;
 const { Title } = Typography;
@@ -60,6 +64,7 @@ export default function Trucking({
   dataPropsBooking,
   setSelectedRowKeys,
   type,
+  dataStep2PropsBooking,
 }: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
@@ -78,6 +83,10 @@ export default function Trucking({
 
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
+  console.log(
+    dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity
+  );
+
   const onFinish = (formValues: IRequireSearchTrucking) => {
     const _requestData =
       type === TYPE_POL_POD.POD
@@ -86,12 +95,20 @@ export default function Trucking({
             pickupID: dataPropsBooking.dataQuotation?.podid || '',
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+            loadcapacity:
+              dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.map(
+                (item) => item
+              ) || [],
           }
         : {
             pickupID: formValues.pickupID || '',
             deliveryID: dataPropsBooking?.dataQuotation?.polid || '',
             commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
+            loadcapacity:
+              dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.map(
+                (item) => item
+              ) || [],
           };
     setDataResearch(_requestData);
     if (
@@ -135,7 +152,7 @@ export default function Trucking({
   });
 
   const getLocation = useQuery({
-    queryKey: [API_LOCATION.GET_ALL],
+    queryKey: [API_LOCATION.GET_ALL, 'truckingQuotationDetails'],
     queryFn: () =>
       getAllLocation({
         type: [

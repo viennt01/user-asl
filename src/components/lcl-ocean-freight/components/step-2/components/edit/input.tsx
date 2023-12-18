@@ -30,7 +30,6 @@ export default function TableContainerEdit({
   const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
     []
   );
-  console.log(dataPropsBooking?.step1?.trafficPol?.name);
 
   const packageID = Form.useWatch('packageID', form);
   const quantityPackage = Form.useWatch('quantityPackage', form);
@@ -46,10 +45,10 @@ export default function TableContainerEdit({
         quantityPackage: quantityPackage,
         gw: gw,
         cbm: cbm,
-        loadCapacityID: loadCapacityID,
+        loadcapacity: [loadCapacityID],
       },
     }));
-  }, [packageID, quantityPackage, gw, cbm]);
+  }, [packageID, quantityPackage, gw, cbm, loadCapacityID]);
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
@@ -184,7 +183,7 @@ export default function TableContainerEdit({
             <Select
               placeholder="Please select Load Capacity"
               showSearch
-              mode="multiple"
+              // mode="multiple"
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option?.label ?? '').includes(input)
