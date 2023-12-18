@@ -83,9 +83,7 @@ export default function Trucking({
 
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
-  console.log(
-    dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity
-  );
+  console.log(dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity);
 
   const onFinish = (formValues: IRequireSearchTrucking) => {
     const _requestData =
@@ -308,21 +306,40 @@ export default function Trucking({
                             ? 'Please select delivery address'
                             : 'Please select pick up address'
                         }
-                        optionFilterProp="children"
-                        filterOption={(input, option) =>
-                          (option?.label ?? '').includes(input)
-                        }
-                        filterSort={(optionA, optionB) =>
-                          (optionA?.label ?? '')
-                            .toLowerCase()
-                            .localeCompare((optionB?.label ?? '').toLowerCase())
-                        }
+                        optionFilterProp="label"
+                        filterOption={(input, option) => {
+                          return (option?.display ?? '').includes(
+                            input.toString().toLocaleUpperCase()
+                          );
+                        }}
                         size="large"
                         options={
                           getLocation.data?.data?.map((item) => {
                             return {
                               value: item.locationID,
-                              label: item.locationName,
+                              display: item.locationName,
+                              label: (
+                                <Flex justify="space-between">
+                                  <Flex>{item.locationName}</Flex>
+                                  <Flex align="center">
+                                    {item.typeLocation.map((item) => {
+                                      return (
+                                        <Tag
+                                          style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            height: '20px',
+                                            marginRight: '4px',
+                                          }}
+                                        >
+                                          {item}
+                                        </Tag>
+                                      );
+                                    })}
+                                  </Flex>
+                                </Flex>
+                              ),
                             };
                           }) || []
                         }
