@@ -318,6 +318,7 @@ export interface ISeaBookingLCLDetailRegisterRequest {
 export interface ITruckBookingLCLDetailRegisterRequests {
   packageID: string;
   quantityPackage: string;
+  loadCapacityID: string;
   gw: string;
   cbm: string;
 }

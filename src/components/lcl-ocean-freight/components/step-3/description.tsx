@@ -146,6 +146,11 @@ export default function ServiceStep3({
           quantityPackage:
             dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage ||
             '',
+          loadCapacityID:
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity[0] ||
+            '',
           gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
           cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
         },
