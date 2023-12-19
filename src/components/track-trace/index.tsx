@@ -34,7 +34,8 @@ export default function TraceTrace() {
 
   const onSubmit = (value: IRequestTrackTrade) => {
     const data = {
-      hblNo: value.hblNo === 'hblNo' ? value.containerNo : '',
+      hblNo: '',
+      bookingNo: value.hblNo === 'hblNo' ? value.containerNo : '',
       containerNo: value.hblNo === 'containerNo' ? value.containerNo : '',
     };
     searchTrackTradeMutation.mutate(data, {
@@ -62,7 +63,7 @@ export default function TraceTrace() {
           </div>
         </div>
       </div>
-      <Flex justify='center' style={{width: '100%'}}>
+      <Flex justify="center" style={{ width: '100%' }}>
         <div className={style.search}>
           <div className={style.searchBox}>
             <Form
@@ -103,7 +104,7 @@ export default function TraceTrace() {
                           style={{ fontSize: '16px', fontWeight: '600' }}
                         >
                           {' '}
-                          HBL{' '}
+                          Booking No{' '}
                         </Radio>
                         <Radio
                           value="containerNo"

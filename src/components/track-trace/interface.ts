@@ -1,6 +1,7 @@
 export interface IRequestTrackTrade {
   hblNo: string;
   containerNo: string;
+  bookingNo: string;
 }
 
 export interface IRequireTrackTrade {
