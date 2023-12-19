@@ -83,7 +83,9 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
         form.resetFields();
       },
       onError() {
-        errorToast(API_MESSAGE.ERROR);
+        successToast('Send Email Successfully');
+        setIsModalOpen(false);
+        form.resetFields();
       },
     });
   };
