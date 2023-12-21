@@ -35,25 +35,26 @@ const Introduce = () => {
               className={style.containerText}
             >
               <Title className={style.containerTextFirst}>
-                Chào mừng đến với{' '}
+                Welcome To{' '}
                 <Text className={style.containerTextSecond} strong>
-                  ASL
+                  ASL Logistic
                 </Text>
               </Title>
               <div className={style.separate}></div>
               <Text className={style.description}>
-                Được thành lập từ tháng 01/2005,{' '}
                 <Text strong className={style.descriptionStrong}>
-                  Công Ty Cổ Phần Giao Nhận Vận Tải Mỹ Á (ASL Logistic)
+                  Amerasian Shipping Logistics Corporation (ASL Logistic)
                 </Text>{' '}
-                là một trong những nhà cung cấp dịch vụ vận tải quốc tế, dịch vụ
-                giao nhận, khai thuê hải quan và vận chuyển nội địa hàng đầu tại
-                Việt Nam.
+                is an International Sea-Air Freight Forwarding and Logistics
+                Company based in Vietnam. We're first established in 2005 with a
+                modest staff of 10 employees. Nowadays, we have expanded to a
+                moderate staff of 100 experienced employees working at our four
+                offices throughout Vietnam.
               </Text>
             </Col>
             <Col span={24} className={style.menuIcon}>
               <Row gutter={24}>
-              <Col
+                <Col
                   xs={12}
                   sm={12}
                   md={12}
@@ -62,49 +63,18 @@ const Introduce = () => {
                   xxl={6}
                   className={style.containerIcon}
                 >
-                  <Flex justify="center" align="center" className={style.icon} vertical>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    className={style.icon}
+                    vertical
+                  >
                     <Image
                       src={'/images/introduce/efficien.png'}
                       preview={false}
-                      style={{marginBottom: '32px'}}
+                      style={{ marginBottom: '32px' }}
                     />
-                   Hiệu quả cao
-                  </Flex>
-                </Col>
-              <Col
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  lg={6}
-                  xl={6}
-                  xxl={6}
-                  className={style.containerIcon}
-                >
-                  <Flex justify="center" align="center" className={style.icon} vertical>
-                    <Image
-                      src={'/images/introduce/efficien1.png'}
-                      preview={false}
-                      style={{marginBottom: '32px'}}
-                    />
-                   Chi phí thấp
-                  </Flex>
-                </Col>
-              <Col
-                  xs={12}
-                  sm={12}
-                  md={12}
-                  lg={6}
-                  xl={6}
-                  xxl={6}
-                  className={style.containerIcon}
-                >
-                  <Flex justify="center" align="center" className={style.icon} vertical>
-                    <Image
-                      src={'/images/introduce/efficien2.png'}
-                      preview={false}
-                      style={{marginBottom: '32px'}}
-                    />
-                    Nhanh chóng
+                    Efficiency
                   </Flex>
                 </Col>
                 <Col
@@ -116,13 +86,64 @@ const Introduce = () => {
                   xxl={6}
                   className={style.containerIcon}
                 >
-                  <Flex justify="center" align="center" className={style.icon} vertical>
+                  <Flex
+                    justify="center"
+                    align="center"
+                    className={style.icon}
+                    vertical
+                  >
+                    <Image
+                      src={'/images/introduce/efficien1.png'}
+                      preview={false}
+                      style={{ marginBottom: '32px' }}
+                    />
+                    Cost Effectiveness
+                  </Flex>
+                </Col>
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}
+                  xxl={6}
+                  className={style.containerIcon}
+                >
+                  <Flex
+                    justify="center"
+                    align="center"
+                    className={style.icon}
+                    vertical
+                  >
+                    <Image
+                      src={'/images/introduce/efficien2.png'}
+                      preview={false}
+                      style={{ marginBottom: '32px' }}
+                    />
+                    Fast Response
+                  </Flex>
+                </Col>
+                <Col
+                  xs={12}
+                  sm={12}
+                  md={12}
+                  lg={6}
+                  xl={6}
+                  xxl={6}
+                  className={style.containerIcon}
+                >
+                  <Flex
+                    justify="center"
+                    align="center"
+                    className={style.icon}
+                    vertical
+                  >
                     <Image
                       src={'/images/introduce/efficien3.png'}
                       preview={false}
-                      style={{marginBottom: '32px'}}
+                      style={{ marginBottom: '32px' }}
                     />
-                    Uy tín
+                    Confidentiality
                   </Flex>
                 </Col>
               </Row>
