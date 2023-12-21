@@ -32,14 +32,17 @@
           background-color: $PRIMARY_DARK;
           margin-bottom: 21px;
         }
-        .description {
-          margin-top: 45px;
-          font-size: 18px;
-          color: #383838;
-          .descriptionStrong {
+        .containerDescription {
+          text-align: justify;
+          .description {
             margin-top: 45px;
             font-size: 18px;
-            color: #0033cc;
+            color: #383838;
+            .descriptionStrong {
+              margin-top: 45px;
+              font-size: 18px;
+              color: #0033cc;
+            }
           }
         }
       }

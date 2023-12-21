@@ -37,20 +37,22 @@ const Introduce = () => {
               <Title className={style.containerTextFirst}>
                 Welcome To{' '}
                 <Text className={style.containerTextSecond} strong>
-                  ASL Logistic
+                  ASL Logistics
                 </Text>
               </Title>
               <div className={style.separate}></div>
-              <Text className={style.description}>
-                <Text strong className={style.descriptionStrong}>
-                  Amerasian Shipping Logistics Corporation (ASL Logistic)
-                </Text>{' '}
-                is an International Sea-Air Freight Forwarding and Logistics
-                Company based in Vietnam. We're first established in 2005 with a
-                modest staff of 10 employees. Nowadays, we have expanded to a
-                moderate staff of 100 experienced employees working at our four
-                offices throughout Vietnam.
-              </Text>
+              <div className={style.containerDescription}>
+                <Text className={style.description}>
+                  <Text strong className={style.descriptionStrong}>
+                    Amerasian Shipping Logistics Corporation (ASL Logistics)
+                  </Text>{' '}
+                  is an International Sea-Air Freight Forwarding and Logistics
+                  Company based in Vietnam. We're first established in 2005 with
+                  just a modest staff of 10 employees. Nowadays, we have
+                  expanded to a moderate staff of 100 experienced employees
+                  working at our four offices throughout Vietnam.
+                </Text>
+              </div>
             </Col>
             <Col span={24} className={style.menuIcon}>
               <Row gutter={24}>
