@@ -16,7 +16,8 @@ const Welcome = () => {
               </Flex>
               <Flex>
                 <Flex justify="center" align="center" className={style.desc}>
-                  Hiệu quả cao - Chi phí thấp - Nhanh chóng - Uy tín
+                  Efficiency - Cost Effectiveness - Fast Response -
+                  Confidentiality
                 </Flex>
               </Flex>
             </Flex>
