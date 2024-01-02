@@ -76,6 +76,12 @@ export interface IQuotation {
   podName: string;
   commodityID: string;
   commodityName: string;
+  vendorName: string;
+  freqDate: string;
+  demSeaQuotation: string;
+  detSeaQuotation: string;
+  stoSeaQuotation: string;
+  transitTimeSeQuotaion: string;
   seaQuotationDetailDTOs: { [key: string]: string };
 }
 export interface IRequireSearchQuotation extends IStep1 {

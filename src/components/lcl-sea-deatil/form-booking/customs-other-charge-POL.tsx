@@ -4,7 +4,7 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDataBookingProps } from '..';
 import { formatNumber } from '@/utils/format-number';
 
 interface Props {

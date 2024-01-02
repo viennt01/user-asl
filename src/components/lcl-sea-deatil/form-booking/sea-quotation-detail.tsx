@@ -3,7 +3,7 @@ import { Card, ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDataBookingProps } from '..';
 import { formatNumber } from '@/utils/format-number';
 
 interface Props {

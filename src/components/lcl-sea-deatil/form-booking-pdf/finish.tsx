@@ -8,7 +8,7 @@ import {
   Typography,
 } from 'antd';
 import COLORS from '@/constants/color';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDataBookingProps } from '..';
 const { Text } = Typography;
 
 interface Props {

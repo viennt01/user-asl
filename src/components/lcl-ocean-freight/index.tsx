@@ -96,6 +96,12 @@ export default function LclOceanFreight() {
                   podName: data.podName,
                   commodityID: data.commodityID,
                   commodityName: data.commodityName,
+                  vendorName: data.vendorName,
+                  freqDate: data.freqDate,
+                  demSeaQuotation: data.demSeaQuotation,
+                  detSeaQuotation: data.detSeaQuotation,
+                  stoSeaQuotation: data.stoSeaQuotation,
+                  transitTimeSeQuotaion: data.transitTimeSeQuotaion,
                   seaQuotationDetailDTOs: data.seaQuotationDetailDTOs,
                 }))
               ),

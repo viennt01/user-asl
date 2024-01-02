@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDataBookingProps } from '..';
 import { formatDate } from '@/utils/format-number';
 import COLORS from '@/constants/color';
 interface Props {

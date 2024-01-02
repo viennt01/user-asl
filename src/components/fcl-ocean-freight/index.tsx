@@ -110,31 +110,41 @@ export default function FclOceanFreight() {
     queryFn: () => searchQuotation(dataResearch),
     enabled: dataResearch.podid !== '',
     onSuccess: (data: ResponseWithPayload<IQuotationRequire>) => {
-      const { currentPage, pageSize, totalPages } = data.data;
-      data.status
-        ? data.data.data.length === 0
-          ? (setShowError(true), setDataTableResearch([]))
-          : (setDataTableResearch(
-              data.data.data.map((data) => ({
-                key: data.seaQuotationID,
-                polid: data.polid,
-                polName: data.polName,
-                podid: data.podid,
-                podName: data.podName,
-                commodityID: data.commodityID,
-                commodityName: data.commodityName,
-                seaQuotationDetailDTOs: data.seaQuotationDetailDTOs,
-              }))
-            ),
-            setPagination({
-              current: currentPage,
-              pageSize: pageSize,
-              total: totalPages,
-            }),
-            setShowError(false))
-        : (errorToast(data.message),
-          setShowError(true),
-          setDataTableResearch([]));
+      if (data.data) {
+        const { currentPage, pageSize, totalPages } = data.data;
+        data.status
+          ? data.data.data.length === 0
+            ? (setShowError(true), setDataTableResearch([]))
+            : (setDataTableResearch(
+                data.data.data.map((data) => ({
+                  key: data.seaQuotationID,
+                  polid: data.polid,
+                  polName: data.polName,
+                  podid: data.podid,
+                  podName: data.podName,
+                  commodityID: data.commodityID,
+                  commodityName: data.commodityName,
+                  vendorName: data.vendorName,
+                  freqDate: data.freqDate,
+                  demSeaQuotation: data.demSeaQuotation,
+                  detSeaQuotation: data.detSeaQuotation,
+                  stoSeaQuotation: data.stoSeaQuotation,
+                  transitTimeSeQuotaion: data.transitTimeSeQuotaion,
+                  seaQuotationDetailDTOs: data.seaQuotationDetailDTOs,
+                }))
+              ),
+              setPagination({
+                current: currentPage,
+                pageSize: pageSize,
+                total: totalPages,
+              }),
+              setShowError(false))
+          : (errorToast(data.message),
+            setShowError(true),
+            setDataTableResearch([]));
+      } else {
+        errorToast(data.message), setShowError(true), setDataTableResearch([]);
+      }
     },
     onError() {
       errorToast(API_MESSAGE.ERROR);

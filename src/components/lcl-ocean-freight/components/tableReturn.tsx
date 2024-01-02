@@ -15,7 +15,8 @@ import {
 import { ColumnsType } from 'antd/lib/table';
 import { IPaginationOfAntd, IQuotationTable } from '../interface';
 import { IDataBookingProps } from '..';
-import { formatCurrencyHasCurrency } from '@/utils/format-number';
+import { formatCurrencyHasCurrency, formatNumber } from '@/utils/format-number';
+import { DAY_WEEK } from '@/constants';
 
 export interface ITypeDTOs {
   [key: string]: string;
@@ -80,6 +81,56 @@ export default function TableReturn({
       },
     },
     ...containerReturn,
+    {
+      title: <div className={style.title}>Frequency</div>,
+      dataIndex: 'freqDate',
+      key: 'freqDate',
+      align: 'right',
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
+    },
+    {
+      title: <div className={style.title}>Demurrage</div>,
+      dataIndex: 'demSeaQuotation',
+      key: 'demSeaQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
+      title: <div className={style.title}>Detention</div>,
+      dataIndex: 'detSeaQuotation',
+      key: 'detSeaQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
+      title: <div className={style.title}>Storage</div>,
+      dataIndex: 'stoSeaQuotation',
+      key: 'stoSeaQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
+      title: <div className={style.title}>Detention</div>,
+      dataIndex: 'transitTimeSeQuotaion',
+      key: 'transitTimeSeQuotaion',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
+      title: <div className={style.title}>Carrier</div>,
+      dataIndex: 'vendorName',
+      key: 'vendorName',
+      align: 'left',
+    },
     {
       title: <div className={style.title}>Commodity</div>,
       dataIndex: 'commodityName',
