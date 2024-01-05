@@ -2,9 +2,9 @@ import { Button, Col, Flex, Row, Image, Typography } from 'antd';
 import style from './index.module.scss';
 import { formatDate } from '@/utils/format-number';
 import { STATUS_COLORS, STATUS_LABELS } from '../..';
-import { IDetailBooking } from '../../interface';
+import { IDetailBooking, TYPE_SERVICE } from '../../interface';
 import { useRouter } from 'next/router';
-import { ROUTERS_DYNAMIC } from '@/constants/router';
+import ROUTERS, { ROUTERS_DYNAMIC } from '@/constants/router';
 
 const { Text } = Typography;
 
@@ -14,6 +14,26 @@ interface Props {
 
 export default function Box({ data }: Props) {
   const router = useRouter();
+
+  const handleChangePage = (page: string, data: string) => {
+    switch (page) {
+      case TYPE_SERVICE.FCL:
+        router.push(ROUTERS_DYNAMIC.FCL_DETAIL(data));
+        break;
+      case TYPE_SERVICE.LCL:
+        router.push(ROUTERS_DYNAMIC.LCL_DETAIL(data));
+        break;
+      case TYPE_SERVICE.LTL:
+        router.push(ROUTERS_DYNAMIC.LTL_DETAIL(data));
+        break;
+      case TYPE_SERVICE.FTL:
+        router.push(ROUTERS_DYNAMIC.FTL_DETAIL(data));
+        break;
+      default:
+        router.push(ROUTERS.BOOKINGS_HISTORY);
+        break;
+    }
+  };
 
   return (
     <div className={style.box}>
@@ -109,9 +129,7 @@ export default function Box({ data }: Props) {
           <Button
             type="primary"
             onClick={() =>
-              data.typeOfSeaService === 'FCL'
-                ? router.push(ROUTERS_DYNAMIC.FCL_DETAIL(data.bookingID))
-                : router.push(ROUTERS_DYNAMIC.LCL_DETAIL(data.bookingID))
+              handleChangePage(data.typeOfSeaService, data.bookingID)
             }
           >
             View detail

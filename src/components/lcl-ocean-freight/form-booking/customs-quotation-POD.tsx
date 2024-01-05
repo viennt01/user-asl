@@ -3,11 +3,11 @@ import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -35,7 +35,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
     totalYellowLane,
     totalGreenLane,
   } =
-    dataPropsBooking?.detailBooking?.customQuotationPODSelected
+    dataPropsBooking?.customQuotationPODSelected
       .customQuotationLCLDetailSelecteds || {};
   const columns: ColumnsType<DataType> = [
     {
@@ -245,7 +245,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     if (
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected
+      dataPropsBooking?.customQuotationPODSelected
         ?.customQuotationLCLDetailSelecteds
     ) {
       setData([
@@ -305,7 +305,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Customs service (ORIGIN)
+          Customs broker (ORIGIN)
         </div>
         <Table
           style={{ width: '100%' }}

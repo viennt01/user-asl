@@ -46,7 +46,7 @@ const menuItemsMobil = [
         key: ROUTERS.AIR_FREIGHT,
       },
       {
-        label: 'Trucking Freight',
+        label: 'Inland Trucking',
         key: ROUTERS.TRUCK_FREIGHT,
       },
       {
@@ -61,7 +61,7 @@ const menuItemsMobil = [
   },
   {
     key: ROUTERS.BOOKINGS_HISTORY,
-    label: 'History Booking',
+    label: 'Manage Shipments',
   },
 ];
 
@@ -80,7 +80,7 @@ const menuItems = [
   },
   {
     key: ROUTERS.BOOKINGS_HISTORY,
-    label: 'History Booking',
+    label: 'Manage Shipments',
   },
 ];
 

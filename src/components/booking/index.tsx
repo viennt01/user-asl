@@ -23,8 +23,8 @@ export default function Booking() {
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
               <Flex>
@@ -78,12 +78,12 @@ export default function Booking() {
           <Flex align="center" justify="center" className={style.container}>
             <Flex vertical align="flex-start" className={style.textCol}>
               <Flex>
-                <h1>Truck Freight</h1>
+                <h1>Inland Trucking</h1>
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Optimize cargo transport with our dedicated Truck Freight
-                  services.
+                  Our Customs Broker service ensures high accuracy, fast batch
+                  processing time with experienced team.
                 </div>
               </Flex>
               <Flex>
@@ -108,12 +108,12 @@ export default function Booking() {
           <Flex align="center" justify="center" className={style.container}>
             <Flex vertical align="flex-end" className={style.textCol}>
               <Flex>
-                <h1>Customs Service</h1>
+                <h1>Customs Broker</h1>
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Optimize cargo transport with our dedicated Truck Freight
-                  services.
+                  Our Customs Broker service ensures high accuracy, fast batch
+                  processing time with experienced team.
                 </div>
               </Flex>
               <Flex>

@@ -95,7 +95,7 @@ export default function Step4({
             display: !getDataBooking.isFetching ? '' : 'none',
           }}
         >
-          <FormBooking dataPropsBooking={dataPropsBooking} />
+          <FormBooking dataPropsBooking={dataPropsBooking?.detailBooking} />
           <div style={{ width: '100%', marginTop: '16px' }}>
             <ConfigProvider
               theme={{
@@ -119,6 +119,7 @@ export default function Step4({
               <Button
                 style={{ width: '150px', height: '40px' }}
                 type="primary"
+                loading={confirmBookingMutation.isLoading}
                 onClick={() =>
                   confirmBookingMutation.mutate(
                     { id: dataPropsBooking.idBooking || '' },

@@ -9,15 +9,16 @@ import {
 } from 'antd';
 import COLORS from '@/constants/color';
 import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDetailBooking } from '../interface';
 const { Text } = Typography;
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 
 export default function Finish({ dataPropsBooking }: Props) {
   const { issuedBy, possition, email, tel } =
-    dataPropsBooking?.detailBooking?.aslContactBooking || {};
+    dataPropsBooking?.aslContactBooking || {};
   const items: DescriptionsProps['items'] = [
     {
       label: (
@@ -111,9 +112,7 @@ export default function Finish({ dataPropsBooking }: Props) {
           <Descriptions
             style={{
               width: '100%',
-              display: dataPropsBooking?.detailBooking?.aslContactBooking
-                ? ''
-                : 'none',
+              display: dataPropsBooking?.aslContactBooking ? '' : 'none',
             }}
             bordered
             column={{ xs: 2, sm: 2, md: 2, lg: 2, xl: 2, xxl: 2 }}

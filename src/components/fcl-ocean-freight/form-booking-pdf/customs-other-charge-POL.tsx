@@ -4,11 +4,11 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -186,7 +186,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
+      dataPropsBooking?.customQuotationPOLSelected?.ortherChargeDetailForBookings?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.customQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
+      dataPropsBooking?.customQuotationPOLSelected?.sumOrtherChargeDetailForBooking?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -253,7 +253,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Customs service other charges (ORIGIN)
+          Customs broker other charges (ORIGIN)
         </div>
         <Table
           className={style.table}

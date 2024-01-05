@@ -1,69 +1,31 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import { Flex, Form, PaginationProps } from 'antd';
-import HeaderFclOceanFreight from './components/header';
-import Step5 from './components/step-5';
+import { Flex } from 'antd';
+import Step5 from './components';
 import Service from '../home-page/components/service';
-import {
-  DEFAULT_PAGINATION,
-  IDetailBooking,
-  IQuotationTable,
-  ISeaPricingDetail,
-  IStep1,
-  TYPE_SERVICE,
-} from './interface';
 import { useQuery } from '@tanstack/react-query';
-import {
-  getDetailBooking,
-  getListTypeTransport,
-  searchQuotation,
-} from './fetcher';
-import { API_BOOKING, API_TYPE_OF_TRANSPORT } from '@/fetcherAxios/endpoint';
+import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import router from 'next/router';
+import { IDetailBooking } from '@/components/lcl-ocean-freight/interface';
+import { getDetailBooking } from '@/components/fcl-ocean-freight/fetcher';
 
 export interface IDataBookingProps {
-  idBooking?: string;
-  idQuotation: string;
-  dataQuotation?: ISeaPricingDetail;
-  dataColTableStep1?: IQuotationTable;
-  step1?: IStep1;
   detailBooking?: IDetailBooking;
 }
 
-export const initalValueProps = {
-  idQuotation: '',
-  idBooking: '',
-};
-
-export const initalValueForm = {
-  polid: '',
-  podid: '',
-  typeSeaService: TYPE_SERVICE.LCL,
-  cargoReady: 1,
-  commodities: [''],
-  paginateRequest: {
-    currentPage: DEFAULT_PAGINATION.current,
-    pageSize: DEFAULT_PAGINATION.pageSize,
-  },
-};
-
 export default function LclOceanFreightDetail() {
   const { id } = router.query;
-  const [displayStep, setDisplayStep] = useState<number>(5);
-
-  const [dataPropsBooking, setDataPropsBooking] =
-    useState<IDataBookingProps>(initalValueProps);
-
+  const [dataPropsBooking, setDataPropsBooking] = useState<IDataBookingProps>();
   useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, id],
     queryFn: () => getDetailBooking({ id: id as string }),
     enabled: id !== undefined,
     onSuccess: (data: ResponseWithPayload<IDetailBooking>) => {
       if (data.status) {
-        setDataPropsBooking((pre) => ({ ...pre, detailBooking: data.data }));
+        setDataPropsBooking(() => ({ detailBooking: data.data }));
       }
     },
     onError() {
@@ -82,8 +44,8 @@ export default function LclOceanFreightDetail() {
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
             </Flex>
@@ -92,11 +54,7 @@ export default function LclOceanFreightDetail() {
       </div>
       <Flex className={style.checkPrice} vertical>
         <div className={style.content}>
-          <HeaderFclOceanFreight displayStep={displayStep} />
-          <Step5
-            displayStep={displayStep}
-            dataPropsBooking={dataPropsBooking}
-          />
+          <Step5 dataPropsBooking={dataPropsBooking} />
         </div>
       </Flex>
       <Service />

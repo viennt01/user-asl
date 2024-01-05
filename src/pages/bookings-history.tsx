@@ -8,7 +8,7 @@ function HistoryBookingPage() {
   return (
     <>
       <Head>
-        <title>{APP_NAME} | History Booking</title>
+        <title>{APP_NAME} | Manage Shipments</title>
       </Head>
       <HistoryBooking />
     </>

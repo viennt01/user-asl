@@ -22,10 +22,7 @@ import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getAllLocation } from '@/components/fcl-ocean-freight/fetcher';
-import {
-  TYPE_LOCATION,
-  TYPE_SERVICE,
-} from '@/components/fcl-ocean-freight/interface';
+import { TYPE_LOCATION } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
 import {
   IDataBookingProps,
@@ -41,6 +38,7 @@ import {
 } from '@/components/lcl-ocean-freight/interface';
 import { getPriceTrucking } from '@/components/lcl-ocean-freight/fetcher';
 import { formatNumber } from '@/utils/format-number';
+import { TYPE_SERVICE } from '@/components/history-booking/interface';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;

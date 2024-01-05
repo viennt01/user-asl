@@ -126,7 +126,7 @@ export default function TableReturn({
       },
     },
     {
-      title: <div className={style.title}>Carrier</div>,
+      title: <div className={style.title}>Shipping Lines</div>,
       dataIndex: 'vendorName',
       key: 'vendorName',
       align: 'left',

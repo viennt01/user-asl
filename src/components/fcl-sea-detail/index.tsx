@@ -1,54 +1,24 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
 import { Flex } from 'antd';
-import HeaderFclOceanFreight from './components/header';
-import Step5 from './components/step-5';
+import Step5 from './components';
 import Service from '../home-page/components/service';
-import {
-  DEFAULT_PAGINATION,
-  IDetailBooking,
-  ISeaPricingDetail,
-  TYPE_SERVICE,
-} from './interface';
 import { useQuery } from '@tanstack/react-query';
-import { getDetailBooking } from './fetcher';
 import { errorToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import router from 'next/router';
+import { IDetailBooking } from '@/components/fcl-ocean-freight/interface';
+import { getDetailBooking } from '@/components/fcl-ocean-freight/fetcher';
 
 export interface IDataBookingProps {
-  idBooking?: string;
-  idQuotation: string;
-  dataQuotation?: ISeaPricingDetail;
   detailBooking?: IDetailBooking;
 }
 
-export const initalValueProps = {
-  idQuotation: '',
-  idBooking: '',
-};
-
-export const initalValueForm = {
-  polid: '',
-  podid: '',
-  typeSeaService: TYPE_SERVICE.FCL,
-  cargoReady: 1,
-  commodities: [''],
-  containers: [''],
-  paginateRequest: {
-    currentPage: DEFAULT_PAGINATION.current,
-    pageSize: DEFAULT_PAGINATION.pageSize,
-  },
-};
-
 export default function FclOceanFreightDetail() {
   const { id } = router.query;
-
-  const [displayStep, setDisplayStep] = useState<number>(5);
-  const [dataPropsBooking, setDataPropsBooking] =
-    useState<IDataBookingProps>(initalValueProps);
+  const [dataPropsBooking, setDataPropsBooking] = useState<IDataBookingProps>();
   useQuery({
     queryKey: [API_BOOKING.GET_SEA_BOOKING_BY_ID, id],
     queryFn: () => getDetailBooking({ id: id as string }),
@@ -73,8 +43,8 @@ export default function FclOceanFreightDetail() {
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
             </Flex>
@@ -83,11 +53,7 @@ export default function FclOceanFreightDetail() {
       </div>
       <Flex className={style.checkPrice} vertical>
         <div className={style.content}>
-          <HeaderFclOceanFreight displayStep={displayStep} />
-          <Step5
-            displayStep={displayStep}
-            dataPropsBooking={dataPropsBooking}
-          />
+          <Step5 dataPropsBooking={dataPropsBooking} />
         </div>
       </Flex>
       <Service />

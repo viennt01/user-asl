@@ -15,6 +15,8 @@ enum ROUTERS {
   LCL_OCEAN_FREIGHT = '/lcl-ocean-freight',
   AIR_FREIGHT = '/air-freight',
   TRUCK_FREIGHT = '/truck-freight',
+  FTL_TRUCK_FREIGHT = '/ftl-truck-freight',
+  LTL_TRUCK_FREIGHT = '/ltl-truck-freight',
   CUSTOMS_SERVICE = '/customs-service',
 }
 
@@ -23,4 +25,6 @@ export default ROUTERS;
 export const ROUTERS_DYNAMIC = {
   LCL_DETAIL: (id: string) => `/lcl-detail/${id}`,
   FCL_DETAIL: (id: string) => `/fcl-detail/${id}`,
+  LTL_DETAIL: (id: string) => `/ltl-detail/${id}`,
+  FTL_DETAIL: (id: string) => `/ftl-detail/${id}`,
 };

@@ -4,11 +4,11 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -186,11 +186,11 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     if (
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected
+      dataPropsBooking?.truckingQuotationPODSelected
         ?.ortherChargeDetailForBookings
     ) {
       setData(
-        dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.ortherChargeDetailForBookings?.map(
+        dataPropsBooking?.truckingQuotationPODSelected?.ortherChargeDetailForBookings?.map(
           (item, index) => ({
             key: index,
             description: item.description,
@@ -208,11 +208,11 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     if (
-      dataPropsBooking?.detailBooking?.truckingQuotationPODSelected
+      dataPropsBooking?.truckingQuotationPODSelected
         ?.sumOrtherChargeDetailForBooking
     ) {
       setDataTotalPrice(
-        dataPropsBooking?.detailBooking?.truckingQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
+        dataPropsBooking?.truckingQuotationPODSelected?.sumOrtherChargeDetailForBooking?.map(
           (item, index) => ({
             key: index,
             price: `${item.item2} ${item.item1}`,

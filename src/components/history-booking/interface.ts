@@ -4,6 +4,20 @@ export enum TYPE_STATUS {
   'COMPLETED' = 'COMPLETED',
   'CANCELLED' = 'CANCELLED',
 }
+export enum TYPE_TABS {
+  PENDING_CONFIRMATION = 'PENDING',
+  PROCESSING = 'PROCESSING',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+  ALL = 'ALL',
+}
+
+export enum TYPE_SERVICE {
+  'FCL' = 'FCL',
+  'LCL' = 'LCL',
+  'FTL' = 'FTL',
+  'LTL' = 'LTL',
+}
 
 export interface IDetailBooking {
   bookingID: string;

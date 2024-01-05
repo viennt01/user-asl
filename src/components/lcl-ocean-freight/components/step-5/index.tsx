@@ -167,7 +167,7 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                 padding: '0 16px',
               }}
             >
-              <FormBooking dataPropsBooking={dataPropsBooking} />
+              <FormBooking dataPropsBooking={dataPropsBooking?.detailBooking} />
             </div>
             <div
               style={{
@@ -181,7 +181,9 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
                   padding: '0 16px',
                 }}
               >
-                <FormBookingPDF dataPropsBooking={dataPropsBooking} />
+                <FormBookingPDF
+                  dataPropsBooking={dataPropsBooking?.detailBooking}
+                />
               </div>
             </div>
 

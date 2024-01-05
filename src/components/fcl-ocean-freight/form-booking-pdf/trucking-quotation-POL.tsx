@@ -4,11 +4,11 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -186,7 +186,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.truckingQuotationFCLDetails?.map(
+      dataPropsBooking?.truckingQuotationPOLSelected?.truckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -203,7 +203,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.sumTruckingQuotationFCLDetails?.map(
+      dataPropsBooking?.truckingQuotationPOLSelected?.sumTruckingQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,

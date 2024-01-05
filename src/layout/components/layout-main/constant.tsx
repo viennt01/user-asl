@@ -38,27 +38,39 @@ const SHOW_ROUTER_HEADER = () => {
     '/truck-freight': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
       { title: <Link href={ROUTERS.BOOKING}>Booking</Link> },
-      { title: <Link href={ROUTERS.TRUCK_FREIGHT}>Truck Freight</Link> },
+      { title: <Link href={ROUTERS.TRUCK_FREIGHT}>Inland Trucking</Link> },
+    ],
+    '/ftl-truck-freight': [
+      { title: <Link href={ROUTERS.HOME}>Home</Link> },
+      { title: <Link href={ROUTERS.BOOKING}>Booking</Link> },
+      { title: <Link href={ROUTERS.TRUCK_FREIGHT}>Inland Trucking</Link> },
+      { title: <Link href={ROUTERS.FTL_TRUCK_FREIGHT}>FTL Shipping</Link> },
+    ],
+    '/ltl-truck-freight': [
+      { title: <Link href={ROUTERS.HOME}>Home</Link> },
+      { title: <Link href={ROUTERS.BOOKING}>Booking</Link> },
+      { title: <Link href={ROUTERS.TRUCK_FREIGHT}>Inland Trucking</Link> },
+      { title: <Link href={ROUTERS.LTL_TRUCK_FREIGHT}>LTL Shipping</Link> },
     ],
     '/customs-service': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
       { title: <Link href={ROUTERS.BOOKING}>Booking</Link> },
-      { title: <Link href={ROUTERS.CUSTOMS_SERVICE}>Customs Service</Link> },
+      { title: <Link href={ROUTERS.CUSTOMS_SERVICE}>Customs Broker</Link> },
     ],
 
     '/bookings-history': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
-      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
+      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>Manage Shipments</Link> },
     ],
 
     '/fcl-detail/[id]': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
-      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
+      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>Manage Shipments</Link> },
     ],
 
     '/lcl-detail/[id]': [
       { title: <Link href={ROUTERS.HOME}>Home</Link> },
-      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>History Booking</Link> },
+      { title: <Link href={ROUTERS.BOOKINGS_HISTORY}>Manage Shipments</Link> },
     ],
 
     '/track-trace': [

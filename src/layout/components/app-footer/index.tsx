@@ -82,7 +82,7 @@ const AppFooter = () => {
                           className={style.item}
                           onClick={() => router.push(ROUTERS.BOOKINGS_HISTORY)}
                         >
-                          History Booking
+                          Manage Shipments
                         </div>
                       </Flex>
                     </div>

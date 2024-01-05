@@ -3,11 +3,11 @@ import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -299,7 +299,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
+      dataPropsBooking?.customQuotationPODSelected?.customQuotationFCLDetailSelecteds?.map(
         (item, index) => ({
           key: index,
           basePriceRedLane: item.basePriceRedLane,
@@ -359,7 +359,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Customs service (DESTINATION)
+          Customs broker (DESTINATION)
         </div>
         <Table
           style={{ width: '100%' }}

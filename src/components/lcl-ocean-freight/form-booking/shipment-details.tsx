@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Flex, ConfigProvider, Table } from 'antd';
+import { Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
-import { formatDate } from '@/utils/format-number';
+import { formatDateYYYYMMDD } from '@/utils/format-number';
 import COLORS from '@/constants/color';
+import { DAY_WEEK } from '@/constants';
+import { IDetailBooking } from '../interface';
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: string;
@@ -22,6 +23,18 @@ interface DataType {
   'Gross weight'?: string;
   CBM?: string;
   Quantity?: string;
+  'Date Booking'?: string;
+  'Expire date'?: string;
+  'Effective date'?: string;
+  Frequency?: string;
+  Storage?: string;
+  Demurrage?: string;
+  Detention?: string;
+  'Transit time'?: string;
+  'Shipping Lines'?: string;
+  'Cargo ready'?: string;
+  'Cargo cutoff to'?: string;
+  'Type of service'?: string;
 }
 export default function ShipmentDetail({ dataPropsBooking }: Props) {
   const [data, setData] = useState<DataType[]>([]);
@@ -30,12 +43,22 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     pol,
     pod,
     quotationNo,
-    date,
+    bookingDated,
     valitidyTo,
     commodity,
     seaBookingLCLDetailDTO,
     bookingNo,
-  } = dataPropsBooking?.detailBooking?.shipmentDetail || {};
+    cargoCutOffDated,
+    cargoReadyDated,
+    demSeaQuotation,
+    detSeaQuotation,
+    stoSeaQuotation,
+    effectDated,
+    freqDate,
+    transitTimeSeaQuotation,
+    typeOfServiceTransportation,
+    vendorName,
+  } = dataPropsBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -61,7 +84,9 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
                 // width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
           </Flex>
         );
@@ -90,7 +115,9 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
                 // width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
           </Flex>
         );
@@ -104,34 +131,70 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '1',
         right: 'Mode of transportation',
         'Mode of transportation': modeOfTransportation || '',
-        left: 'Quotation no',
-        'Quotation no': quotationNo || '',
+        left: 'Type of service',
+        'Type of service': typeOfServiceTransportation || '',
       },
       {
         key: '2',
         right: 'Port of loading',
         'Port of loading': pol || '',
-        left: 'Date',
-        Date: formatDate(Number(date)) || '',
+        left: 'Port of discharge',
+        'Port of discharge': pod || '',
       },
       {
         key: '3',
-        right: 'Port of discharge',
-        'Port of discharge': pod || '',
-        left: 'Validity to',
-        'Validity to': formatDate(Number(valitidyTo)) || '',
+        right: 'Effective date',
+        'Effective date': formatDateYYYYMMDD(Number(effectDated)) || '',
+        left: 'Expire date',
+        'Expire date': formatDateYYYYMMDD(Number(valitidyTo)) || '',
       },
       {
         key: '4',
-        right: 'Commodity',
+        right: 'Quotation no',
+        'Quotation no': quotationNo || '',
+        left: 'Date Booking',
+        'Date Booking': formatDateYYYYMMDD(Number(bookingDated)) || '',
+      },
+      {
+        key: '5',
+        right: 'Frequency',
+        Frequency:
+          DAY_WEEK.find((date) => date.value === freqDate)?.label || '',
+        left: 'Storage',
+        Storage: stoSeaQuotation || '',
+      },
+      {
+        key: '6',
+        right: 'Demurrage',
+        Demurrage: demSeaQuotation || '',
+        left: 'Detention',
+        Detention: detSeaQuotation || '',
+      },
+      {
+        key: '7',
+        right: 'Transit time',
+        'Transit time': transitTimeSeaQuotation || '',
+        left: 'Commodity',
         Commodity: commodity || '',
+      },
+      {
+        key: '8',
+        right: 'Cargo ready',
+        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
+        left: 'Cargo cutoff to',
+        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
+      },
+      {
+        key: '9',
+        right: 'CBM',
+        CBM: seaBookingLCLDetailDTO?.cbm || '',
         left: 'Gross weight',
         'Gross weight': seaBookingLCLDetailDTO?.gw || '',
       },
       {
-        key: '5',
-        right: 'CBM',
-        CBM: seaBookingLCLDetailDTO?.gw || '',
+        key: '10',
+        right: 'Shipping Lines',
+        'Shipping Lines': vendorName || '',
         left: 'Quantity',
         Quantity:
           `${seaBookingLCLDetailDTO?.quantity} x ${seaBookingLCLDetailDTO?.internationalCode}` ||

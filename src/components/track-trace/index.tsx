@@ -55,10 +55,10 @@ export default function TraceTrace() {
       <div className={style.welcome}>
         <div className={style.container}>
           <div className={style.textCol}>
-            <h1>Track & Trade</h1>
+            <h1>Track & Trace</h1>
             <div className={style.desc}>
-              Find the right route for your goods with guaranteed container
-              allocation by ocean freight.
+              Watch how your cargo travels with ASL and learn how we can help
+              with each step!
             </div>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function TraceTrace() {
             >
               <Row gutter={24}>
                 <Col span={12}>
-                  <div className={style.title}>Track your shipment</div>{' '}
+                  <div className={style.title1}>Track your shipment</div>{' '}
                   <ConfigProvider
                     theme={{
                       components: {
@@ -118,7 +118,7 @@ export default function TraceTrace() {
                   </ConfigProvider>
                 </Col>
                 <Col span={12}>
-                  <div className={style.title}>Number no</div>
+                  <div className={style.title2}></div>
                   <Form.Item
                     name="containerNo"
                     rules={[

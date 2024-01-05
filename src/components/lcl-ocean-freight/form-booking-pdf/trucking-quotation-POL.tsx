@@ -3,11 +3,11 @@ import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -183,11 +183,11 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     if (
-      dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected
+      dataPropsBooking?.truckingQuotationPOLSelected
         ?.truckingQuotationLCLDetails
     ) {
       setData(
-        dataPropsBooking?.detailBooking?.truckingQuotationPOLSelected?.truckingQuotationLCLDetails?.map(
+        dataPropsBooking?.truckingQuotationPOLSelected?.truckingQuotationLCLDetails?.map(
           (item, index) => ({
             key: index,
             description: item.description,

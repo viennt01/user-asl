@@ -8,7 +8,7 @@ function CustomServicePage() {
   return (
     <>
       <Head>
-        <title>{APP_NAME} | Customs Service</title>
+        <title>{APP_NAME} | Customs Broker</title>
       </Head>
       <CustomService />
     </>

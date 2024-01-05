@@ -4,9 +4,10 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import { IDataBookingProps } from '@/components/lcl-ocean-freight';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: string;
@@ -55,7 +56,7 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
     tel,
     mobil,
     contact,
-  } = dataPropsBooking?.detailBooking?.customerInformation || {};
+  } = dataPropsBooking?.customerInformation || {};
 
   const columns: ColumnsType<DataType> = [
     {
@@ -81,7 +82,9 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
                 width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
           </Flex>
         );
@@ -110,7 +113,9 @@ export default function CustomerInformation({ dataPropsBooking }: Props) {
                 width: '80%',
               }}
             >
-              {record[text as keyof DataType]}
+              {record[text as keyof DataType]
+                ? record[text as keyof DataType]
+                : '-'}
             </div>
           </Flex>
         );

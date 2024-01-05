@@ -19,12 +19,12 @@ import {
   ISeaPricingDetail,
   IStep1,
   ITypeOfTransport,
-  TYPE_SERVICE,
 } from './interface';
 import { useQuery } from '@tanstack/react-query';
 import { getListTypeTransport, searchQuotation } from './fetcher';
 import { API_BOOKING, API_TYPE_OF_TRANSPORT } from '@/fetcherAxios/endpoint';
 import { ResponseWithPayload } from '@/fetcherAxios';
+import { TYPE_SERVICE } from '../history-booking/interface';
 
 export interface IDataBookingProps {
   idBooking?: string;
@@ -182,8 +182,8 @@ export default function LclOceanFreight() {
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
             </Flex>

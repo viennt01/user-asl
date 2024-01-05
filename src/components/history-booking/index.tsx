@@ -7,48 +7,54 @@ import Processing from './components/processing';
 import Pending from './components/pending';
 import Completed from './components/completed';
 import Cancelled from './components/cancelled';
+import { TYPE_TABS } from './interface';
+import { useQueryClient } from '@tanstack/react-query';
 export const STATUS_COLORS = {
-  'PENDING': COLORS.STATUS_CODE.PENDING,
+  PENDING: COLORS.STATUS_CODE.PENDING,
   PROCESSING: COLORS.STATUS_CODE.PROCESSING,
   COMPLETED: COLORS.STATUS_CODE.COMPLETED,
   CANCELLED: COLORS.STATUS_CODE.CANCELLED,
 };
 
 export const STATUS_LABELS = {
-  'PENDING': 'Pending Confirmation',
+  PENDING: 'Pending Confirmation',
   PROCESSING: 'Processing',
   COMPLETED: 'Completed',
   CANCELLED: 'Cancelled',
 };
 
 export default function HistoryBooking() {
-  const onChange = (key: string) => {
-    console.log(key);
+  const queryClient = useQueryClient();
+
+  const onChange = (key: TYPE_TABS) => {
+    queryClient.invalidateQueries({
+      queryKey: [key],
+    });
   };
 
   const items: TabsProps['items'] = [
     {
-      key: '1',
+      key: TYPE_TABS.ALL,
       label: 'All',
       children: <All />,
     },
     {
-      key: '2',
+      key: TYPE_TABS.PENDING_CONFIRMATION,
       label: 'Pending Confirmation',
       children: <Pending />,
     },
     {
-      key: '3',
+      key: TYPE_TABS.PROCESSING,
       label: 'Processing',
       children: <Processing />,
     },
     {
-      key: '4',
+      key: TYPE_TABS.COMPLETED,
       label: 'Completed',
       children: <Completed />,
     },
     {
-      key: '5',
+      key: TYPE_TABS.CANCELLED,
       label: 'Cancelled',
       children: <Cancelled />,
     },
@@ -60,12 +66,12 @@ export default function HistoryBooking() {
           <Flex align="center" justify="center" className={style.container}>
             <Flex vertical align="flex-start" className={style.textCol}>
               <Flex>
-                <h1>History Booking</h1>
+                <h1>Manage Shipments</h1>
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
             </Flex>
@@ -84,7 +90,11 @@ export default function HistoryBooking() {
               },
             }}
           >
-            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+            <Tabs
+              defaultActiveKey="1"
+              items={items}
+              onChange={(key: string) => onChange(key as TYPE_TABS)}
+            />
           </ConfigProvider>
         </div>
       </Flex>

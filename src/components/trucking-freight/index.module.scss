@@ -1,0 +1,106 @@
+@import '@/styles/_base.scss';
+
+.wrapper {
+  background: $WHITE;
+  color: $WHITE;
+
+  .bg {
+    background-image: url('/images/oceanFreight/bgOcean.jpg');
+    background-size: 100% 100%;
+    width: 100%;
+    .welcome {
+      width: 100%;
+      min-height: 300px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      .container {
+        max-width: 1200px;
+        width: 100%;
+        max-height: 300px;
+        padding: 92px 32px;
+        .textCol {
+          width: 100%;
+          h1 {
+            font-weight: 800;
+            font-size: 64px;
+            line-height: 60px;
+            letter-spacing: 0.05em;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          }
+          .desc {
+            font-size: 22px;
+            font-weight: 600;
+            line-height: 22px;
+            letter-spacing: 0.02em;
+            margin-bottom: 32px;
+          }
+        }
+      }
+    }
+  }
+  .option {
+    background: #0c529e url('./assets/bg.jpg') center center;
+    .header {
+      color: $WHITE;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-size: 24px;
+      font-weight: 700;
+      line-height: normal;
+      font-family: Inter;
+      margin: 18px 0px;
+      text-align: center;
+    }
+    .card {
+      font-family: Inter;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      margin-bottom: 32px;
+
+      .description {
+        .description_1 {
+          position: relative;
+          margin-bottom: 12px;
+          .box {
+            position: absolute;
+            width: 250px;
+            height: 60px;
+            background-color: $GREY_BACKGROUND;
+            color: #000;
+            font-size: 32px;
+            font-style: normal;
+            font-weight: 550;
+            line-height: normal;
+            top: -100px;
+            left: -24px;
+          }
+        }
+      }
+      .btn {
+        background: $RED;
+        color: $WHITE;
+        width: 170px;
+        height: 40px;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    .option {
+      .header {
+        // color: $GREY_COLOR_HOVER;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        font-size: 42px;
+      }
+      .card {
+        .description {
+          height: 100px;
+        }
+      }
+    }
+  }
+}

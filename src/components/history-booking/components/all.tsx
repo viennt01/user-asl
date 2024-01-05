@@ -4,13 +4,13 @@ import Box from './box';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getHistoryBooking } from '../fetcher';
-import { IDetailBooking, TYPE_STATUS } from '../interface';
+import { IDetailBooking, TYPE_STATUS, TYPE_TABS } from '../interface';
 import { useState } from 'react';
 
 export default function All() {
   const [dataHistory, setDataHistory] = useState<IDetailBooking[]>([]);
   useQuery({
-    queryKey: [API_BOOKING.GET_HISTORY_BOOKING_BY_USER],
+    queryKey: [TYPE_TABS.ALL],
     queryFn: () =>
       getHistoryBooking({
         statusBooking: [

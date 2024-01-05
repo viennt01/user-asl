@@ -1,7 +1,6 @@
 import React from 'react';
 import { ConfigProvider, Descriptions, Flex, Table } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import style from '../index.module.scss';
 import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 interface Props {
@@ -17,6 +16,8 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
   const items: DescriptionsProps['items'] = [
     {
       key: '10',
+      span: 0,
+      contentStyle: { width: '300px' }, // tổng px ở table
       label: (
         <Flex
           justify="center"
@@ -33,7 +34,6 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
           {dataToTalPrice?.map((data, index) => (
             <div
               style={{
-                width: '100%',
                 fontSize: '16px',
                 fontWeight: '700',
                 height: '50px',
@@ -63,7 +63,6 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
       }}
     >
       <Descriptions
-        className={style.description}
         style={{ width: '100%', padding: '0px', margin: '0px' }}
         bordered
         size="small"

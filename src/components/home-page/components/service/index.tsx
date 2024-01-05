@@ -73,7 +73,7 @@ export default function Service() {
                     <Flex justify="center">
                       <Flex vertical justify="center" className={style.card}>
                         <Flex justify="center" className={style.titleCard}>
-                          Truck Freight
+                          Inland Trucking
                         </Flex>
                         <Flex justify="center">
                           <Image
@@ -98,7 +98,7 @@ export default function Service() {
                     <Flex justify="center">
                       <Flex vertical justify="center" className={style.card}>
                         <Flex justify="center" className={style.titleCard}>
-                          Customs Service
+                          Customs Broker
                         </Flex>
                         <Flex justify="center">
                           <Image

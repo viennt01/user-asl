@@ -2,7 +2,7 @@ import { Button, Col, Input, List, Row, Space, Image } from 'antd';
 import style from '../index.module.scss';
 import Box from './box';
 import { useState } from 'react';
-import { IDetailBooking, TYPE_STATUS } from '../interface';
+import { IDetailBooking, TYPE_STATUS, TYPE_TABS } from '../interface';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getHistoryBooking } from '../fetcher';
@@ -10,7 +10,7 @@ import { getHistoryBooking } from '../fetcher';
 export default function Completed() {
   const [dataHistory, setDataHistory] = useState<IDetailBooking[]>([]);
   useQuery({
-    queryKey: [API_BOOKING.GET_HISTORY_BOOKING_BY_USER],
+    queryKey: [TYPE_TABS.COMPLETED],
     queryFn: () =>
       getHistoryBooking({
         statusBooking: [TYPE_STATUS.COMPLETED],

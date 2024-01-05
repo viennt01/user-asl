@@ -30,7 +30,6 @@ import {
   IQuotationTrucking,
   IRequireSearchTrucking,
   TYPE_LOCATION,
-  TYPE_SERVICE,
 } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
 import {
@@ -40,6 +39,7 @@ import {
 import { ColumnsType } from 'antd/lib/table';
 import { TYPE_POL_POD } from '../description';
 import { formatNumber } from '@/utils/format-number';
+import { TYPE_SERVICE } from '@/components/history-booking/interface';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;

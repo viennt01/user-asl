@@ -8,7 +8,7 @@ function TruckingFreightPage() {
   return (
     <>
       <Head>
-        <title>{APP_NAME} | Trucking Freight</title>
+        <title>{APP_NAME} | Inland Trucking</title>
       </Head>
       <TruckingFreight />
     </>

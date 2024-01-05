@@ -10,7 +10,7 @@ export default function OceanFreight() {
 
   return (
     <div className={style.wrapper}>
-       <div className={style.bg}>
+      <div className={style.bg}>
         <Flex justify="center" className={style.welcome}>
           <Flex align="center" justify="center" className={style.container}>
             <Flex vertical align="flex-start" className={style.textCol}>
@@ -19,8 +19,8 @@ export default function OceanFreight() {
               </Flex>
               <Flex>
                 <div className={style.desc}>
-                  Find the right route for your goods with guaranteed container
-                  allocation by ocean freight.
+                  Watch how your cargo travels with ASL and learn how we can
+                  help with each step!
                 </div>
               </Flex>
             </Flex>
@@ -28,7 +28,7 @@ export default function OceanFreight() {
         </Flex>
       </div>
       <Flex className={style.option} justify={'center'} align={'center'}>
-        <Row style={{maxWidth: '1200px'}}>
+        <Row style={{ maxWidth: '1200px' }}>
           <Col className={style.header} span={24}>
             TYPES OF SERVICES OF SEA FREIGHT
           </Col>

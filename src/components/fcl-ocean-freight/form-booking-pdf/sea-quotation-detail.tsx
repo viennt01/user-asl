@@ -4,11 +4,11 @@ import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import TotalPrice, { DataTypeTotalPrice } from './totalPrice';
-import { IDataBookingProps } from '@/components/fcl-ocean-freight';
 import { formatNumber } from '@/utils/format-number';
+import { IDetailBooking } from '../interface';
 
 interface Props {
-  dataPropsBooking: IDataBookingProps;
+  dataPropsBooking: IDetailBooking | undefined;
 }
 interface DataType {
   key: number;
@@ -82,8 +82,13 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Quantity
         </div>
       ),
+      align: 'right',
+      width: 95,
       dataIndex: 'quantity',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -100,6 +105,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Unit
         </div>
       ),
+      width: 95,
+      align: 'left',
       dataIndex: 'unit',
       key: 'unit',
     },
@@ -118,8 +125,10 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
+      align: 'right',
       dataIndex: 'price',
       key: 'price',
+      width: 170,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -139,6 +148,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Currency
         </div>
       ),
+      width: 95,
+      align: 'left',
       dataIndex: 'currency',
       key: 'currency',
     },
@@ -157,6 +168,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
+      width: 170,
+      fixed: 'right',
       dataIndex: 'total',
       key: 'total',
       render: (value) => {
@@ -167,7 +180,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setData(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
+      dataPropsBooking?.seaQuotationBooking?.seaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           description: item.description,
@@ -183,7 +196,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
 
   useEffect(() => {
     setDataTotalPrice(
-      dataPropsBooking?.detailBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
+      dataPropsBooking?.seaQuotationBooking?.sumSeaQuotationFCLDetails?.map(
         (item, index) => ({
           key: index,
           price: `${item.item2} ${item.item1}`,
@@ -241,9 +254,6 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          // scroll={{
-          //   x: 'max-content',
-          // }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

@@ -96,7 +96,7 @@ export default function Step4({
             display: !getDataBooking.isFetching ? '' : 'none',
           }}
         >
-          <FormBooking dataPropsBooking={dataPropsBooking} />
+          <FormBooking dataPropsBooking={dataPropsBooking?.detailBooking} />
           <div style={{ width: '100%', marginTop: '16px' }}>
             <ConfigProvider
               theme={{

@@ -11,12 +11,12 @@ import {
   IBooking,
   ICustomQuotationPOD,
   ICustomQuotationPOL,
-  TYPE_SERVICE,
 } from '../../interface';
 import { errorToast, successToast } from '@/hook/toast';
 import { API_MESSAGE } from '@/constants/message';
 import { ISubmitFeeCustoms } from './components/customs/feeOfCustoms';
 import { useRouter } from 'next/router';
+import { TYPE_SERVICE } from '@/components/history-booking/interface';
 
 export enum TYPE_POL_POD {
   'POL' = 'POL',

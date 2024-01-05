@@ -13,11 +13,6 @@ export enum TYPE_LOAD_CAPACITY {
   'TOTAL' = '',
 }
 
-export enum TYPE_SERVICE {
-  'FCL' = 'FCL',
-  'LCL' = 'LCL',
-}
-
 export enum TYPE_UNIT {
   'SEA' = 'Sea',
   'TRUCKING' = 'Truck',
@@ -346,7 +341,7 @@ export interface IDetailBooking {
     pol: string;
     pod: string;
     quotationNo: string;
-    date: string;
+    bookingDated: string;
     valitidyTo: string;
     commodity: string;
     seaBookingLCLDetailDTO: {
@@ -355,6 +350,16 @@ export interface IDetailBooking {
       gw: string;
       cbm: string;
     };
+    cargoCutOffDated: string;
+    cargoReadyDated: string;
+    demSeaQuotation: string;
+    detSeaQuotation: string;
+    stoSeaQuotation: string;
+    effectDated: string;
+    freqDate: string;
+    transitTimeSeaQuotation: string;
+    typeOfServiceTransportation: string;
+    vendorName: string;
   };
   seaQuotationBooking: {
     quotationNo: string;
