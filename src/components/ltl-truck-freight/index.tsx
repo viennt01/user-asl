@@ -96,19 +96,6 @@ export default function LtlTruckFreight() {
     useState<IPaginationOfAntd>(DEFAULT_PAGINATION);
   const [showError, setShowError] = useState<boolean>(false);
 
-  const getContainerType = useQuery({
-    queryKey: [API_CONTAINER_TYPE.GET_ALL],
-    queryFn: () => getAllContainerType(),
-    onSuccess: (data) => {
-      if (!data.status) {
-        router.back();
-      }
-    },
-    onError: () => {
-      router.back();
-    },
-  });
-
   const getLoadCapacity = useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
     queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TRUCKING }),

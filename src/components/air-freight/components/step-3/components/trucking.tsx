@@ -24,10 +24,6 @@ import { API_BOOKING, API_LOCATION } from '@/fetcherAxios/endpoint';
 import { getAllLocation } from '@/components/fcl-ocean-freight/fetcher';
 import { TYPE_LOCATION } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
-import {
-  IDataBookingProps,
-  IDataStep2Props,
-} from '@/components/lcl-ocean-freight';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
 import { TYPE_POL_POD } from '../description';
@@ -39,6 +35,7 @@ import {
 import { getPriceTrucking } from '@/components/lcl-ocean-freight/fetcher';
 import { formatNumber } from '@/utils/format-number';
 import { TYPE_SERVICE } from '@/components/history-booking/interface';
+import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
@@ -87,21 +84,21 @@ export default function Trucking({
       type === TYPE_POL_POD.POD
         ? {
             deliveryID: formValues.deliveryID || '',
-            pickupID: dataPropsBooking.dataQuotation?.podid || '',
-            commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+            pickupID: dataPropsBooking.dataQuotation?.aodid || '',
+            commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
             loadcapacity:
-              dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.map(
+              dataStep2PropsBooking?.packageBookingLCLDetail?.loadCapacity?.map(
                 (item) => item
               ) || [],
           }
         : {
             pickupID: formValues.pickupID || '',
-            deliveryID: dataPropsBooking?.dataQuotation?.polid || '',
-            commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+            deliveryID: dataPropsBooking?.dataQuotation?.aolid || '',
+            commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
             loadcapacity:
-              dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.map(
+              dataStep2PropsBooking?.packageBookingLCLDetail?.loadCapacity?.map(
                 (item) => item
               ) || [],
           };
@@ -147,7 +144,7 @@ export default function Trucking({
   });
 
   const getLocation = useQuery({
-    queryKey: [API_LOCATION.GET_ALL, 'truckingQuotationDetails'],
+    queryKey: ['truckingQuotationDetails'],
     queryFn: () =>
       getAllLocation({
         type: [

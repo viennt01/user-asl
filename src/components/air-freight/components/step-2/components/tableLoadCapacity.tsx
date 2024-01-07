@@ -1,12 +1,15 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
-import { Table, ConfigProvider, InputNumber, Flex } from 'antd';
+import {
+  Table,
+  ConfigProvider,
+  InputNumber,
+  Flex,
+  FormInstance,
+  Form,
+} from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import COLORS from '@/constants/color';
-
-import {
-  IDataBookingProps,
-  IDataStep2Props,
-} from '@/components/ltl-truck-freight';
+import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -14,6 +17,11 @@ interface Props {
     React.SetStateAction<IDataStep2Props | undefined>
   >;
   dataStep2PropsBooking: IDataStep2Props | undefined;
+  form: FormInstance<any>;
+  dataLoadCapacity: {
+    label: string;
+    value: string;
+  }[];
 }
 
 export interface DataType {
@@ -30,19 +38,25 @@ export default function TableLoadCapacityEdit({
   dataPropsBooking,
   setDataStep2PropsBooking,
   dataStep2PropsBooking,
+  form,
+  dataLoadCapacity,
 }: Props) {
   const [dataTable, setDataTable] = useState<DataType[]>([]);
   const inputRefs = useRef<Array<React.MutableRefObject<any>>>([]);
+  const loadCapacityID = Form.useWatch('loadCapacityID', form);
 
   useEffect(() => {
-    setDataTable(
-      dataPropsBooking?.listContainerType?.map((container) => ({
-        containerType: container.label,
+    setDataTable([
+      {
+        containerType:
+          dataLoadCapacity?.find((item) => item.value === loadCapacityID)
+            ?.label || '',
         quantity: '1',
-        key: container.value,
-      })) || []
-    );
-  }, [dataPropsBooking]);
+        key: loadCapacityID,
+      },
+    ]);
+  }, [loadCapacityID]);
+  console.log('dataTable', dataTable);
 
   // Thêm useEffect để khởi tạo mảng tham chiếu
   useEffect(() => {
@@ -114,17 +128,23 @@ export default function TableLoadCapacityEdit({
         const matchedContainer = dataPropsBooking?.listContainerType?.find(
           (itemB) => itemB.label === itemA.containerType
         );
+        console.log('matchedContainer', matchedContainer);
+
         return {
-          key: matchedContainer?.value || '', // ID của container từ mảng B
+          key: itemA?.key || '', // ID của container từ mảng B
           name: itemA.containerType,
           quantity: itemA.quantity, // Số lượng từ mảng A
         };
       }),
     }));
-  }, [dataTable]);
+  }, [dataTable, loadCapacityID]);
 
   return (
-    <div>
+    <div
+      style={{
+        display: loadCapacityID ? '' : 'none',
+      }}
+    >
       <ConfigProvider
         theme={{
           components: {
