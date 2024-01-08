@@ -1,47 +1,73 @@
 @import '@/styles/_base.scss';
 
-.appFooterWrapper {
-  padding: 0;
-  width: 100%;
-  .wrapper {
-    max-width: 1200px;
+.cover {
+  .dFlex {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
 
-    width: 100%;
-    .appFooter {
-      padding: 24px;
-      max-width: 1200px;
-      width: 100%;
+  p {
+    margin-bottom: unset !important;
+  }
 
-      .headerItem {
-        color: $GREY_COLOR_HOVER;
-        font-size: 26px;
-        font-weight: 700;
-        font-family: Inika;
-        margin-bottom: 8px;
+  .appFooterWrapper {
+    .top {
+      padding: 20px 0;
+
+      .over {
+        margin-bottom: 30px;
+
+        .headerItem {
+          color: $GREY_COLOR_HOVER;
+          font-size: 36px;
+          font-weight: 700;
+          font-family: Inika;
+          margin-bottom: 25px;
+        }
+
+        .item {
+          color: $GREY_COLOR_HOVER;
+          font-size: 18px;
+          font-weight: 400;
+          font-family: Inika;
+          margin-bottom: 15px;
+          cursor: pointer;
+          transition: all 0.5s;
+
+          &:hover {
+            margin-left: 5px;
+          }
+
+          a {
+            justify-content: flex-start;
+            &:hover {
+              color: $GREY_COLOR_HOVER;
+            }
+          }
+        }
       }
-      .item {
-        color: $GREY_COLOR_HOVER;
-        font-size: 18px;
-        font-weight: 400;
-        font-family: Inika;
-        margin: 0 0 8px 8px;
-        cursor: pointer;
+
+      .map {
+        iframe {
+          border: none;
+        }
       }
     }
   }
-  .copyRight {
-    background-color: $GREY_COLOR_HOVER;
-    text-align: center;
-    line-height: 26px;
-    width: 100%;
-    padding: 16px;
-    font-size: 18px;
-    font-weight: 600;
-    color: $WHITE;
-  }
-}
 
-@include desktop-device {
-  .appFooterWrapper {
+  .bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $GREY_COLOR_HOVER;
+    width: 100%;
+    p {
+      font-size: 15px;
+      font-weight: 600;
+      color: $WHITE;
+      text-align: center;
+      padding: 10px 0;
+    }
   }
 }
