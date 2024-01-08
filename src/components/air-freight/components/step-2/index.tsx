@@ -55,7 +55,7 @@ export default function Step2({
             currencyID: data.data.currencyID,
             public: data.data.public,
             statusAirQuotation: data.data.statusAirQuotation,
-            hscAirQuotation: data.data.hscAirQuotation,
+            fscAirQuotation: data.data.fscAirQuotation,
             sscAirQuotation: data.data.sscAirQuotation,
             loadCapacityMinAirQuotation: data.data.loadCapacityMinAirQuotation,
             priceLoadCapacityMinAirQuotation:

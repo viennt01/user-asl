@@ -29,7 +29,7 @@ interface DataType {
   Frequency?: string;
   Storage?: string;
   SSC?: string;
-  HSC?: string;
+  FSC?: string;
   'Transit time'?: string;
   'Air Line'?: string;
   'Cargo ready'?: string;
@@ -53,7 +53,7 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     cargoCutOffDated,
     cargoReadyDated,
     sscAirQuotaiton,
-    hscAirQuotaiton,
+    fscAirQuotaiton,
     note,
     placeOfDelivery,
     placeOfRecipt,
@@ -171,8 +171,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '6',
         right: 'SSC',
         SSC: formatNumber(sscAirQuotaiton || '0') || '',
-        left: 'HSC',
-        HSC: formatNumber(hscAirQuotaiton || '0') || '',
+        left: 'FSC',
+        FSC: formatNumber(fscAirQuotaiton || '0') || '',
       },
       {
         key: '7',

@@ -104,7 +104,7 @@ export default function AirFreight() {
                   commodityName: data.commodityName,
                   currencyAbbreviations: data.currencyAbbreviations,
                   freqDate: data.freqDate,
-                  hscAirQuotation: data.hscAirQuotation,
+                  fscAirQuotation: data.fscAirQuotation,
                   loadCapacityMinAirQuotation: data.loadCapacityMinAirQuotation,
                   priceLoadCapacityMinAirQuotation:
                     data.priceLoadCapacityMinAirQuotation,

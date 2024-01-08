@@ -101,16 +101,16 @@ export default function TableReturn({
       },
     },
     {
-      title: <div className={style.title}>HSC</div>,
-      dataIndex: 'hscAirQuotation',
-      key: 'hscAirQuotation',
+      title: <div className={style.title}>FSC</div>,
+      dataIndex: 'fscAirQuotation',
+      key: 'fscAirQuotation',
       align: 'right',
       render: (value) => {
         return formatNumber(Number(value));
       },
     },
     {
-      title: <div className={style.title}>HSC</div>,
+      title: <div className={style.title}>FSC</div>,
       dataIndex: 'sscAirQuotation',
       key: 'sscAirQuotation',
       align: 'right',

@@ -13,7 +13,7 @@ export interface IQuotation {
   commodityName: string;
   currencyAbbreviations: string;
   freqDate: string;
-  hscAirQuotation: string;
+  fscAirQuotation: string;
   loadCapacityMinAirQuotation: string;
   priceLoadCapacityMinAirQuotation: string;
   sscAirQuotation: string;
@@ -65,7 +65,7 @@ export interface ISeaPricingDetail {
   currencyID: string;
   public: boolean;
   statusAirQuotation: string;
-  hscAirQuotation: string;
+  fscAirQuotation: string;
   sscAirQuotation: string;
   loadCapacityMinAirQuotation: string;
   priceLoadCapacityMinAirQuotation: string;
@@ -269,7 +269,7 @@ export interface IDetailBooking {
     commodity: string;
     effectDated: string;
     freqDate: string;
-    hscAirQuotaiton: string;
+    fscAirQuotaiton: string;
     modeOfTransportation: string;
     note: string;
     placeOfDelivery: string;
