@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -83,6 +83,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'quantity',
       key: 'quantity',
+      align: 'right',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -101,6 +105,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'price',
       key: 'price',
+      align: 'right',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -122,6 +127,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'currency',
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -140,6 +148,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'vat',
       key: 'vat',
+      align: 'right',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -158,6 +170,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'total',
       key: 'total',
+      align: 'right',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -241,9 +254,6 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          // scroll={{
-          //   x: 'max-content',
-          // }}
         />
         <TotalPrice dataToTalPrice={dataToTalPrice} />
       </div>

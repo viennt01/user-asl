@@ -7,6 +7,8 @@ import {
   IBooking,
   IRequireDetailBooking,
   IDetailBooking,
+  IRequireSearchTrucking,
+  IQuotationTrucking,
 } from './interface';
 import { API_AIR_QUOTATION, API_BOOKING } from '@/fetcherAxios/endpoint';
 
@@ -39,4 +41,10 @@ export const getDetailBooking = (data: IRequireDetailBooking) => {
   return post<IRequireDetailBooking, ResponseWithPayload<IDetailBooking>>({
     data,
   })(API_BOOKING.GET_AIR_BOOKING_BY_ID);
+};
+// Get price trucking
+export const getPriceTrucking = (data: IRequireSearchTrucking) => {
+  return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking>>({
+    data,
+  })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_LCL);
 };

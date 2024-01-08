@@ -20,22 +20,24 @@ import {
 } from 'antd';
 import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING, API_LOCATION } from '@/fetcherAxios/endpoint';
+import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getAllLocation } from '@/components/fcl-ocean-freight/fetcher';
 import { TYPE_LOCATION } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
 import { TYPE_POL_POD } from '../description';
+
+import { formatNumber } from '@/utils/format-number';
+import { TYPE_SERVICE } from '@/components/history-booking/interface';
+import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 import {
   ILclTruckingQuotationDetails,
   IQuotationTrucking,
   IRequireSearchTrucking,
-} from '@/components/lcl-ocean-freight/interface';
-import { getPriceTrucking } from '@/components/lcl-ocean-freight/fetcher';
-import { formatNumber } from '@/utils/format-number';
-import { TYPE_SERVICE } from '@/components/history-booking/interface';
-import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
+  LoadCapacitiesType,
+} from '@/components/air-freight/interface';
+import { getPriceTrucking } from '@/components/air-freight/fetcher';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
@@ -52,7 +54,7 @@ const initalValueForm = {
   typeSeaService: TYPE_SERVICE.LCL,
   cargoReady: 1,
   commodityID: '',
-  loadCapacities: [''],
+  loadcapacities: {},
 };
 
 export default function Trucking({
@@ -87,20 +89,28 @@ export default function Trucking({
             pickupID: dataPropsBooking.dataQuotation?.aodid || '',
             commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-            loadcapacity:
-              dataStep2PropsBooking?.packageBookingLCLDetail?.loadCapacity?.map(
-                (item) => item
-              ) || [],
+            loadcapacities:
+              dataStep2PropsBooking?.listQuantityType?.reduce(
+                (result: LoadCapacitiesType, item) => {
+                  result[item.key] = item.quantity;
+                  return result;
+                },
+                {}
+              ) || {},
           }
         : {
             pickupID: formValues.pickupID || '',
             deliveryID: dataPropsBooking?.dataQuotation?.aolid || '',
             commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-            loadcapacity:
-              dataStep2PropsBooking?.packageBookingLCLDetail?.loadCapacity?.map(
-                (item) => item
-              ) || [],
+            loadcapacities:
+              dataStep2PropsBooking?.listQuantityType?.reduce(
+                (result: LoadCapacitiesType, item) => {
+                  result[item.key] = item.quantity;
+                  return result;
+                },
+                {}
+              ) || {},
           };
     setDataResearch(_requestData);
     if (
@@ -132,6 +142,7 @@ export default function Trucking({
               abbreviations: data.data.abbreviations,
               lclTruckingQuotationDetails:
                 data.data.lclTruckingQuotationDetails,
+              totalPrice: data.data.totalPrice,
             }),
             setShowError(false),
             setSelectedRowKeys(''))
@@ -144,7 +155,7 @@ export default function Trucking({
   });
 
   const getLocation = useQuery({
-    queryKey: ['truckingQuotationDetails'],
+    queryKey: ['trucking'],
     queryFn: () =>
       getAllLocation({
         type: [

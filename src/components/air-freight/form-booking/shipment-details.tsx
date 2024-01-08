@@ -148,10 +148,10 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       },
       {
         key: '2.1',
-        right: 'Delivery',
-        Delivery: placeOfDelivery || '',
-        left: 'Receipt',
+        right: 'Receipt',
         Receipt: placeOfRecipt || '',
+        left: 'Delivery',
+        Delivery: placeOfDelivery || '',
       },
       {
         key: '3',
@@ -170,9 +170,9 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
       {
         key: '6',
         right: 'SSC',
-        SSC: formatNumber(sscAirQuotaiton || '0') || '',
+        SSC: formatNumber(sscAirQuotaiton || 0),
         left: 'FSC',
-        FSC: formatNumber(fscAirQuotaiton || '0') || '',
+        FSC: formatNumber(fscAirQuotaiton || 0),
       },
       {
         key: '7',

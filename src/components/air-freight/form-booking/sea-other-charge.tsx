@@ -83,6 +83,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'quantity',
       key: 'quantity',
+      align: 'right',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -101,6 +105,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'price',
       key: 'price',
+      align: 'right',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -122,6 +127,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'currency',
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -140,6 +148,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'vat',
       key: 'vat',
+      align: 'right',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (

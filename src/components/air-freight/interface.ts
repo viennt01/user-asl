@@ -106,11 +106,16 @@ export interface IAirQuotationDetailDTOsFormValue {
 }
 
 // search trucking
+export type LoadCapacitiesType = {
+  [key: string]: string;
+};
+
 export interface IRequireSearchTrucking {
   pickupID: string;
   deliveryID: string;
   cargoReady: number;
   commodityID: string;
+  loadcapacities: LoadCapacitiesType;
 }
 export interface IQuotationTrucking {
   truckingQuotationID: string;
@@ -122,6 +127,7 @@ export interface IQuotationTrucking {
   commodityName: string;
   abbreviations: string;
   lclTruckingQuotationDetails: ILclTruckingQuotationDetails[];
+  totalPrice: string;
 }
 export interface ILclTruckingQuotationDetails {
   loadCapacityID: string;
