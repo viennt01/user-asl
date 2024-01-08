@@ -12,7 +12,7 @@ export interface IQuotation {
   commodityName: string;
   truckingQuotationDetailDTOs: { [key: string]: string };
 }
-export interface IRequireSearchQuotation extends IStep1 {
+export interface IRequireSearchQuotation {
   pickupID: string;
   deliveryID: string;
   typeSeaService: string;
@@ -30,12 +30,14 @@ export interface IQuotationTable
 }
 
 export interface IStep1 {
+  pickupID: string;
+  deliveryID: string;
   receipt?: string;
   delivery?: string;
-  cargoReady?: number;
+  cargoReady: number;
   cargoCutOffDated?: number;
-  loadCapacities?: string[];
-  commodities?: string[];
+  loadCapacities: string;
+  commodities: string[];
 }
 
 export interface IQuotationDetailDataBody {

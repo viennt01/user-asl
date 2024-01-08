@@ -15,12 +15,7 @@ import {
 } from 'antd';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { API_COMMODITY, API_LOCATION } from '@/fetcherAxios/endpoint';
-import {
-  IQuotationTable,
-  IRequireSearchQuotation,
-  IStep1,
-  ITypeOfTransport,
-} from '../interface';
+import { IQuotationTable, IStep1, ITypeOfTransport } from '../interface';
 import { useRouter } from 'next/router';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import TableReturn from './tableReturn';

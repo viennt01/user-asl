@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from './index.module.scss';
 import { Flex, Form, PaginationProps } from 'antd';
 import HeaderFclOceanFreight from './components/header';
@@ -39,6 +39,7 @@ import {
   getListTypeTransport,
 } from '@/components/fcl-ocean-freight/fetcher';
 import { TYPE_SERVICE } from '../history-booking/interface';
+import { useWatch } from 'antd/lib/form/Form';
 
 export interface IQuantity {
   key: string;
@@ -71,6 +72,7 @@ export const initalValueForm = {
   deliveryID: '',
   typeSeaService: TYPE_SERVICE.LTL,
   cargoReady: 1,
+  cargoCutOffDated: 1,
   commodities: [''],
   loadCapacities: [''],
   paginateRequest: {
@@ -85,6 +87,8 @@ export default function LtlTruckFreight() {
   const [dataTableResearch, setDataTableResearch] = useState<IQuotationTable[]>(
     []
   );
+  const selectedValueContainerType = useWatch('loadCapacities', form);
+
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchQuotation>(initalValueForm);
   const [displayStep, setDisplayStep] = useState<number>(1);
@@ -156,15 +160,15 @@ export default function LtlTruckFreight() {
     },
   });
 
-  const onFinish = (formValues: IRequireSearchQuotation) => {
+  const onFinish = (formValues: IStep1) => {
     const _requestData = {
       pickupID: formValues.pickupID,
       deliveryID: formValues.deliveryID,
       typeSeaService: TYPE_SERVICE.LTL,
-      cargoReady: formValues.cargoReady?.valueOf(),
-      cargoCutOffDated: formValues.cargoCutOffDated?.valueOf(),
+      cargoReady: formValues.cargoReady?.valueOf() || 1,
+      cargoCutOffDated: formValues.cargoCutOffDated?.valueOf() || 1,
       commodities: formValues.commodities,
-      loadCapacities: formValues.loadCapacities,
+      loadCapacities: [formValues.loadCapacities],
       paginateRequest: {
         currentPage: pagination.current,
         pageSize: pagination.pageSize,
@@ -173,6 +177,8 @@ export default function LtlTruckFreight() {
     setDataPropsBooking((pre) => ({
       ...pre,
       step1: {
+        pickupID: formValues.pickupID,
+        deliveryID: formValues.deliveryID,
         receipt: formValues.receipt,
         delivery: formValues.delivery,
         commodities: formValues.commodities,
@@ -180,16 +186,6 @@ export default function LtlTruckFreight() {
         cargoReady: formValues.cargoReady,
         cargoCutOffDated: formValues.cargoCutOffDated,
       },
-      listContainerType:
-        formValues.loadCapacities?.map((selectedValue: string) => {
-          const containerType = getLoadCapacity.data?.data.find(
-            (item) => item.loadCapacityID === selectedValue
-          );
-          return {
-            value: selectedValue,
-            label: containerType?.name || '',
-          };
-        }) || [],
     }));
     setDataResearch(_requestData);
     if (
@@ -210,6 +206,22 @@ export default function LtlTruckFreight() {
   const onReset = () => {
     form.resetFields();
   };
+
+  useEffect(() => {
+    const containerType = getLoadCapacity.data?.data.find(
+      (item) => item.loadCapacityID === selectedValueContainerType
+    );
+    setDataPropsBooking((pre) => ({
+      ...pre,
+      listContainerType:
+        [
+          {
+            value: selectedValueContainerType,
+            label: containerType?.name || '',
+          },
+        ] || [],
+    }));
+  }, [selectedValueContainerType]);
 
   return (
     <section className={style.wrapper}>
