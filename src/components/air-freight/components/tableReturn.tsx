@@ -57,8 +57,7 @@ export default function TableReturn({
                   color="#F2F48E"
                   style={{ color: '#000', fontWeight: '450' }}
                 >
-                  {/* {formatCurrencyHasCurrency(value[key])} */}
-                  100.000. VND
+                  {formatCurrencyHasCurrency(value[key])}
                 </Tag>
               );
             },

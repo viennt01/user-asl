@@ -178,21 +178,57 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
   ];
 
   useEffect(() => {
-    setData(
-      dataPropsBooking?.airQuotationSelected.ortherChargeDetailForBookings.map(
+    const otherCharge =
+      dataPropsBooking?.airQuotationSelected?.ortherChargeDetailForBookings.map(
         (item, index) => ({
           key: index,
           description: item.description,
-          quantity: item.quantity,
-          price: item.price,
-          currency: item.currency,
-          vat: item.vat,
-          total: item.totalAmount,
+          quantity: item.quantity || '', // Use empty string as default value
+          price: item.price || '', // Use empty string as default value
+          currency: item.currency || '', // Use empty string as default value
+          vat: item.vat || '', // Use empty string as default value
+          total: item.totalAmount || '', // Use empty string as default value
         })
-      ) || []
-    );
+      ) || [];
+    const fsc = [
+      {
+        key: 10000000,
+        description: 'FSC',
+        quantity:
+          dataPropsBooking?.airQuotationSelected.fscDetailBooking?.quantity ||
+          '',
+        price:
+          dataPropsBooking?.airQuotationSelected.fscDetailBooking?.price || '',
+        currency:
+          dataPropsBooking?.airQuotationSelected.fscDetailBooking?.currency ||
+          '',
+        vat: dataPropsBooking?.airQuotationSelected.fscDetailBooking?.vat || '',
+        total:
+          dataPropsBooking?.airQuotationSelected.fscDetailBooking
+            ?.totalAmount || '',
+      },
+    ];
+    const ssc = [
+      {
+        key: 20000000,
+        description: 'SSC',
+        quantity:
+          dataPropsBooking?.airQuotationSelected.sscDetailBooking?.quantity ||
+          '',
+        price:
+          dataPropsBooking?.airQuotationSelected.sscDetailBooking?.price || '',
+        currency:
+          dataPropsBooking?.airQuotationSelected.sscDetailBooking?.currency ||
+          '',
+        vat: dataPropsBooking?.airQuotationSelected.fscDetailBooking?.vat || '',
+        total:
+          dataPropsBooking?.airQuotationSelected.sscDetailBooking
+            ?.totalAmount || '',
+      },
+    ];
+    setData([...otherCharge, ...fsc, ...ssc]);
   }, [dataPropsBooking]);
-
+  
   useEffect(() => {
     setDataTotalPrice(
       dataPropsBooking?.airQuotationSelected?.sumOrtherChargeDetailForBooking?.map(

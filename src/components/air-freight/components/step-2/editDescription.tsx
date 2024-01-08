@@ -53,7 +53,7 @@ export default function EditDescription({
   >([]);
   useQuery({
     queryKey: [API_LOAD_CAPACITY.GET_ALL],
-    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.AIR }),
+    queryFn: () => getAllLoadCapacity({ type: TYPE_LOAD_CAPACITY.TRUCKING }),
     onSuccess: (data) => {
       if (!data.status) {
         router.back();

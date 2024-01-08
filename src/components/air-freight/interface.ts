@@ -303,6 +303,20 @@ export interface IDetailBooking {
       quantityPackage: string;
       totalAmount: string;
     };
+    fscDetailBooking: {
+      quantity: string;
+      price: string;
+      vat: string;
+      currency: string;
+      totalAmount: string;
+    };
+    sscDetailBooking: {
+      quantity: string;
+      price: string;
+      vat: string;
+      currency: string;
+      totalAmount: string;
+    };
     ortherChargeDetailForBookings: IDetailPriceVAT[];
     sumOrtherChargeDetailForBooking: ITotalPrice[];
   };
