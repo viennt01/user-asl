@@ -1,5 +1,6 @@
 import { Dayjs } from 'dayjs';
 import {
+  ICustomQuotationFCLDetailSelecteds,
   IPagination,
   TYPE_LOAD_CAPACITY,
   TYPE_UNIT,
@@ -43,7 +44,6 @@ export interface IStep1 {
   receipt?: string;
   delivery?: string;
   cargoReady: number;
-  cargoCutOffDated: number;
   commodities: string;
 }
 
@@ -129,6 +129,10 @@ export interface IQuotationTrucking {
   lclTruckingQuotationDetails: ILclTruckingQuotationDetails[];
   totalPrice: string;
 }
+export interface IQuotationTruckingTable
+  extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
+  key: string;
+}
 export interface ILclTruckingQuotationDetails {
   loadCapacityID: string;
   loadCapacityCode: string;
@@ -200,7 +204,6 @@ export interface IBooking {
   commodityID: string;
   currencyID: string;
   cargoReadyDated: number;
-  cargoCutOffDated: number;
   placeOfRecipt: string;
   placeOfDelivery: string;
   note: string;
@@ -223,6 +226,15 @@ export interface IBooking {
     quantityPackage: string;
     gw: string;
     cbm: string;
+  };
+  quotationBookingDetailRegisterRequest: {
+    airQuotationID: string;
+    truckingQuotationPOLID: React.Key;
+    truckingQuotationPODID: React.Key;
+    customQuotationPOLID: React.Key;
+    customQuotationPODID: React.Key;
+    customQuotationPOLDetailRegisterRequests: ICustomQuotationPOL[];
+    customQuotationPODDetailRegisterRequests: ICustomQuotationPOD[];
   };
 }
 export interface ICustomQuotationPOL {
@@ -331,6 +343,18 @@ export interface IDetailBooking {
     quotationNo: string;
     truckingQuotationLCLDetails: IDetailPriceVAT[];
     sumTruckingQuotationFCLDetails: ITotalPrice[];
+    ortherChargeDetailForBookings: IDetailPriceVAT[];
+    sumOrtherChargeDetailForBooking: ITotalPrice[];
+  };
+  customQuotationPOLSelected: {
+    quotationNo: string;
+    customQuotationFCLDetailSelecteds: ICustomQuotationFCLDetailSelecteds[];
+    ortherChargeDetailForBookings: IDetailPriceVAT[];
+    sumOrtherChargeDetailForBooking: ITotalPrice[];
+  };
+  customQuotationPODSelected: {
+    quotationNo: string;
+    customQuotationFCLDetailSelecteds: ICustomQuotationFCLDetailSelecteds[];
     ortherChargeDetailForBookings: IDetailPriceVAT[];
     sumOrtherChargeDetailForBooking: ITotalPrice[];
   };

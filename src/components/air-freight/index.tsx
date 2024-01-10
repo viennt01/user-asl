@@ -159,7 +159,6 @@ export default function AirFreight() {
         delivery: formValues.delivery,
         commodities: formValues.commodities,
         cargoReady: formValues.cargoReady,
-        cargoCutOffDated: formValues.cargoCutOffDated,
       },
     }));
     setDataResearch(_requestData);

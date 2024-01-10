@@ -83,41 +83,6 @@ export default function TableReturn({
     },
     ...containerReturn,
     {
-      title: <div className={style.title}>Frequency</div>,
-      dataIndex: 'freqDate',
-      key: 'freqDate',
-      align: 'left',
-      render: (value) =>
-        DAY_WEEK.find((date) => date.value === value)?.label || '-',
-    },
-    {
-      title: <div className={style.title}>Detention</div>,
-      dataIndex: 'transitTimeAirQuotation',
-      key: 'transitTimeAirQuotation',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value));
-      },
-    },
-    {
-      title: <div className={style.title}>FSC</div>,
-      dataIndex: 'fscAirQuotation',
-      key: 'fscAirQuotation',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value));
-      },
-    },
-    {
-      title: <div className={style.title}>FSC</div>,
-      dataIndex: 'sscAirQuotation',
-      key: 'sscAirQuotation',
-      align: 'right',
-      render: (value) => {
-        return formatNumber(Number(value));
-      },
-    },
-    {
       title: <div className={style.title}>Load Capacity Min (Kg)</div>,
       dataIndex: 'loadCapacityMinAirQuotation',
       key: 'loadCapacityMinAirQuotation',
@@ -136,12 +101,47 @@ export default function TableReturn({
       },
     },
     {
+      title: <div className={style.title}>FSC</div>,
+      dataIndex: 'fscAirQuotation',
+      key: 'fscAirQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
+      title: <div className={style.title}>SSC</div>,
+      dataIndex: 'sscAirQuotation',
+      key: 'sscAirQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
+      },
+    },
+    {
       title: <div className={style.title}>Currency</div>,
       dataIndex: 'currencyAbbreviations',
       key: 'currencyAbbreviations',
       align: 'left',
       render: (value) => {
         return value ? value : '-';
+      },
+    },
+    {
+      title: <div className={style.title}>Frequency</div>,
+      dataIndex: 'freqDate',
+      key: 'freqDate',
+      align: 'left',
+      render: (value) =>
+        DAY_WEEK.find((date) => date.value === value)?.label || '-',
+    },
+    {
+      title: <div className={style.title}>Detention</div>,
+      dataIndex: 'transitTimeAirQuotation',
+      key: 'transitTimeAirQuotation',
+      align: 'right',
+      render: (value) => {
+        return formatNumber(Number(value));
       },
     },
     {

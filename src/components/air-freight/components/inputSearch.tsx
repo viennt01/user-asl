@@ -511,7 +511,7 @@ export default function InputFclOceanFreight({
                 </div>
               </Flex>
             </Col>
-            <Col className={style.input} lg={12} span={24}>
+            {/* <Col className={style.input} lg={12} span={24}>
               <Flex align={'center'}>
                 <Flex align={'center'} className={style.headerInput}>
                   <Image
@@ -541,7 +541,7 @@ export default function InputFclOceanFreight({
                   </Form.Item>
                 </div>
               </Flex>
-            </Col>
+            </Col> */}
 
             <Col className={style.input} span={24}>
               <Flex align={'center'}>

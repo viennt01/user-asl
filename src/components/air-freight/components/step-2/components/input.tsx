@@ -5,7 +5,6 @@ import { API_UNIT } from '@/fetcherAxios/endpoint';
 import { getListTypeUnit } from '@/components/fcl-ocean-freight/fetcher';
 import { TYPE_UNIT } from '@/components/fcl-ocean-freight/interface';
 import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
-import TableLoadCapacityEdit from './tableLoadCapacity';
 
 interface Props {
   setDataStep2PropsBooking: React.Dispatch<
@@ -184,26 +183,29 @@ export default function TableContainerEdit({
           </Form.Item>
         </Col>
         <Col
-          // span={
-          //   dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
-          //   dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
-          //     ? 12
-          //     : 0
-          // }
-          span={12}
+          span={
+            dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
+            dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
+              ? 12
+              : 0
+          }
         >
           <Form.Item
-            label={'Load Capacity'}
+            label={'Truck type'}
             name="loadCapacityID"
             rules={[
               {
-                required: true,
-                message: 'Please select Load Capacity',
+                required:
+                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
+                  dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
+                    ? true
+                    : false,
+                message: 'Please select type truck',
               },
             ]}
           >
             <Select
-              placeholder="Please select Load Capacity"
+              placeholder="Please select type truck"
               showSearch
               // mode="multiple"
               optionFilterProp="children"
@@ -221,13 +223,14 @@ export default function TableContainerEdit({
           </Form.Item>
         </Col>
       </Row>
-      <TableLoadCapacityEdit
+      {/* dùng cho số nhiều */}
+      {/* <TableLoadCapacityEdit
         dataPropsBooking={dataPropsBooking}
         setDataStep2PropsBooking={setDataStep2PropsBooking}
         dataStep2PropsBooking={dataStep2PropsBooking}
         form={form}
         dataLoadCapacity={dataLoadCapacity}
-      />
+      /> */}
     </div>
   );
 }

@@ -11,6 +11,10 @@ import TruckingOtherChargesPOL from './trucking-other-charge-POL';
 import TuckingQuotationPOD from './trucking-quotation-POD';
 import TruckingOtherChargesPOD from './trucking-other-charge-POD';
 import { IDetailBooking } from '../interface';
+import CustomsQuotationPOL from './customs-quotation-POL';
+import CustomsOtherChargesPOL from './customs-other-charge-POL';
+import CustomsQuotationPOD from './customs-quotation-POD';
+import CustomsOtherChargesPOD from './customs-other-charge-POD';
 
 interface Props {
   dataPropsBooking: IDetailBooking | undefined;
@@ -43,6 +47,10 @@ export default function FormBooking({ dataPropsBooking }: Props) {
       <TruckingOtherChargesPOL dataPropsBooking={dataPropsBooking} />
       <TuckingQuotationPOD dataPropsBooking={dataPropsBooking} />
       <TruckingOtherChargesPOD dataPropsBooking={dataPropsBooking} />
+      <CustomsQuotationPOL dataPropsBooking={dataPropsBooking} />
+      <CustomsOtherChargesPOL dataPropsBooking={dataPropsBooking} />
+      <CustomsQuotationPOD dataPropsBooking={dataPropsBooking} />
+      <CustomsOtherChargesPOD dataPropsBooking={dataPropsBooking} />
       <Finish dataPropsBooking={dataPropsBooking} />
     </div>
   );

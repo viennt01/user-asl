@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import style from '../index.module.scss';
+import React, { Key, useState } from 'react';
+import style from '../../index.module.scss';
 import {
   Button,
   Col,
@@ -16,7 +16,7 @@ import {
   Table,
   Tag,
   Result,
-  Checkbox,
+  Popover,
 } from 'antd';
 import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
@@ -26,18 +26,18 @@ import { TYPE_LOCATION } from '@/components/fcl-ocean-freight/interface';
 import { useRouter } from 'next/router';
 import { ResponseWithPayload } from '@/fetcherAxios';
 import { ColumnsType } from 'antd/lib/table';
-import { TYPE_POL_POD } from '../description';
-
+import { TYPE_POL_POD } from '../../description';
 import { formatNumber } from '@/utils/format-number';
 import { TYPE_SERVICE } from '@/components/history-booking/interface';
 import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 import {
   ILclTruckingQuotationDetails,
   IQuotationTrucking,
+  IQuotationTruckingTable,
   IRequireSearchTrucking,
-  LoadCapacitiesType,
 } from '@/components/air-freight/interface';
 import { getPriceTrucking } from '@/components/air-freight/fetcher';
+import DetailTrucking from './table-detail';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
@@ -65,18 +65,11 @@ export default function Trucking({
 }: Props) {
   const [form] = Form.useForm();
   const router = useRouter();
-  const [dataTableResearch, setDataTableResearch] =
-    useState<IQuotationTrucking>();
+  const [dataTableResearch, setDataTableResearch] = useState<
+    IQuotationTruckingTable[]
+  >([]);
   const [showError, setShowError] = useState<boolean>(false);
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (dataTableResearch?.truckingQuotationID) {
-      setSelectedRowKeys(
-        componentDisabled ? dataTableResearch?.truckingQuotationID : ''
-      );
-    }
-  }, [componentDisabled]);
+  const [hoverKey, setHoverKey] = useState<string>('');
 
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchTrucking>(initalValueForm);
@@ -89,28 +82,40 @@ export default function Trucking({
             pickupID: dataPropsBooking.dataQuotation?.aodid || '',
             commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-            loadcapacities:
-              dataStep2PropsBooking?.listQuantityType?.reduce(
-                (result: LoadCapacitiesType, item) => {
-                  result[item.key] = item.quantity;
-                  return result;
-                },
-                {}
-              ) || {},
+            // loadcapacities:
+            //   dataStep2PropsBooking?.listQuantityType?.reduce(
+            //     (result: LoadCapacitiesType, item) => {
+            //       result[item.key] = item.quantity;
+            //       return result;
+            //     },
+            //     {}
+            //   ) || {},
+            loadcapacities: {
+              [`${
+                dataStep2PropsBooking?.packageBookingLCLDetail
+                  ?.loadCapacity?.[0] || ''
+              }`]: '1',
+            },
           }
         : {
             pickupID: formValues.pickupID || '',
             deliveryID: dataPropsBooking?.dataQuotation?.aolid || '',
             commodityID: dataPropsBooking.step1?.commodities || '',
             cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-            loadcapacities:
-              dataStep2PropsBooking?.listQuantityType?.reduce(
-                (result: LoadCapacitiesType, item) => {
-                  result[item.key] = item.quantity;
-                  return result;
-                },
-                {}
-              ) || {},
+            // loadcapacities:
+            //   dataStep2PropsBooking?.listQuantityType?.reduce(
+            //     (result: LoadCapacitiesType, item) => {
+            //       result[item.key] = item.quantity;
+            //       return result;
+            //     },
+            //     {}
+            //   ) || {},
+            loadcapacities: {
+              [`${
+                dataStep2PropsBooking?.packageBookingLCLDetail
+                  ?.loadCapacity?.[0] || ''
+              }`]: '1',
+            },
           };
     setDataResearch(_requestData);
     if (
@@ -128,22 +133,23 @@ export default function Trucking({
     ],
     queryFn: () => getPriceTrucking(dataResearch),
     enabled: dataResearch.pickupID !== '',
-    onSuccess: (data: ResponseWithPayload<IQuotationTrucking>) => {
+    onSuccess: (data: ResponseWithPayload<IQuotationTrucking[]>) => {
       data.status
         ? data.data
-          ? (setDataTableResearch({
-              truckingQuotationID: data.data.truckingQuotationID,
-              pickupID: data.data.pickupID,
-              pickupName: data.data.pickupName,
-              deliveryID: data.data.deliveryID,
-              deliveryName: data.data.deliveryName,
-              commodityID: data.data.commodityID,
-              commodityName: data.data.commodityName,
-              abbreviations: data.data.abbreviations,
-              lclTruckingQuotationDetails:
-                data.data.lclTruckingQuotationDetails,
-              totalPrice: data.data.totalPrice,
-            }),
+          ? (setDataTableResearch(
+              (data.data.map((item) => ({
+                key: item.truckingQuotationID,
+                pickupID: item.pickupID,
+                pickupName: item.pickupName,
+                deliveryID: item.deliveryID,
+                deliveryName: item.deliveryName,
+                commodityID: item.commodityID,
+                commodityName: item.commodityName,
+                abbreviations: item.abbreviations,
+                lclTruckingQuotationDetails: item.lclTruckingQuotationDetails,
+                totalPrice: item.totalPrice,
+              })) as IQuotationTruckingTable[]) || []
+            ),
             setShowError(false),
             setSelectedRowKeys(''))
           : (setShowError(true), setSelectedRowKeys(''))
@@ -175,26 +181,38 @@ export default function Trucking({
     },
   });
 
-  const columns: ColumnsType<ILclTruckingQuotationDetails> = [
+  const contentDetail = (
+    lclTruckingQuotationDetails: ILclTruckingQuotationDetails[],
+    abbreviations: string
+  ) => {
+    return (
+      <div>
+        <DetailTrucking
+          lclTruckingQuotationDetails={lclTruckingQuotationDetails}
+          abbreviations={abbreviations}
+        />
+      </div>
+    );
+  };
+
+  const columns: ColumnsType<IQuotationTruckingTable> = [
     {
       title: (
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        />
+        <Flex align="center" justify="center">
+          Place of pick up
+        </Flex>
       ),
-      dataIndex: 'key',
-      width: 50,
-      render: (_, record) => <></>,
+      dataIndex: 'pickupName',
+      key: 'pickupName',
     },
     {
       title: (
         <Flex align="center" justify="center">
-          Load Capacity
+          Place of Delivery
         </Flex>
       ),
-      dataIndex: 'loadCapacityCode',
-      key: 'loadCapacityCode',
+      dataIndex: 'deliveryName',
+      key: 'deliveryName',
     },
     {
       title: (
@@ -202,33 +220,35 @@ export default function Trucking({
           Price
         </Flex>
       ),
-      dataIndex: 'price',
-      key: 'price',
+      dataIndex: 'totalPrice',
+      key: 'totalPrice',
       align: 'right',
-      render: (value) => {
+      render: (value, record) => {
         return (
-          <Tag color="#F2F48E" style={{ color: '#000', fontWeight: '450' }}>
-            {value
-              ? `${formatNumber(value)} ${dataTableResearch?.abbreviations}`
-              : '-'}
-          </Tag>
+          <Popover
+            content={contentDetail(
+              record.lclTruckingQuotationDetails,
+              record.abbreviations
+            )}
+            visible={hoverKey === record.key ? true : false}
+          >
+            <Tag color="#F2F48E" style={{ color: '#000', fontWeight: '450' }}>
+              {value ? `${formatNumber(value)} ${record?.abbreviations}` : '-'}
+            </Tag>
+          </Popover>
         );
       },
     },
-    {
-      title: (
-        <Flex align="center" justify="center">
-          VAT
-        </Flex>
-      ),
-      dataIndex: 'vat',
-      key: 'vat',
-      align: 'right',
-      render: (value) => {
-        return value ? formatNumber(value) : '-';
-      },
-    },
   ];
+
+  const rowSelection = {
+    onChange: (
+      selectedRowKeys: React.Key[],
+      selectedRows: IQuotationTruckingTable[]
+    ) => {
+      setSelectedRowKeys(selectedRowKeys?.[0] as string);
+    },
+  };
 
   return (
     <ConfigProvider
@@ -425,18 +445,34 @@ export default function Trucking({
               <div
                 style={{
                   width: '100%',
-                  display: dataTableResearch ? '' : 'none',
+                  display: dataTableResearch.length === 0 ? 'none' : '',
                 }}
               >
                 <Table
                   scroll={{
                     x: 'max-content',
                   }}
+                  onRow={(record) => {
+                    return {
+                      onMouseEnter: (e) => {
+                        // handleOnDoubleClick(e, record);
+                        // console.log('vào', record.key);
+                        setHoverKey(record.key);
+                      },
+                      onMouseLeave: (e) => {
+                        // handleOnDoubleClick(e, record);
+                        setHoverKey('');
+                        // console.log('ra', record.key);
+                      },
+                    };
+                  }}
                   columns={columns}
-                  dataSource={
-                    dataTableResearch?.lclTruckingQuotationDetails || []
-                  }
+                  dataSource={dataTableResearch || []}
                   pagination={false}
+                  rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                  }}
                 />
               </div>
             </Flex>

@@ -16,10 +16,6 @@ import {
   Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
-import {
-  IDataBookingProps,
-  IDataStep2Props,
-} from '@/components/lcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getPriceCustom } from '@/components/lcl-ocean-freight/fetcher';
@@ -27,12 +23,12 @@ import {
   ICustomQuotationLCLDetailForBooking,
   IQuotationCustoms,
   IRequireSearchCustoms,
-  TYPE_UNIT,
 } from '@/components/lcl-ocean-freight/interface';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
 import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
 import { TYPE_POL_POD } from '../../description';
+import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -158,12 +154,12 @@ export default function Customs({
 
   const onFinish = (formValues: IRequireSearchCustoms) => {
     const _requestData = {
-      polid: dataPropsBooking.dataQuotation?.polid || '',
-      podid: dataPropsBooking.dataQuotation?.podid || '',
+      polid: dataPropsBooking.dataQuotation?.aolid || '',
+      podid: dataPropsBooking.dataQuotation?.aodid || '',
       customsService: type,
       typeDeclarationName: formValues.typeDeclarationName || '',
       cargoReady: dataPropsBooking?.step1?.cargoReady?.valueOf() || 1,
-      commodityID: dataPropsBooking.dataColTableStep1?.commodityID || '',
+      commodityID: dataPropsBooking.dataQuotation?.commodityID || '',
     };
     setDataResearch(_requestData);
     if (_requestData.cargoReady === dataResearch.cargoReady) {

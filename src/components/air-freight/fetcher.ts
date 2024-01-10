@@ -44,7 +44,7 @@ export const getDetailBooking = (data: IRequireDetailBooking) => {
 };
 // Get price trucking
 export const getPriceTrucking = (data: IRequireSearchTrucking) => {
-  return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking>>({
+  return post<IRequireSearchTrucking, ResponseWithPayload<IQuotationTrucking[]>>({
     data,
   })(API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_LCL);
 };
