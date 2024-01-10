@@ -4,10 +4,13 @@
   background: $WHITE;
   color: $WHITE;
   .bg {
-    background-size: 100% 100%;
     margin-bottom: 16px;
     width: 100%;
+    height: 100%;
+    background-size: cover; /* Kích thước ảnh sẽ tự điều chỉnh để phủ toàn bộ phần tử mà không bị bể */
+    background-position: center;
     .welcome {
+      position: relative;
       width: 100%;
       min-height: 350px;
       height: 100%;
@@ -46,38 +49,6 @@
         }
       }
     }
-  }
-
-  .oceanFreight {
-    aspect-ratio: 1920 / 530;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/OceanFreight.png') center center no-repeat;
-    background-size: cover;
-    margin-bottom: 4px;
-  }
-  .airFreight {
-    aspect-ratio: 1920 / 530;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/Air.png') center center no-repeat;
-    background-size: cover;
-    margin-bottom: 4px;
-  }
-  .truckFreight {
-    aspect-ratio: 1920 / 530;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/Truck.png') center center no-repeat;
-    background-size: cover;
-    margin-bottom: 4px;
-  }
-  .customsService {
-    aspect-ratio: 1920 / 530;
-    height: auto;
-    width: 100%;
-    background: #fff url('./assets/Customs.png') center center no-repeat;
-    background-size: cover;
   }
 }
 
