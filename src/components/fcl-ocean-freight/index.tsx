@@ -182,7 +182,6 @@ export default function FclOceanFreight() {
         containers: formValues.containers,
         commodities: formValues.commodities,
         cargoReady: formValues.cargoReady,
-        cargoCutOffDated: formValues.cargoCutOffDated,
       },
       listContainerType:
         formValues.containers?.map((selectedValue: string) => {

@@ -4,7 +4,6 @@ import { Button, Card, Col, Flex, Row } from 'antd';
 import COLORS from '@/constants/color';
 import Customs from './components/customs';
 import { IDataBookingProps, IDataStep2Props } from '../..';
-import Trucking from './components/trucking';
 import { useMutation } from '@tanstack/react-query';
 import { createBooking } from '../../fetcher';
 import {
@@ -17,6 +16,7 @@ import { API_MESSAGE } from '@/constants/message';
 import { ISubmitFeeCustoms } from './components/customs/feeOfCustoms';
 import { useRouter } from 'next/router';
 import { TYPE_SERVICE } from '@/components/history-booking/interface';
+import Trucking from './components/truck';
 
 export enum TYPE_POL_POD {
   'POL' = 'POL',
@@ -107,8 +107,6 @@ export default function ServiceStep3({
       typeSeaService: TYPE_SERVICE.FCL,
       typeOfService: 'SEA',
       cargoReadyDated: dataPropsBooking.step1?.cargoReady?.valueOf() || 1,
-      cargoCutOffDated:
-        dataPropsBooking.step1?.cargoCutOffDated?.valueOf() || 1,
       placeOfRecipt: dataPropsBooking.step1?.receipt || '',
       placeOfDelivery: dataPropsBooking.step1?.delivery || '',
       note: '',

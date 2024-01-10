@@ -100,7 +100,6 @@ export interface IStep1 {
   receipt?: string;
   delivery?: string;
   cargoReady?: number;
-  cargoCutOffDated?: number;
   containers?: string[];
   commodities?: string[];
 }
@@ -278,7 +277,6 @@ export interface IBooking {
   typeSeaService: string;
   typeOfService: string; // SEA
   cargoReadyDated: number;
-  cargoCutOffDated: number;
   placeOfRecipt: string;
   placeOfDelivery: string;
   note: string;

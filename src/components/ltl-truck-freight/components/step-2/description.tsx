@@ -102,8 +102,6 @@ export default function EditDescription({
       currencyID: dataPropsBooking.dataQuotation?.currencyID || '',
       commodityID: dataPropsBooking.dataQuotation?.commodityID || '',
       cargoReadyDated: dataPropsBooking.step1?.cargoReady?.valueOf() || 1,
-      cargoCutOffDated:
-        dataPropsBooking.step1?.cargoCutOffDated?.valueOf() || 1,
       note: '',
       statusBooking: 'DRAFT',
       isManualBooking: false,

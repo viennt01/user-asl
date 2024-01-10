@@ -153,7 +153,6 @@ export default function FtlTruckFreight() {
       deliveryID: formValues.deliveryID,
       typeSeaService: TYPE_SERVICE.FTL,
       cargoReady: formValues.cargoReady?.valueOf(),
-      cargoCutOffDated: formValues.cargoCutOffDated?.valueOf(),
       commodities: formValues.commodities,
       containers: formValues.containers,
       paginateRequest: {
@@ -169,7 +168,6 @@ export default function FtlTruckFreight() {
         containers: formValues.containers,
         commodities: formValues.commodities,
         cargoReady: formValues.cargoReady,
-        cargoCutOffDated: formValues.cargoCutOffDated,
       },
       listContainerType:
         formValues.containers?.map((selectedValue: string) => {

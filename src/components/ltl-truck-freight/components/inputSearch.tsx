@@ -345,37 +345,6 @@ export default function InputFclOceanFreight({
                 </div>
               </Flex>
             </Col>
-            <Col className={style.input} lg={12} span={24}>
-              <Flex align={'center'}>
-                <Flex align={'center'} className={style.headerInput}>
-                  <Image
-                    src={'/images/oceanFreight/date.png'}
-                    alt="logo"
-                    preview={false}
-                    className={style.iconInput}
-                    width={25}
-                  />
-                  <div className={style.titleInput}>Cargo Cutoff To</div>
-                </Flex>
-                <div className={style.contentInput}>
-                  <Form.Item
-                    name="cargoCutOffDated"
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Please select a cargo cutoff to',
-                      },
-                    ]}
-                  >
-                    <DatePicker
-                      size="large"
-                      format={dateFormat}
-                      style={{ width: '100%' }}
-                    />
-                  </Form.Item>
-                </div>
-              </Flex>
-            </Col>
 
             <Col className={style.input} span={24}>
               <Flex align={'center'}>

@@ -4,7 +4,7 @@ import { Button, Card, Col, Flex, Row } from 'antd';
 import COLORS from '@/constants/color';
 import Customs from './components/customs';
 import { IDataBookingProps, IDataStep2Props } from '../..';
-import Trucking from './components/trucking';
+import Trucking from './components/truck';
 import { useMutation } from '@tanstack/react-query';
 import { createBooking } from '../../fetcher';
 import {
@@ -107,8 +107,6 @@ export default function ServiceStep3({
       typeSeaService: TYPE_SERVICE.LCL,
       typeOfService: 'SEA',
       cargoReadyDated: dataPropsBooking.step1?.cargoReady?.valueOf() || 1,
-      cargoCutOffDated:
-        dataPropsBooking.step1?.cargoCutOffDated?.valueOf() || 1,
       placeOfRecipt: dataPropsBooking.step1?.receipt || '',
       placeOfDelivery: dataPropsBooking.step1?.delivery || '',
       note: '',
@@ -147,9 +145,7 @@ export default function ServiceStep3({
             dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage ||
             '',
           loadCapacityID:
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity[0] ||
+            dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.[0] ||
             '',
           gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
           cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',

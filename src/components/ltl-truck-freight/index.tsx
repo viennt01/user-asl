@@ -72,7 +72,6 @@ export const initalValueForm = {
   deliveryID: '',
   typeSeaService: TYPE_SERVICE.LTL,
   cargoReady: 1,
-  cargoCutOffDated: 1,
   commodities: [''],
   loadCapacities: [''],
   paginateRequest: {
@@ -166,7 +165,6 @@ export default function LtlTruckFreight() {
       deliveryID: formValues.deliveryID,
       typeSeaService: TYPE_SERVICE.LTL,
       cargoReady: formValues.cargoReady?.valueOf() || 1,
-      cargoCutOffDated: formValues.cargoCutOffDated?.valueOf() || 1,
       commodities: formValues.commodities,
       loadCapacities: [formValues.loadCapacities],
       paginateRequest: {
@@ -184,7 +182,6 @@ export default function LtlTruckFreight() {
         commodities: formValues.commodities,
         loadCapacities: formValues.loadCapacities,
         cargoReady: formValues.cargoReady,
-        cargoCutOffDated: formValues.cargoCutOffDated,
       },
     }));
     setDataResearch(_requestData);

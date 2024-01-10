@@ -1,4 +1,5 @@
 import { Dayjs } from 'dayjs';
+import { LoadCapacitiesType } from '../air-freight/interface';
 
 export enum TYPE_LOCATION {
   'PORT' = 'Port',
@@ -199,7 +200,7 @@ export interface IRequireSearchTrucking {
   deliveryID: string;
   cargoReady: number;
   commodityID: string;
-  containers: string[];
+  containers: LoadCapacitiesType;
 }
 export interface IQuotationTrucking {
   truckingQuotationID: string;
@@ -211,6 +212,11 @@ export interface IQuotationTrucking {
   commodityName: string;
   abbreviations: string;
   fclTruckingQuotationDetails: IFclTruckingQuotationDetails[];
+  totalPrice: string;
+}
+export interface IQuotationTruckingTable
+  extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
+  key: string;
 }
 export interface IFclTruckingQuotationDetails {
   containerTypeCode: string;
@@ -286,7 +292,6 @@ export interface IBooking {
   typeSeaService: string;
   typeOfService: string; // SEA
   cargoReadyDated: number;
-  cargoCutOffDated: number;
   placeOfRecipt: string;
   placeOfDelivery: string;
   note: string;
