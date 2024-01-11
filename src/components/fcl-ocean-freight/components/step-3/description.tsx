@@ -168,7 +168,11 @@ export default function ServiceStep3({
                 />
               </Col>
 
-              <Col span={24}>
+              <Col
+                span={
+                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ? 24 : 0
+                }
+              >
                 <Customs
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
@@ -178,7 +182,11 @@ export default function ServiceStep3({
                   dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
-              <Col span={24}>
+              <Col
+                span={
+                  dataPropsBooking?.step1?.trafficPod?.name === 'DOOR' ? 24 : 0
+                }
+              >
                 <Customs
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}

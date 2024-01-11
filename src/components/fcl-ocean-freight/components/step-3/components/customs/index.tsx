@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from '../../index.module.scss';
 import {
   Collapse,
@@ -7,13 +7,14 @@ import {
   Typography,
   Table,
   Result,
-  Checkbox,
   Row,
   Col,
   Input,
   Form,
   Image,
   Button,
+  Popover,
+  Tag,
 } from 'antd';
 import COLORS from '@/constants/color';
 import {
@@ -28,14 +29,17 @@ import {
 } from '@/components/fcl-ocean-freight/fetcher';
 import {
   ICustomQuotationFCLDetailForBookings,
-  IQuotationCustoms,
+  IQuotationCustomsTable,
   IRequireSearchCustoms,
   TYPE_UNIT,
 } from '@/components/fcl-ocean-freight/interface';
-import { ColumnsType, TableRowSelection } from 'antd/lib/table/interface';
-import { formatNumber } from '@/utils/format-number';
-import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
+import { ColumnsType } from 'antd/lib/table/interface';
+import FeeOfCustoms, {
+  ISeaQuotationFeeFormValue,
+  ISubmitFeeCustoms,
+} from './feeOfCustoms';
 import { TYPE_POL_POD } from '../../description';
+import CustomsDetail from './table-detail';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -63,36 +67,14 @@ export default function Customs({
   dataStep2PropsBooking,
 }: Props) {
   const [form] = Form.useForm();
-  const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
+  const [dataAPIResearch, setDataAPIResearch] = useState<
+    IQuotationCustomsTable[]
+  >([]);
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
-  const [dataUnit, setDataUnit] = useState<{ label: string; value: string }[]>(
-    []
-  );
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (dataAPIResearch?.customQuotationID) {
-      setSelectedRowKey(
-        componentDisabled ? dataAPIResearch?.customQuotationID : ''
-      );
-    }
-  }, [componentDisabled]);
-
-  useQuery({
-    queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
-    onSuccess: (data) => {
-      if (data.status) {
-        const newData = data.data.map((unit) => ({
-          label: unit.internationalCode,
-          value: unit.unitID,
-        }));
-        setDataUnit(newData);
-      }
-    },
-  });
+  const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
+  const [hoverKey, setHoverKey] = useState<string>('');
 
   const getPrice = useQuery({
     queryKey: [
@@ -104,20 +86,22 @@ export default function Customs({
     onSuccess: (data) => {
       data.status
         ? data.data
-          ? (setDataAPIResearch({
-              customQuotationID: data.data.customQuotationID,
-              typeDelaracrionID: data.data.typeDelaracrionID,
-              typeDelaracrionCode: data.data.typeDelaracrionCode,
-              transactionTypeID: data.data.transactionTypeID,
-              transactionTypeName: data.data.transactionTypeName,
-              currencyID: data.data.currencyID,
-              abbreviations: data.data.abbreviations,
-              commodityID: data.data.commodityID,
-              commodityName: data.data.commodityName,
-              listFeeGroup: data.data.listFeeGroup,
-              customQuotationFCLDetailForBookings:
-                data.data.customQuotationFCLDetailForBookings,
-            }),
+          ? (setDataAPIResearch(
+              data.data.map((data) => ({
+                key: data.customQuotationID,
+                typeDelaracrionID: data.typeDelaracrionID,
+                typeDelaracrionCode: data.typeDelaracrionCode,
+                transactionTypeID: data.transactionTypeID,
+                transactionTypeName: data.transactionTypeName,
+                currencyID: data.currencyID,
+                abbreviations: data.abbreviations,
+                commodityID: data.commodityID,
+                commodityName: data.commodityName,
+                listFeeGroup: data.listFeeGroup,
+                customQuotationFCLDetailForBookings:
+                  data.customQuotationFCLDetailForBookings,
+              }))
+            ),
             setShowError(false))
           : setShowError(true)
         : setShowError(true);
@@ -127,76 +111,83 @@ export default function Customs({
     },
   });
 
-  const columns: ColumnsType<ICustomQuotationFCLDetailForBookings> = [
+  const contentDetail = (value: ICustomQuotationFCLDetailForBookings[]) => {
+    return (
+      <Row gutter={16}>
+        <Col span={24}>
+          <CustomsDetail dataFeeDetail={value} />
+        </Col>
+      </Row>
+    );
+  };
+
+  const columns: ColumnsType<IQuotationCustomsTable> = [
     {
       title: (
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        />
+        <Flex align="center" justify="center">
+          Commodity
+        </Flex>
       ),
-      dataIndex: 'key',
-      width: 50,
-      render: (_, record) => <></>,
-    },
-    {
-      title: 'Unit',
-      dataIndex: 'unitID',
-      align: 'center',
+      dataIndex: 'commodityName',
+      align: 'left',
       render: (value) => {
-        return dataUnit.find((item) => item.value === value)?.label;
-      },
-    },
-    {
-      title: <Text style={{ color: 'green' }}>Base Green Router</Text>,
-      dataIndex: 'basePriceGreenLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <Text style={{ color: '#d4b106' }}>Base Yellow Router</Text>,
-      dataIndex: 'basePriceYellowLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
-      },
-    },
-    {
-      title: <Text style={{ color: '#cf1322' }}>Base Red Router</Text>,
-      dataIndex: 'basePriceRedLane',
-      align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return <div>{value ? value : '-'}</div>;
       },
     },
     {
       title: (
-        <Text color={'green'} style={{ color: 'green' }}>
-          Green Router
-        </Text>
+        <Flex align="center" justify="center">
+          Transaction type
+        </Flex>
       ),
-      dataIndex: 'priceGreenLane',
-      align: 'center',
+      dataIndex: 'transactionTypeName',
+      align: 'left',
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return <div>{value ? value : '-'}</div>;
       },
     },
     {
-      title: <Text style={{ color: '#d4b106' }}>Yellow Router</Text>,
-      dataIndex: 'priceYellowLane',
-      align: 'center',
+      title: (
+        <Flex align="center" justify="center">
+          Declaration code
+        </Flex>
+      ),
+      dataIndex: 'typeDelaracrionCode',
+      align: 'left',
       render: (value) => {
-        return formatNumber(Number(value) || 0);
+        return <div>{value ? value : '-'}</div>;
       },
     },
     {
-      title: <Text style={{ color: '#cf1322' }}>Red Router</Text>,
-      dataIndex: 'priceRedLane',
+      title: (
+        <Flex align="center" justify="center">
+          Unit
+        </Flex>
+      ),
+      dataIndex: 'customQuotationFCLDetailForBookings',
       align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
+      render: (value, record) => {
+        return (
+          <Popover
+            content={contentDetail(value)}
+            visible={hoverKey === record.key ? true : false}
+          >
+            {value.length <= 5 ? (
+              value.map((type: ICustomQuotationFCLDetailForBookings) => (
+                <Tag key={type.unitID}>{type.internationalCode}</Tag>
+              ))
+            ) : (
+              <>
+                {value
+                  .slice(0, 2)
+                  .map((type: ICustomQuotationFCLDetailForBookings) => (
+                    <Tag key={type.unitID}>{type.internationalCode}</Tag>
+                  ))}
+                <Tag>...</Tag>
+              </>
+            )}
+          </Popover>
+        );
       },
     },
   ];
@@ -214,6 +205,19 @@ export default function Customs({
     if (_requestData.cargoReady === dataResearch.cargoReady) {
       getPrice.refetch();
     }
+  };
+  const rowSelection = {
+    onChange: (
+      selectedRowKeys: React.Key[],
+      selectedRows: IQuotationCustomsTable[]
+    ) => {
+      setSelectedRowKey((selectedRowKeys?.[0] as string) || '');
+      setSubmitFeeCustoms([]);
+      setDataFee(
+        selectedRows.find((item) => item.key === selectedRowKeys[0])
+          ?.listFeeGroup || []
+      );
+    },
   };
 
   return (
@@ -312,9 +316,7 @@ export default function Customs({
             >
               <div
                 style={{
-                  display: dataAPIResearch?.customQuotationFCLDetailForBookings
-                    ? ''
-                    : 'none',
+                  display: dataAPIResearch.length === 0 ? 'none' : '',
                 }}
               >
                 <Flex style={{ padding: '0 8px 16px 0' }}>
@@ -324,10 +326,22 @@ export default function Customs({
                     }}
                     style={{ width: '100%' }}
                     columns={columns}
-                    dataSource={
-                      dataAPIResearch?.customQuotationFCLDetailForBookings || []
-                    }
+                    dataSource={dataAPIResearch || []}
                     pagination={false}
+                    rowSelection={{
+                      type: 'radio',
+                      ...rowSelection,
+                    }}
+                    onRow={(record) => {
+                      return {
+                        onMouseEnter: (e) => {
+                          setHoverKey(record.key as string);
+                        },
+                        onMouseLeave: (e) => {
+                          setHoverKey('');
+                        },
+                      };
+                    }}
                   />
                 </Flex>
                 <div
@@ -336,7 +350,7 @@ export default function Customs({
                   }}
                 >
                   <FeeOfCustoms
-                    dataAPIResearch={dataAPIResearch}
+                    dataFee={dataFee}
                     setSubmitFeeCustoms={setSubmitFeeCustoms}
                     dataStep2PropsBooking={dataStep2PropsBooking}
                   />

@@ -338,34 +338,7 @@ export default function InputFclOceanFreight({
             </Col>
 
             <Col
-              span={
-                getTypeTransport.data?.data
-                  ?.map((item) => {
-                    return {
-                      value: item.typeOfTransportID,
-                      label: item.name,
-                    };
-                  })
-                  .find((item) => item.value === trafficPol)?.label !== 'DOOR'
-                  ? 12
-                  : 0
-              }
-            ></Col>
-
-            <Col
               className={style.input}
-              lg={
-                getTypeTransport.data?.data
-                  ?.map((item) => {
-                    return {
-                      value: item.typeOfTransportID,
-                      label: item.name,
-                    };
-                  })
-                  .find((item) => item.value === trafficPol)?.label === 'DOOR'
-                  ? 12
-                  : 0
-              }
               span={
                 getTypeTransport.data?.data
                   ?.map((item) => {
@@ -410,18 +383,6 @@ export default function InputFclOceanFreight({
             </Col>
             <Col
               className={style.input}
-              lg={
-                getTypeTransport.data?.data
-                  ?.map((item) => {
-                    return {
-                      value: item.typeOfTransportID,
-                      label: item.name,
-                    };
-                  })
-                  .find((item) => item.value === trafficPod)?.label === 'DOOR'
-                  ? 12
-                  : 0
-              }
               span={
                 getTypeTransport.data?.data
                   ?.map((item) => {
@@ -465,21 +426,6 @@ export default function InputFclOceanFreight({
               </Flex>
             </Col>
 
-            <Col
-              span={
-                getTypeTransport.data?.data
-                  ?.map((item) => {
-                    return {
-                      value: item.typeOfTransportID,
-                      label: item.name,
-                    };
-                  })
-                  .find((item) => item.value === trafficPod)?.label !== 'DOOR'
-                  ? 12
-                  : 0
-              }
-            ></Col>
-
             <Col className={style.input} lg={12} span={24}>
               <Flex align={'center'}>
                 <Flex align={'center'} className={style.headerInput}>
@@ -511,7 +457,7 @@ export default function InputFclOceanFreight({
                 </div>
               </Flex>
             </Col>
-            
+
             <Col className={style.input} span={24}>
               <Flex align={'center'}>
                 <Flex align={'center'} className={style.headerInput}>

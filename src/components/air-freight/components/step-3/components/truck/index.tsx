@@ -1,4 +1,4 @@
-import React, { Key, useState } from 'react';
+import React, { useState } from 'react';
 import style from '../../index.module.scss';
 import {
   Button,
@@ -29,7 +29,6 @@ import { ColumnsType } from 'antd/lib/table';
 import { TYPE_POL_POD } from '../../description';
 import { formatNumber } from '@/utils/format-number';
 import { TYPE_SERVICE } from '@/components/history-booking/interface';
-import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 import {
   ILclTruckingQuotationDetails,
   IQuotationTrucking,
@@ -38,6 +37,8 @@ import {
 } from '@/components/air-freight/interface';
 import { getPriceTrucking } from '@/components/air-freight/fetcher';
 import DetailTrucking from './table-detail';
+import DetailTruckingOtherCharge from './table-other-charge';
+import { IDataBookingProps, IDataStep2Props } from '@/components/air-freight';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
@@ -148,6 +149,7 @@ export default function Trucking({
                 abbreviations: item.abbreviations,
                 lclTruckingQuotationDetails: item.lclTruckingQuotationDetails,
                 totalPrice: item.totalPrice,
+                listFeeGroupID: item.listFeeGroupID,
               })) as IQuotationTruckingTable[]) || []
             ),
             setShowError(false),
@@ -183,15 +185,21 @@ export default function Trucking({
 
   const contentDetail = (
     lclTruckingQuotationDetails: ILclTruckingQuotationDetails[],
-    abbreviations: string
+    abbreviations: string,
+    listFeeGroupID: string[]
   ) => {
     return (
-      <div>
-        <DetailTrucking
-          lclTruckingQuotationDetails={lclTruckingQuotationDetails}
-          abbreviations={abbreviations}
-        />
-      </div>
+      <Row gutter={16}>
+        <Col span={24}>
+          <DetailTrucking
+            lclTruckingQuotationDetails={lclTruckingQuotationDetails}
+            abbreviations={abbreviations}
+          />
+        </Col>
+        <Col span={24}>
+          <DetailTruckingOtherCharge listFeeGroupID={listFeeGroupID} />
+        </Col>
+      </Row>
     );
   };
 
@@ -228,7 +236,8 @@ export default function Trucking({
           <Popover
             content={contentDetail(
               record.lclTruckingQuotationDetails,
-              record.abbreviations
+              record.abbreviations,
+              record.listFeeGroupID
             )}
             visible={hoverKey === record.key ? true : false}
           >

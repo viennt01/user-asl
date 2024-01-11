@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import style from '../../index.module.scss';
 import {
   Collapse,
@@ -13,7 +13,6 @@ import {
   Col,
   Image,
   Input,
-  Checkbox,
 } from 'antd';
 import COLORS from '@/constants/color';
 import {
@@ -24,14 +23,15 @@ import { useQuery } from '@tanstack/react-query';
 import { API_BOOKING } from '@/fetcherAxios/endpoint';
 import { getPriceCustom } from '@/components/lcl-ocean-freight/fetcher';
 import {
-  ICustomQuotationLCLDetailForBooking,
-  IQuotationCustoms,
+  IQuotationCustomsTable,
   IRequireSearchCustoms,
-  TYPE_UNIT,
 } from '@/components/lcl-ocean-freight/interface';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
-import FeeOfCustoms, { ISubmitFeeCustoms } from './feeOfCustoms';
+import FeeOfCustoms, {
+  ISeaQuotationFeeFormValue,
+  ISubmitFeeCustoms,
+} from './feeOfCustoms';
 import { TYPE_POL_POD } from '../../description';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
@@ -51,13 +51,6 @@ const initalValueForm = {
   commodityID: '',
 };
 
-interface DataType {
-  key: React.Key;
-  priceRedLane: string;
-  priceYellowLane: string;
-  priceGreenLane: string;
-}
-
 export default function Customs({
   type,
   dataPropsBooking,
@@ -67,19 +60,13 @@ export default function Customs({
   dataStep2PropsBooking,
 }: Props) {
   const [form] = Form.useForm();
-  const [dataAPIResearch, setDataAPIResearch] = useState<IQuotationCustoms>();
+  const [dataAPIResearch, setDataAPIResearch] = useState<
+    IQuotationCustomsTable[]
+  >([]);
   const [dataResearch, setDataResearch] =
     useState<IRequireSearchCustoms>(initalValueForm);
-  const [componentDisabled, setComponentDisabled] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
-  const [dataSource, setDataSource] = useState<DataType[]>([]);
-  useEffect(() => {
-    if (dataAPIResearch?.customQuotationID) {
-      setSelectedRowKey(
-        componentDisabled ? dataAPIResearch?.customQuotationID : ''
-      );
-    }
-  }, [componentDisabled]);
+  const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
 
   const getPrice = useQuery({
     queryKey: [
@@ -91,20 +78,22 @@ export default function Customs({
     onSuccess: (data) => {
       data.status
         ? data.data
-          ? (setDataAPIResearch({
-              customQuotationID: data.data.customQuotationID,
-              typeDelaracrionID: data.data.typeDelaracrionID,
-              typeDelaracrionCode: data.data.typeDelaracrionCode,
-              transactionTypeID: data.data.transactionTypeID,
-              transactionTypeName: data.data.transactionTypeName,
-              currencyID: data.data.currencyID,
-              abbreviations: data.data.abbreviations,
-              commodityID: data.data.commodityID,
-              commodityName: data.data.commodityName,
-              listFeeGroup: data.data.listFeeGroup,
-              customQuotationLCLDetailForBooking:
-                data.data.customQuotationLCLDetailForBooking,
-            }),
+          ? (setDataAPIResearch(
+              data.data.map((data) => ({
+                key: data.customQuotationID,
+                typeDelaracrionID: data.typeDelaracrionID,
+                typeDelaracrionCode: data.typeDelaracrionCode,
+                transactionTypeID: data.transactionTypeID,
+                transactionTypeName: data.transactionTypeName,
+                currencyID: data.currencyID,
+                abbreviations: data.abbreviations,
+                commodityID: data.commodityID,
+                commodityName: data.commodityName,
+                listFeeGroup: data.listFeeGroup,
+                customQuotationLCLDetailForBooking:
+                  data.customQuotationLCLDetailForBooking,
+              }))
+            ),
             setShowError(false))
           : setShowError(true)
         : setShowError(true);
@@ -114,18 +103,7 @@ export default function Customs({
     },
   });
 
-  const columns: ColumnsType<ICustomQuotationLCLDetailForBooking> = [
-    {
-      title: (
-        <Checkbox
-          checked={componentDisabled}
-          onChange={(e) => setComponentDisabled(e.target.checked)}
-        />
-      ),
-      dataIndex: 'key',
-      width: 50,
-      render: (_, record) => <></>,
-    },
+  const columns: ColumnsType<IQuotationCustomsTable> = [
     {
       title: (
         <Text color={'green'} style={{ color: 'green' }}>
@@ -134,24 +112,32 @@ export default function Customs({
       ),
       dataIndex: 'priceGreenLane',
       align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
+      render: (value, record) => {
+        return formatNumber(
+          Number(record.customQuotationLCLDetailForBooking?.priceGreenLane) ||
+            '0'
+        );
       },
     },
     {
       title: <Text style={{ color: '#d4b106' }}>Yellow Router</Text>,
       dataIndex: 'priceYellowLane',
       align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
+      render: (value, record) => {
+        return formatNumber(
+          Number(record.customQuotationLCLDetailForBooking?.priceYellowLane) ||
+            '0'
+        );
       },
     },
     {
       title: <Text style={{ color: '#cf1322' }}>Red Router</Text>,
       dataIndex: 'priceRedLane',
       align: 'center',
-      render: (value) => {
-        return formatNumber(Number(value) || 0);
+      render: (value, record) => {
+        return formatNumber(
+          Number(record.customQuotationLCLDetailForBooking?.priceRedLane) || '0'
+        );
       },
     },
   ];
@@ -170,23 +156,19 @@ export default function Customs({
       getPrice.refetch();
     }
   };
-
-  useEffect(() => {
-    if (dataAPIResearch?.customQuotationLCLDetailForBooking) {
-      setDataSource([
-        {
-          key: 1,
-          priceRedLane:
-            dataAPIResearch?.customQuotationLCLDetailForBooking.priceRedLane,
-          priceYellowLane:
-            dataAPIResearch?.customQuotationLCLDetailForBooking.priceYellowLane,
-          priceGreenLane:
-            dataAPIResearch?.customQuotationLCLDetailForBooking.priceGreenLane,
-        },
-      ]);
-    }
-  }, [dataAPIResearch?.customQuotationLCLDetailForBooking]);
-
+  const rowSelection = {
+    onChange: (
+      selectedRowKeys: React.Key[],
+      selectedRows: IQuotationCustomsTable[]
+    ) => {
+      setSelectedRowKey((selectedRowKeys?.[0] as string) || '');
+      setSubmitFeeCustoms([]);
+      setDataFee(
+        selectedRows.find((item) => item.key === selectedRowKeys[0])
+          ?.listFeeGroup || []
+      );
+    },
+  };
   return (
     <ConfigProvider
       theme={{
@@ -283,9 +265,7 @@ export default function Customs({
             >
               <div
                 style={{
-                  display: dataAPIResearch?.customQuotationLCLDetailForBooking
-                    ? ''
-                    : 'none',
+                  display: dataAPIResearch.length === 0 ? 'none' : '',
                 }}
               >
                 <Flex style={{ padding: '0 8px 16px 0' }}>
@@ -295,8 +275,12 @@ export default function Customs({
                     }}
                     style={{ width: '100%' }}
                     columns={columns}
-                    dataSource={dataSource || []}
+                    dataSource={dataAPIResearch || []}
                     pagination={false}
+                    rowSelection={{
+                      type: 'radio',
+                      ...rowSelection,
+                    }}
                   />
                 </Flex>
                 <div
@@ -305,7 +289,7 @@ export default function Customs({
                   }}
                 >
                   <FeeOfCustoms
-                    dataAPIResearch={dataAPIResearch}
+                    dataFee={dataFee}
                     setSubmitFeeCustoms={setSubmitFeeCustoms}
                   />
                 </div>

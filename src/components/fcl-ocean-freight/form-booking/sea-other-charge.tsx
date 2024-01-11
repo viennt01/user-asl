@@ -67,6 +67,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -84,7 +87,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      width: 95,
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -102,7 +109,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'unit',
+      width: 95,
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -120,6 +131,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'price',
+      width: 170,
       key: 'price',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -141,7 +153,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'currency',
+      width: 95,
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -159,7 +175,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      width: 80,
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -178,6 +198,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'total',
       key: 'total',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },

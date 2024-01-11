@@ -1,4 +1,4 @@
-import React, { Key, useState } from 'react';
+import React, { useState } from 'react';
 import style from '../../index.module.scss';
 import {
   Button,
@@ -41,6 +41,7 @@ import {
   IDataBookingProps,
   IDataStep2Props,
 } from '@/components/lcl-ocean-freight';
+import DetailTruckingOtherCharge from './table-other-charge';
 interface Props {
   dataPropsBooking: IDataBookingProps;
   setSelectedRowKeys: React.Dispatch<React.SetStateAction<string>>;
@@ -131,7 +132,7 @@ export default function Trucking({
 
   const getPrice = useQuery({
     queryKey: [
-      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_LCL,
+      API_BOOKING.RECOMMEND_TRUCKING_QUOTATION_FOR_BOOKING_FCL,
       dataResearch,
     ],
     queryFn: () => getPriceTrucking(dataResearch),
@@ -151,6 +152,7 @@ export default function Trucking({
                 abbreviations: item.abbreviations,
                 lclTruckingQuotationDetails: item.lclTruckingQuotationDetails,
                 totalPrice: item.totalPrice,
+                listFeeGroupID: item.listFeeGroupID,
               })) as IQuotationTruckingTable[]) || []
             ),
             setShowError(false),
@@ -186,15 +188,21 @@ export default function Trucking({
 
   const contentDetail = (
     lclTruckingQuotationDetails: ILclTruckingQuotationDetails[],
-    abbreviations: string
+    abbreviations: string,
+    listFeeGroupID: string[]
   ) => {
     return (
-      <div>
-        <DetailTrucking
-          lclTruckingQuotationDetails={lclTruckingQuotationDetails}
-          abbreviations={abbreviations}
-        />
-      </div>
+      <Row gutter={16}>
+        <Col span={24}>
+          <DetailTrucking
+            lclTruckingQuotationDetails={lclTruckingQuotationDetails}
+            abbreviations={abbreviations}
+          />
+        </Col>
+        <Col span={24}>
+          <DetailTruckingOtherCharge listFeeGroupID={listFeeGroupID} />
+        </Col>
+      </Row>
     );
   };
 
@@ -231,7 +239,8 @@ export default function Trucking({
           <Popover
             content={contentDetail(
               record.lclTruckingQuotationDetails,
-              record.abbreviations
+              record.abbreviations,
+              record.listFeeGroupID
             )}
             visible={hoverKey === record.key ? true : false}
           >

@@ -7,7 +7,7 @@ import { IDataStep2Props } from '@/components/fcl-ocean-freight';
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 interface Props {
-  dataAPIResearch: IQuotationCustoms | undefined;
+  dataFee: ISeaQuotationFeeFormValue[];
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
@@ -25,11 +25,10 @@ export interface ISubmitFeeCustoms {
 }
 
 export default function FeeOfCustoms({
-  dataAPIResearch,
+  dataFee,
   setSubmitFeeCustoms,
   dataStep2PropsBooking,
 }: Props) {
-  const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
 
   const [activeKey, setActiveKey] = useState('1');
   const [idActive, setIdActive] = useState<string[]>([]);
@@ -53,15 +52,6 @@ export default function FeeOfCustoms({
   const onChange = (key: string) => {
     setActiveKey(key);
   };
-
-  useEffect(() => {
-    setDataFee(
-      dataAPIResearch?.listFeeGroup.map((value, index) => ({
-        feeGroupID: value.feeGroupID,
-        feeGroupName: value.feeGroupName,
-      })) || []
-    );
-  }, [dataAPIResearch]);
 
   useEffect(() => {
     setItems(defaultPanes);

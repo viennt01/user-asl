@@ -44,7 +44,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     commodity,
     seaBookingFCLDetailDTOs,
     bookingNo,
-    cargoCutOffDated,
     cargoReadyDated,
     demSeaQuotation,
     detSeaQuotation,
@@ -148,8 +147,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '4',
         right: 'Quotation no',
         'Quotation no': quotationNo || '',
-        left: 'Date Booking',
-        'Date Booking': formatDateYYYYMMDD(Number(bookingDated)) || '',
+        left: 'Cargo ready',
+        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
       },
       {
         key: '5',
@@ -173,13 +172,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
 
         left: 'Commodity',
         Commodity: commodity || '',
-      },
-      {
-        key: '8',
-        right: 'Cargo ready',
-        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
-        left: 'Cargo cutoff to',
-        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
       },
       {
         key: '9',
@@ -229,7 +221,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated)) || ''}
         </div>
         <Table
           style={{ width: '100%' }}

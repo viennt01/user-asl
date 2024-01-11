@@ -128,6 +128,7 @@ export interface IQuotationTrucking {
   abbreviations: string;
   lclTruckingQuotationDetails: ILclTruckingQuotationDetails[];
   totalPrice: string;
+  listFeeGroupID: string[];
 }
 export interface IQuotationTruckingTable
   extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
@@ -173,10 +174,10 @@ export interface IQuotationCustoms {
     feeGroupID: string;
     feeGroupName: string;
   }[];
-  customQuotationLCLDetailForBooking: ICustomQuotationLCLDetailForBooking;
+  customQuotationAirDetailForBooking: ICustomQuotationAirDetailForBooking;
 }
 
-export interface ICustomQuotationLCLDetailForBooking {
+export interface ICustomQuotationAirDetailForBooking {
   priceRedLane: string;
   priceYellowLane: string;
   priceGreenLane: string;
@@ -272,7 +273,7 @@ export interface TypeUnitData {
 }
 
 export interface IRequireTypeUnit {
-  typeUnit: TYPE_UNIT;
+  type: TYPE_UNIT;
 }
 //Detail booking
 export interface IDetailBooking {

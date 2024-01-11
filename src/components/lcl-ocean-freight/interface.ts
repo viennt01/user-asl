@@ -292,7 +292,7 @@ export interface IBooking {
     customQuotationPODDetailRegisterRequests: ICustomQuotationPOD[];
   };
   seaBookingLCLDetailRegisterRequest: ISeaBookingLCLDetailRegisterRequest;
-  truckBookingLCLDetailRegisterRequests: ITruckBookingLCLDetailRegisterRequests[];
+  truckBookingLCLDetailRegisterRequest: ITruckBookingLCLDetailRegisterRequest;
 }
 export interface ICustomQuotationPOL {
   feeGroupID: string;
@@ -314,7 +314,7 @@ export interface ISeaBookingLCLDetailRegisterRequest {
   cbm: string;
   loadcapacity?: string[];
 }
-export interface ITruckBookingLCLDetailRegisterRequests {
+export interface ITruckBookingLCLDetailRegisterRequest {
   packageID: string;
   quantityPackage: string;
   loadCapacityID: string;
@@ -328,7 +328,7 @@ export interface TypeUnitData {
 }
 
 export interface IRequireTypeUnit {
-  typeUnit: TYPE_UNIT;
+  type: TYPE_UNIT;
 }
 //Detail booking
 export interface IDetailBooking {
@@ -348,7 +348,6 @@ export interface IDetailBooking {
       gw: string;
       cbm: string;
     };
-    cargoCutOffDated: string;
     cargoReadyDated: string;
     demSeaQuotation: string;
     detSeaQuotation: string;

@@ -14,15 +14,11 @@ export interface DataTypeTotalPrice {
 }
 
 const TotalPrice = ({ dataToTalPrice }: Props) => {
-  const totalPrice = [
-    { key: 1, price: '100000 VND' },
-    { key: 2, price: '100000 USD' },
-  ];
   const items: DescriptionsProps['items'] = [
     {
       key: '10',
       span: 0,
-      contentStyle: { width: '627px'}, // tổng px ở table
+      contentStyle: { width: '200px' }, // tổng px ở table
       label: (
         <Flex
           justify="center"
@@ -36,7 +32,7 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
       ),
       children: (
         <div>
-          {totalPrice?.map((data, index) => (
+          {dataToTalPrice?.map((data, index) => (
             <div
               style={{
                 fontSize: '16px',
@@ -46,7 +42,7 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 borderBottom:
-                  index === totalPrice.length - 1 ? 'none' : '1px solid',
+                  index === dataToTalPrice.length - 1 ? 'none' : '1px solid',
               }}
             >
               {formatCurrencyHasCurrency(data.price || '0')}

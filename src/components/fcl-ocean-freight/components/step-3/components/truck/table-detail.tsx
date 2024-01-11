@@ -47,6 +47,7 @@ export default function DetailTrucking({
       ),
       dataIndex: 'vat',
       key: 'vat',
+      width: 100,
       align: 'right',
       render: (value) => {
         return value ? formatNumber(value) : '-';

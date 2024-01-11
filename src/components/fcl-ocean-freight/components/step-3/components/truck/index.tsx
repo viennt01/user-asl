@@ -44,6 +44,7 @@ import {
   IDataBookingProps,
   IDataStep2Props,
 } from '@/components/fcl-ocean-freight';
+import DetailTruckingOtherCharge from './table-other-charge';
 
 interface Props {
   dataPropsBooking: IDataBookingProps;
@@ -143,6 +144,7 @@ export default function Trucking({
                 abbreviations: item.abbreviations,
                 fclTruckingQuotationDetails: item.fclTruckingQuotationDetails,
                 totalPrice: item.totalPrice,
+                listFeeGroupID: item.listFeeGroupID,
               })) as IQuotationTruckingTable[]) || []
             ),
             setShowError(false),
@@ -178,15 +180,21 @@ export default function Trucking({
 
   const contentDetail = (
     lclTruckingQuotationDetails: IFclTruckingQuotationDetails[],
-    abbreviations: string
+    abbreviations: string,
+    listFeeGroupID: string[]
   ) => {
     return (
-      <div>
-        <DetailTrucking
-          lclTruckingQuotationDetails={lclTruckingQuotationDetails}
-          abbreviations={abbreviations}
-        />
-      </div>
+      <Row gutter={16}>
+        <Col span={24}>
+          <DetailTrucking
+            lclTruckingQuotationDetails={lclTruckingQuotationDetails}
+            abbreviations={abbreviations}
+          />
+        </Col>
+        <Col span={24}>
+          <DetailTruckingOtherCharge listFeeGroupID={listFeeGroupID} />
+        </Col>
+      </Row>
     );
   };
 
@@ -223,7 +231,8 @@ export default function Trucking({
           <Popover
             content={contentDetail(
               record.fclTruckingQuotationDetails,
-              record.abbreviations
+              record.abbreviations,
+              record.listFeeGroupID
             )}
             visible={hoverKey === record.key ? true : false}
           >
@@ -450,14 +459,10 @@ export default function Trucking({
                   onRow={(record) => {
                     return {
                       onMouseEnter: (e) => {
-                        // handleOnDoubleClick(e, record);
-                        // console.log('vào', record.key);
                         setHoverKey(record.key);
                       },
                       onMouseLeave: (e) => {
-                        // handleOnDoubleClick(e, record);
                         setHoverKey('');
-                        // console.log('ra', record.key);
                       },
                     };
                   }}

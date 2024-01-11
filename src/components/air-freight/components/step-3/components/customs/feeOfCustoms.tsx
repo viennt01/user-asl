@@ -6,7 +6,7 @@ import TableFeeOfCustoms from './tableFeeCustoms';
 type TargetKey = React.MouseEvent | React.KeyboardEvent | string;
 
 interface Props {
-  dataAPIResearch: IQuotationCustoms | undefined;
+  dataFee: ISeaQuotationFeeFormValue[];
   setSubmitFeeCustoms: React.Dispatch<
     React.SetStateAction<ISubmitFeeCustoms[]>
   >;
@@ -22,12 +22,7 @@ export interface ISubmitFeeCustoms {
   listFee: React.Key[];
 }
 
-export default function FeeOfCustoms({
-  dataAPIResearch,
-  setSubmitFeeCustoms,
-}: Props) {
-  const [dataFee, setDataFee] = useState<ISeaQuotationFeeFormValue[]>([]);
-
+export default function FeeOfCustoms({ dataFee, setSubmitFeeCustoms }: Props) {
   const [activeKey, setActiveKey] = useState('1');
   const [idActive, setIdActive] = useState<string[]>([]);
 
@@ -49,15 +44,6 @@ export default function FeeOfCustoms({
   const onChange = (key: string) => {
     setActiveKey(key);
   };
-
-  useEffect(() => {
-    setDataFee(
-      dataAPIResearch?.listFeeGroup.map((value, index) => ({
-        feeGroupID: value.feeGroupID,
-        feeGroupName: value.feeGroupName,
-      })) || []
-    );
-  }, [dataAPIResearch]);
 
   useEffect(() => {
     setItems(defaultPanes);

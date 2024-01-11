@@ -137,20 +137,17 @@ export default function ServiceStep3({
             (item) => item
           ) || [],
       },
-      truckBookingLCLDetailRegisterRequests: [
-        {
-          packageID:
-            dataStep2PropsBooking?.packageBookingLCLDetail?.packageID || '',
-          quantityPackage:
-            dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage ||
-            '',
-          loadCapacityID:
-            dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.[0] ||
-            '',
-          gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
-          cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
-        },
-      ],
+      truckBookingLCLDetailRegisterRequest: {
+        packageID:
+          dataStep2PropsBooking?.packageBookingLCLDetail?.packageID || '',
+        quantityPackage:
+          dataStep2PropsBooking?.packageBookingLCLDetail?.quantityPackage || '',
+        loadCapacityID:
+          dataStep2PropsBooking?.packageBookingLCLDetail?.loadcapacity?.[0] ||
+          '',
+        gw: dataStep2PropsBooking?.packageBookingLCLDetail?.gw || '',
+        cbm: dataStep2PropsBooking?.packageBookingLCLDetail?.cbm || '',
+      },
     };
     createBookingMutation.mutate(_requestData);
   };
@@ -189,7 +186,11 @@ export default function ServiceStep3({
                 />
               </Col>
 
-              <Col span={24}>
+              <Col
+                span={
+                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ? 24 : 0
+                }
+              >
                 <Customs
                   type={TYPE_POL_POD.POL}
                   dataPropsBooking={dataPropsBooking}
@@ -199,7 +200,11 @@ export default function ServiceStep3({
                   dataStep2PropsBooking={dataStep2PropsBooking}
                 />
               </Col>
-              <Col span={24}>
+              <Col
+                span={
+                  dataPropsBooking?.step1?.trafficPod?.name === 'DOOR' ? 24 : 0
+                }
+              >
                 <Customs
                   type={TYPE_POL_POD.POD}
                   dataPropsBooking={dataPropsBooking}

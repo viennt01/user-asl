@@ -17,7 +17,7 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
     {
       key: '10',
       span: 0,
-      contentStyle: { width: '300px' }, // tổng px ở table
+      contentStyle: { width: '200px' }, // tổng px ở table
       label: (
         <Flex
           justify="center"

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Flex, ConfigProvider, Table } from 'antd';
+import { Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
-import { IDataBookingProps } from '@/components/lcl-ocean-freight';
-import { formatDate, formatDateYYYYMMDD } from '@/utils/format-number';
+import { formatDateYYYYMMDD } from '@/utils/format-number';
 import COLORS from '@/constants/color';
 import { DAY_WEEK } from '@/constants';
 import { IDetailBooking } from '../interface';
@@ -34,7 +33,6 @@ interface DataType {
   'Transit time'?: string;
   'Shipping Lines'?: string;
   'Cargo ready'?: string;
-  'Cargo cutoff to'?: string;
   'Type of service'?: string;
 }
 export default function ShipmentDetail({ dataPropsBooking }: Props) {
@@ -49,7 +47,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     commodity,
     seaBookingLCLDetailDTO,
     bookingNo,
-    cargoCutOffDated,
     cargoReadyDated,
     demSeaQuotation,
     detSeaQuotation,
@@ -153,8 +150,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '4',
         right: 'Quotation no',
         'Quotation no': quotationNo || '',
-        left: 'Date Booking',
-        'Date Booking': formatDateYYYYMMDD(Number(bookingDated)) || '',
+        left: 'Cargo ready',
+        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
       },
       {
         key: '5',
@@ -175,16 +172,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '7',
         right: 'Transit time',
         'Transit time': transitTimeSeaQuotation || '',
-
         left: 'Commodity',
         Commodity: commodity || '',
-      },
-      {
-        key: '8',
-        right: 'Cargo ready',
-        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
-        left: 'Cargo cutoff to',
-        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
       },
       {
         key: '9',
@@ -238,7 +227,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated)) || ''}
         </div>
         <Table
           style={{ width: '100%' }}

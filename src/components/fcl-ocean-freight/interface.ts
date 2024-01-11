@@ -20,6 +20,7 @@ export enum TYPE_UNIT {
   'AIR' = 'Air',
   'ALL' = 'All',
   'TOTAL' = '',
+  'PACKAGE' = 'Package',
 }
 
 export interface IPagination {
@@ -102,7 +103,6 @@ export interface IStep1 {
   receipt?: string;
   delivery?: string;
   cargoReady?: number;
-  cargoCutOffDated?: number;
   containers?: string[];
   commodities?: string[];
 }
@@ -213,6 +213,7 @@ export interface IQuotationTrucking {
   abbreviations: string;
   fclTruckingQuotationDetails: IFclTruckingQuotationDetails[];
   totalPrice: string;
+  listFeeGroupID: string[];
 }
 export interface IQuotationTruckingTable
   extends Omit<IQuotationTrucking, 'truckingQuotationID'> {
@@ -329,7 +330,7 @@ export interface TypeUnitData {
 }
 
 export interface IRequireTypeUnit {
-  typeUnit: TYPE_UNIT;
+  type: TYPE_UNIT;
 }
 //Detail booking
 export interface IDetailBooking {
@@ -347,7 +348,6 @@ export interface IDetailBooking {
       containerTypeCode: string;
       quantity: string;
     }[];
-    cargoCutOffDated: string;
     cargoReadyDated: string;
     demSeaQuotation: string;
     detSeaQuotation: string;
@@ -360,7 +360,7 @@ export interface IDetailBooking {
   };
   seaQuotationBooking: {
     quotationNo: string;
-    seaQuotationFCLDetails: IDetailPrice[];
+    seaQuotationFCLDetails: IDetailPriceVAT[];
     sumSeaQuotationFCLDetails: ITotalPrice[];
     ortherChargeDetailForBookings: IDetailPriceVAT[];
     sumOrtherChargeDetailForBooking: ITotalPrice[];

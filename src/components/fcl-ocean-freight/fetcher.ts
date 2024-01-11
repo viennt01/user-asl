@@ -108,7 +108,7 @@ export const getAllLoadCapacity = (data: IRequireTypeLoadCapacity) => {
 
 // Get price custom
 export const getPriceCustom = (data: IRequireSearchCustoms) => {
-  return post<IRequireSearchCustoms, ResponseWithPayload<IQuotationCustoms>>({
+  return post<IRequireSearchCustoms, ResponseWithPayload<IQuotationCustoms[]>>({
     data,
   })(API_BOOKING.RECOMMEND_CUSTOM_QUOTATION_FOR_BOOKING);
 };

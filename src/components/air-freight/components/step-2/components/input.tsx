@@ -53,7 +53,7 @@ export default function TableContainerEdit({
 
   useQuery({
     queryKey: [API_UNIT.GET_ALL],
-    queryFn: () => getListTypeUnit({ typeUnit: TYPE_UNIT.SEA }),
+    queryFn: () => getListTypeUnit({ type: TYPE_UNIT.PACKAGE }),
     onSuccess: (data) => {
       if (data.status) {
         const newData = data.data.map((unit) => ({
