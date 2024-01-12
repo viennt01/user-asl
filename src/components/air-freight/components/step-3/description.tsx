@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import style from './index.module.scss';
-import { Button, Card, Col, Flex, Row } from 'antd';
+import { Button, Card, Col, Flex, Result, Row } from 'antd';
 import COLORS from '@/constants/color';
 import { IDataBookingProps, IDataStep2Props } from '../..';
 import Trucking from './components/truck';
@@ -159,6 +159,20 @@ export default function ServiceStep3({
             <Row gutter={16}>
               <Col span={24}>
                 <div className={style.header}>Recommend Service</div>
+              </Col>
+              <Col
+                span={
+                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' &&
+                  dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
+                    ? 0
+                    : 24
+                }
+              >
+                <Result
+                  status="success"
+                  title="Please skip this step!"
+                  subTitle="If you wish to use the service, go back to step 1 and select traffic mode as DOOR."
+                />
               </Col>
               <Col
                 span={
