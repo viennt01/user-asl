@@ -107,8 +107,8 @@ export default function TableContainerEdit({
         return (
           <InputNumber
             ref={inputRef}
-            defaultValue={0}
-            min={0}
+            defaultValue={1}
+            min={1}
             onPressEnter={() => save(recode, inputRef)}
             onBlur={() => save(recode, inputRef)}
           />

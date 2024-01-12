@@ -70,12 +70,17 @@ export default function EditDescription({
     },
   });
 
+  const onFinish = () => {
+    router.push('/lcl-ocean-freight/#headerStep'), setDisplayStep(3);
+  };
+
   return (
     <div className={style.description}>
       <Form
         form={form}
         initialValues={initalValue}
         layout="vertical"
+        onFinish={onFinish}
         autoComplete="off"
       >
         <Row gutter={16}>
@@ -90,7 +95,7 @@ export default function EditDescription({
                 />
               </Col>
               {/* <Col span={24}> */}
-                {/* <TableLoadCapacityEdit
+              {/* <TableLoadCapacityEdit
                   setDataStep2PropsBooking={setDataStep2PropsBooking}
                   dataStep2PropsBooking={dataStep2PropsBooking}
                   dataLoadCapacity={dataLoadCapacity}
@@ -123,10 +128,7 @@ export default function EditDescription({
               <Button
                 style={{ width: '120px', height: '40px' }}
                 type="primary"
-                onClick={() => (
-                  router.push('/lcl-ocean-freight/#headerStep'),
-                  setDisplayStep(3)
-                )}
+                htmlType="submit"
               >
                 Next
               </Button>
