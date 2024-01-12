@@ -3,7 +3,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { errorToast, successToast } from '@/hook/toast';
 import style from './forgot-password-page.module.scss';
 import { resetPassword, sendOtp, sendVerifyOtp } from './fetcher';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   LAYOUT_TYPE,
   SendOtpData,
@@ -34,12 +34,14 @@ const initialValuesResetPassword: SendResetPasswordData = {
 };
 
 export default function ForgotPasswordPage() {
+  const [formEmail] = Form.useForm();
   const [isLoadingSendOtp, setIsLoadingSendOtp] = useState(false);
   const [isLoadingConfirmOtp, setIsLoadingConfirmOtp] = useState(false);
   const [isLoadingResetPassword, setIsLoadingResetPassword] = useState(false);
   const [isLayout, setIsLayout] = useState<LAYOUT_TYPE>(LAYOUT_TYPE.SEND_OTP);
   const [isEmail, setIsEmail] = useState<string>('');
   const router = useRouter();
+  const { email } = router.query;
 
   const handleSubmitSendOtp = (values: SendOtpData) => {
     setIsLoadingSendOtp(true);
@@ -114,6 +116,10 @@ export default function ForgotPasswordPage() {
         setIsLoadingResetPassword(false);
       });
   };
+
+  useEffect(() => {
+    formEmail.setFieldValue('email', email);
+  }, [email]);
 
   return (
     <Layout className={style.layoutForgotPassword}>

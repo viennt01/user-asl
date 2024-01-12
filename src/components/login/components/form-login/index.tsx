@@ -28,6 +28,8 @@ const FormLogin = ({ formLogin }: LoginProps) => {
   const [ip, setIp] = useState();
   const deviceName =
     typeof navigator !== 'undefined' ? navigator.userAgent : 'Unknown';
+  const emailForgotPassword = Form.useWatch('email', formLogin);
+
   const getIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
     const data = await response.json();
@@ -178,13 +180,19 @@ const FormLogin = ({ formLogin }: LoginProps) => {
           </Form.Item>
 
           <div className={style.loginOptions}>
-            <div>
-              <Link
-                href={ROUTERS.FORGOT_PASSWORD}
-                className={style.forgotFieldLink}
-              >
-                Forgot password ?
-              </Link>
+            <div
+              onClick={() => {
+                const props = {
+                  email: emailForgotPassword,
+                };
+                router.push({
+                  pathname: ROUTERS.FORGOT_PASSWORD,
+                  query: props,
+                });
+              }}
+              className={style.forgotFieldLink}
+            >
+              Forgot password ?
             </div>
           </div>
           <Button
