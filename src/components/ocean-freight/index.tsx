@@ -46,7 +46,7 @@ export default function OceanFreight() {
                     justify={'center'}
                     align={'center'}
                   >
-                    FCL Shipping
+                    FCL
                   </Flex>
                 </div>
                 <div>
@@ -82,7 +82,7 @@ export default function OceanFreight() {
                     justify={'center'}
                     align={'center'}
                   >
-                    LCL Shipping
+                    LCL
                   </Flex>
                 </div>
                 <div>

@@ -46,7 +46,7 @@ export default function TruckingFreight() {
                     justify={'center'}
                     align={'center'}
                   >
-                    FTL Shipping
+                    FTL
                   </Flex>
                 </div>
                 <div>
@@ -82,7 +82,7 @@ export default function TruckingFreight() {
                     justify={'center'}
                     align={'center'}
                   >
-                    LTL Shipping
+                    LTL
                   </Flex>
                 </div>
                 <div>
