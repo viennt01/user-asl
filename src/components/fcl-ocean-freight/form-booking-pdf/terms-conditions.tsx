@@ -1,10 +1,10 @@
 import React from 'react';
-import style from '../index.module.scss';
 import { Image } from 'antd';
 
 export default function TermsConditions() {
   return (
     <div
+      // className="page-break"
       style={{
         marginBottom: '16px',
       }}

@@ -1,7 +1,6 @@
 import React from 'react';
 import { ConfigProvider, Descriptions, Flex, Table } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import style from '../index.module.scss';
 import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 interface Props {
@@ -59,6 +58,9 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
         components: {
           Descriptions: {
             padding: 0,
+            paddingLG: 0,
+            paddingSM: 0,
+            paddingXS: 0,
           },
         },
       }}
