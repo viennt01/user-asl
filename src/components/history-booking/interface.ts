@@ -1,3 +1,5 @@
+import { IPagination } from '../fcl-ocean-freight/interface';
+
 export enum TYPE_STATUS {
   'PENDING_CONFIRMATION' = 'PENDING',
   'PROCESSING' = 'PROCESSING',
@@ -47,9 +49,19 @@ export interface IDetailBooking {
   typeOfService: string;
   updatedByUser: string;
 }
-
-export interface IRequireBookingHistory {
+export interface IRequireBookingHistory extends IPagination {
+  data: IDetailBooking[];
+}
+export interface IRequestBookingHistory {
   startDate?: number;
   endDate?: number;
   statusBooking: string[];
+  searchAll: string;
+  paginateRequest: {
+    currentPage: number;
+    pageSize: number;
+  };
+}
+export interface IFormSearch {
+  searchAll: string;
 }
