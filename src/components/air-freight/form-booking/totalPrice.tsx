@@ -1,7 +1,6 @@
 import React from 'react';
-import { ConfigProvider, Descriptions, Flex, Table } from 'antd';
+import { ConfigProvider, Descriptions, Flex } from 'antd';
 import type { DescriptionsProps } from 'antd';
-import style from '../index.module.scss';
 import { formatCurrencyHasCurrency } from '@/utils/format-number';
 
 interface Props {
@@ -17,6 +16,8 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
   const items: DescriptionsProps['items'] = [
     {
       key: '10',
+      span: 0,
+      contentStyle: { width: '200px' }, // tổng px ở table
       label: (
         <Flex
           justify="center"
@@ -58,12 +59,15 @@ const TotalPrice = ({ dataToTalPrice }: Props) => {
         components: {
           Descriptions: {
             padding: 0,
+            paddingLG: 0,
+            paddingSM: 0,
+            paddingXS: 0,
           },
         },
       }}
     >
       <Descriptions
-        className={style.description}
+        // className={style.description}
         style={{ width: '100%', padding: '0px', margin: '0px' }}
         bordered
         size="small"

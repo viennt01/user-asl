@@ -65,6 +65,9 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -82,10 +85,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      width: 95,
       key: 'quantity',
-      align: 'right',
       render: (value) => {
-        return value ? value : '-';
+        return value ? formatNumber(value) : '-';
       },
     },
     {
@@ -103,9 +106,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
+      align: 'right',
       dataIndex: 'price',
       key: 'price',
-      align: 'right',
+      width: 170,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -126,6 +130,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'currency',
+      width: 95,
       key: 'currency',
       render: (value) => {
         return value ? value : '-';
@@ -147,10 +152,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      width: 80,
       key: 'vat',
-      align: 'right',
       render: (value) => {
-        return value ? value : '-';
+        return value ? formatNumber(value) : '-';
       },
     },
     {
@@ -168,9 +173,11 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
+      fixed: 'right',
+      align: 'right',
       dataIndex: 'total',
       key: 'total',
-      align: 'right',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -228,7 +235,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
     ];
     setData([...otherCharge, ...fsc, ...ssc]);
   }, [dataPropsBooking]);
-  
+
   useEffect(() => {
     setDataTotalPrice(
       dataPropsBooking?.airQuotationSelected?.sumOrtherChargeDetailForBooking?.map(
@@ -250,6 +257,10 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,

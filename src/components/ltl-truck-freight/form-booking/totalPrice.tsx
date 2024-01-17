@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ConfigProvider, Descriptions, Flex } from 'antd';
 import type { DescriptionsProps } from 'antd';
 import style from '../index.module.scss';
@@ -16,27 +16,11 @@ export interface DataTypeTotalPrice {
 }
 
 const TotalPrice = ({ dataToTalPrice, typeTable }: Props) => {
-  const [widthContentStyle, setWidthContentStyle] = useState<string>('200px');
-  useEffect(() => {
-    if (typeTable) {
-      switch (typeTable) {
-        case TYPE_TABLE.FREIGHT_CHARGES:
-          setWidthContentStyle('200px');
-          break;
-        case TYPE_TABLE.OTHER_CHARGES:
-          setWidthContentStyle('200px');
-          break;
-        default:
-          setWidthContentStyle('200px');
-          break;
-      }
-    }
-  }, [typeTable]);
   const items: DescriptionsProps['items'] = [
     {
       key: '10',
       span: 0,
-      contentStyle: { width: widthContentStyle }, // tổng px ở table
+      contentStyle: { width: '200px' }, // tổng px ở table
       label: (
         <Flex
           justify="center"
@@ -78,6 +62,9 @@ const TotalPrice = ({ dataToTalPrice, typeTable }: Props) => {
         components: {
           Descriptions: {
             padding: 0,
+            paddingLG: 0,
+            paddingSM: 0,
+            paddingXS: 0,
           },
         },
       }}

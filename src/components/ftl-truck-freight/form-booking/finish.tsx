@@ -102,9 +102,14 @@ export default function Finish({ dataPropsBooking }: Props) {
             components: {
               Descriptions: {
                 colorTextSecondary: COLORS.GREY_COLOR_HOVER,
-                colorFillAlter: '#e7eeff',
                 colorSplit: '#000',
+                // labelBg: '#e7eeff',
+                colorFillAlter: '#e7eeff',
                 borderRadiusLG: 0,
+                padding: 8,
+                paddingLG: 8,
+                paddingSM: 8,
+                paddingXS: 8,
               },
             },
           }}

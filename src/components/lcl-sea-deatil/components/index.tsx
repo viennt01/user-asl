@@ -99,6 +99,21 @@ export default function Step5({ dataPropsBooking }: Props) {
       // Specify the parameters for html2pdf
       const parameters = {
         filename: 'Booking.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        // margin: '10px',
+        jsPDF: {
+          unit: 'in',
+          format: 'a3',
+          // format: [8000, 2300],
+          orientation: 'portrait',
+        },
+        html2canvas: {
+          scale: 6, // You can adjust the scale to fit more content into a single page
+        },
+        pagebreak: {
+          mode: ['avoid-all', 'css'],
+          before: 'pageX',
+        },
       };
 
       const pdf = window.html2pdf(element, parameters);

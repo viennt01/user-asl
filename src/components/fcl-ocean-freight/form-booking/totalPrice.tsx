@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConfigProvider, Descriptions, Flex, Table } from 'antd';
+import { ConfigProvider, Descriptions, Flex } from 'antd';
 import type { DescriptionsProps } from 'antd';
 import { formatCurrencyHasCurrency } from '@/utils/format-number';
 

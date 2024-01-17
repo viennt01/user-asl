@@ -67,6 +67,9 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -83,9 +86,8 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           Quantity
         </div>
       ),
-      align: 'right',
-      width: 95,
       dataIndex: 'quantity',
+      width: 95,
       key: 'quantity',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -106,10 +108,12 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           Unit
         </div>
       ),
-      width: 95,
-      align: 'left',
       dataIndex: 'unit',
+      width: 95,
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -126,10 +130,9 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
-      align: 'right',
       dataIndex: 'price',
-      key: 'price',
       width: 170,
+      key: 'price',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -149,10 +152,12 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           Currency
         </div>
       ),
-      width: 95,
-      align: 'left',
       dataIndex: 'currency',
+      width: 95,
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -169,9 +174,8 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           VAT
         </div>
       ),
-      width: 50,
-      align: 'right',
       dataIndex: 'vat',
+      width: 80,
       key: 'vat',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -192,10 +196,9 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
-      width: 200,
-      align: 'right',
       dataIndex: 'total',
       key: 'total',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -240,6 +243,10 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,

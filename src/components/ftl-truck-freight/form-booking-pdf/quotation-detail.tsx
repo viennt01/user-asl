@@ -66,6 +66,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -109,6 +112,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       align: 'left',
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -152,6 +158,32 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       align: 'left',
       dataIndex: 'currency',
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
+    },
+    {
+      title: (
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '14px',
+            fontWeight: '720',
+            textAlign: 'center',
+          }}
+        >
+          VAT
+        </div>
+      ),
+      width: 80,
+      align: 'left',
+      dataIndex: 'vat',
+      key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -169,7 +201,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       width: 200,
-      align: 'right',
+      fixed: 'right',
       dataIndex: 'total',
       key: 'total',
       render: (value) => {
@@ -215,6 +247,10 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,

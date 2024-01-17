@@ -64,6 +64,9 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'description',
       key: 'description',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -81,7 +84,11 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      width: 95,
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -99,7 +106,11 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'unit',
+      width: 95,
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -116,8 +127,10 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
           Price
         </div>
       ),
+      align: 'right',
       dataIndex: 'price',
       key: 'price',
+      width: 170,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -138,7 +151,11 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'currency',
+      width: 95,
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -156,7 +173,11 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      width: 80,
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -173,8 +194,11 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
+      fixed: 'right',
+      align: 'right',
       dataIndex: 'total',
       key: 'total',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -213,6 +237,10 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,
@@ -252,9 +280,6 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          // scroll={{
-          //   x: 'max-content',
-          // }}
         />
       </div>
     </ConfigProvider>
