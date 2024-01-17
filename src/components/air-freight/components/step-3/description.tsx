@@ -162,7 +162,7 @@ export default function ServiceStep3({
               </Col>
               <Col
                 span={
-                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' &&
+                  dataPropsBooking?.step1?.trafficPol?.name === 'DOOR' ||
                   dataPropsBooking?.step1?.trafficPod?.name === 'DOOR'
                     ? 0
                     : 24
