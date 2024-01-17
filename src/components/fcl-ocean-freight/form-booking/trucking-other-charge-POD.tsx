@@ -87,6 +87,7 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       width: 95,
       key: 'quantity',
       render: (value) => {
@@ -154,6 +155,7 @@ export default function TruckingOtherChargesPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'currency',
+      align: 'right',
       width: 95,
       key: 'currency',
       render: (value) => {

@@ -68,7 +68,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (

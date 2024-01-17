@@ -68,7 +68,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -87,6 +91,9 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -106,6 +113,9 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
       dataIndex: 'vat',
       align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (

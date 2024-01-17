@@ -88,6 +88,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'quantity',
       width: 95,
+      align: 'right',
       key: 'quantity',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -176,6 +177,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       width: 80,
       key: 'vat',
       render: (value) => {

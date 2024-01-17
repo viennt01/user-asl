@@ -81,6 +81,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       width: 95,
       key: 'quantity',
       render: (value) => {
@@ -171,6 +172,7 @@ export default function TuckingQuotationPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'vat',
       width: 80,
+      align: 'right',
       key: 'vat',
       render: (value) => {
         return value ? formatNumber(value) : '-';

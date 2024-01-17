@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -61,6 +61,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Quantity Package
         </div>
       ),
+      align: 'right',
       dataIndex: 'quantityPackage',
       key: 'quantityPackage',
     },
@@ -98,6 +99,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'price',
+      align: 'right',
       key: 'price',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -137,6 +139,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'cbm',
+      align: 'right',
       key: 'cbm',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -158,6 +161,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'gw',
+      align: 'right',
       key: 'gw',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -179,6 +183,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -201,6 +206,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'totalAmount',
       key: 'totalAmount',
+      fixed: 'right',
+      align: 'right',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -234,6 +242,10 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,
@@ -273,9 +285,6 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           dataSource={data}
           pagination={false}
           bordered
-          // scroll={{
-          //   x: 'max-content',
-          // }}
         />
       </div>
     </ConfigProvider>

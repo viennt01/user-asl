@@ -77,7 +77,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'cbm',
+      align: 'right',
       key: 'cbm',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -95,7 +99,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'gw',
+      align: 'right',
       key: 'gw',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -113,7 +121,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -131,6 +143,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceGreenLane',
+      align: 'right',
       key: 'priceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -152,6 +165,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceYellowLane',
+      align: 'right',
       key: 'priceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -173,6 +187,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceRedLane',
+      align: 'right',
       key: 'priceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -194,6 +209,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -215,6 +231,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalYellowLane',
+      align: 'right',
       key: 'totalYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -236,6 +253,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -274,6 +292,10 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
           Descriptions: {
             colorTextSecondary: COLORS.GREY_COLOR_HOVER,

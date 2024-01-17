@@ -61,6 +61,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Quantity Package
         </div>
       ),
+      align: 'right',
       dataIndex: 'quantityPackage',
       key: 'quantityPackage',
     },
@@ -98,6 +99,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'price',
+      align: 'right',
       key: 'price',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -137,6 +139,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'cbm',
+      align: 'right',
       key: 'cbm',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -158,6 +161,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'gw',
+      align: 'right',
       key: 'gw',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -179,6 +183,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -201,6 +206,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'totalAmount',
       key: 'totalAmount',
+      fixed: 'right',
+      align: 'right',
+      width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },

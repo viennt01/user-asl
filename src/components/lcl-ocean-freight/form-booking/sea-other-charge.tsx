@@ -153,6 +153,7 @@ export default function SeaOtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'vat',
       width: 80,
+      align: 'right',
       key: 'vat',
       render: (value) => {
         return value ? formatNumber(value) : '-';

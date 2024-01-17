@@ -67,6 +67,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
           Quantity
         </div>
       ),
+      align: 'right',
       dataIndex: 'quantity',
       key: 'quantity',
       render: (value) => {
@@ -88,6 +89,7 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
           Unit
         </div>
       ),
+      align: 'right',
       dataIndex: 'unit',
       key: 'unit',
       render: (value) => {
@@ -112,6 +114,9 @@ export default function CustomsQuotationPOD({ dataPropsBooking }: Props) {
       dataIndex: 'vat',
       align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (

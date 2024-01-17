@@ -88,6 +88,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'quantity',
       width: 95,
+      align: 'right',
       key: 'quantity',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -177,6 +178,7 @@ export default function CustomsOtherChargesPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'vat',
       width: 80,
+      align: 'right',
       key: 'vat',
       render: (value) => {
         return value ? formatNumber(value) : '-';

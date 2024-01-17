@@ -176,6 +176,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       width: 80,
       key: 'vat',
       render: (value) => {
