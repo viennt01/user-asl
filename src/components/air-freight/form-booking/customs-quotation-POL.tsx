@@ -68,7 +68,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -87,6 +91,9 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -104,7 +111,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -118,10 +129,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Base Green Lane
+          Base Green Router
         </div>
       ),
       dataIndex: 'basePriceGreenLane',
+      align: 'right',
       key: 'basePriceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -139,10 +151,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Base Yellow Lane
+          Base Yellow Router
         </div>
       ),
       dataIndex: 'basePriceYellowLane',
+      align: 'right',
       key: 'basePriceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -160,10 +173,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Base Red Lane
+          Base Red Router
         </div>
       ),
       dataIndex: 'basePriceRedLane',
+      align: 'right',
       key: 'basePriceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -181,10 +195,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Green Lane
+          Green Router
         </div>
       ),
       dataIndex: 'priceGreenLane',
+      align: 'right',
       key: 'priceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -202,7 +217,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Yellow Lane
+          Yellow Router
         </div>
       ),
       dataIndex: 'priceYellowLane',
@@ -223,10 +238,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Red Lane
+          Red Router
         </div>
       ),
       dataIndex: 'priceRedLane',
+      align: 'right',
       key: 'priceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -244,10 +260,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Green Lane
+          Total Green Router
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -265,10 +282,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Yellow Lane
+          Total Yellow Router
         </div>
       ),
       dataIndex: 'totalYellowLane',
+      align: 'right',
       key: 'totalYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -286,10 +304,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
             textAlign: 'center',
           }}
         >
-          Total Red Lane
+          Total Red Router
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';

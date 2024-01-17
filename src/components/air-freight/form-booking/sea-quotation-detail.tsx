@@ -62,9 +62,12 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Quantity Package
         </div>
       ),
-      align: 'right',
       dataIndex: 'quantityPackage',
+      align: 'right',
       key: 'quantityPackage',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -83,6 +86,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'package',
       key: 'package',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -101,6 +107,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'currency',
       key: 'currency',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -140,8 +149,8 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'gw',
-      key: 'gw',
       align: 'right',
+      key: 'gw',
       render: (value) => {
         return value ? formatNumber(value) : '-';
       },
@@ -161,8 +170,9 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
           Total Amount
         </div>
       ),
-      dataIndex: 'totalAmount',
       align: 'right',
+      width: 200,
+      dataIndex: 'totalAmount',
       key: 'totalAmount',
       render: (value) => {
         return value ? formatNumber(value) : '-';

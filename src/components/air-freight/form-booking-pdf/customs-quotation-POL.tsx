@@ -68,7 +68,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       key: 'quantity',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -87,6 +91,9 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'unit',
       key: 'unit',
+      render: (value) => {
+        return value ? value : '-';
+      },
     },
     {
       title: (
@@ -104,7 +111,11 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       key: 'vat',
+      render: (value) => {
+        return value ? formatNumber(value) : '-';
+      },
     },
     {
       title: (
@@ -122,6 +133,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceGreenLane',
+      align: 'right',
       key: 'basePriceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -143,6 +155,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceYellowLane',
+      align: 'right',
       key: 'basePriceYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -164,6 +177,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'basePriceRedLane',
+      align: 'right',
       key: 'basePriceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -185,6 +199,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceGreenLane',
+      align: 'right',
       key: 'priceGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -227,6 +242,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'priceRedLane',
+      align: 'right',
       key: 'priceRedLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -248,6 +264,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -269,6 +286,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalYellowLane',
+      align: 'right',
       key: 'totalYellowLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';
@@ -290,6 +308,7 @@ export default function CustomsQuotationPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'totalGreenLane',
+      align: 'right',
       key: 'totalGreenLane',
       render: (value) => {
         return value ? formatNumber(value) : '-';

@@ -185,8 +185,9 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '8',
         right: 'Cargo ready',
         'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
-        left: 'Cargo cutoff to',
-        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
+        left: 'Frequency',
+        Frequency:
+          DAY_WEEK.find((date) => date.value === freqDate)?.label || '',
       },
       {
         key: '9',
@@ -204,14 +205,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
           `${airBookingDetailDTO?.package} x ${airBookingDetailDTO?.quantityPackage}` ||
           '',
       },
-      {
-        key: '5',
-        right: 'Frequency',
-        Frequency:
-          DAY_WEEK.find((date) => date.value === freqDate)?.label || '',
-        left: 'Note',
-        Note: note || '',
-      },
     ]);
   }, [dataPropsBooking]);
 
@@ -223,6 +216,10 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
         },
       }}
@@ -248,7 +245,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated))}
         </div>
         <Table
           style={{ width: '100%' }}

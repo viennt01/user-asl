@@ -84,6 +84,7 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       width: 95,
       key: 'quantity',
       render: (value) => {
@@ -173,6 +174,7 @@ export default function TuckingQuotationPOD({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       width: 80,
       key: 'vat',
       render: (value) => {
