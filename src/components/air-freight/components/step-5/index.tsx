@@ -112,10 +112,10 @@ export default function Step5({ displayStep, dataPropsBooking }: Props) {
         html2canvas: {
           scale: 6, // You can adjust the scale to fit more content into a single page
         },
-        pagebreak: {
-          mode: ['avoid-all', 'css'],
-          before: 'pageX',
-        },
+        // pagebreak: {
+        //   mode: ['avoid-all', 'css'],
+        //   before: 'pageX',
+        // },
       };
       const pdf = window.html2pdf(element, parameters);
 

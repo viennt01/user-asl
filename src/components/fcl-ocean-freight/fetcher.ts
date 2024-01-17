@@ -25,6 +25,7 @@ import {
   IRequireConfirmBooking,
   RequestFeeOption,
   IRequireSendListEmail,
+  ITypeDeclaration,
 } from './interface';
 import {
   API_BOOKING,
@@ -34,6 +35,7 @@ import {
   API_LOAD_CAPACITY,
   API_LOCATION,
   API_SEA_QUOTATION,
+  API_TYPE_DECLARATION,
   API_TYPE_OF_TRANSPORT,
   API_UNIT,
 } from '@/fetcherAxios/endpoint';
@@ -146,4 +148,11 @@ export const sendListEmail = (data: IRequireSendListEmail) => {
   return post<IRequireSendListEmail, ResponseWithPayload<string>>({
     data,
   })(API_BOOKING.SEND_FILE_IN_EMAIL_BOOKING_BY_USER);
+};
+//----------------------------------------------------------------
+//Get type Declaration
+export const getListTypeDeclaration = () => {
+  return get<ResponseWithPayload<ITypeDeclaration[]>>({})(
+    API_TYPE_DECLARATION.GET_ALL
+  );
 };

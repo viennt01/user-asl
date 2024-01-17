@@ -449,3 +449,6 @@ export interface IRequireSendListEmail {
   bookingID: string;
   listEmail: string[];
 }
+export interface ITypeDeclaration {
+  typeDelaracrionName: string;
+}

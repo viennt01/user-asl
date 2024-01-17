@@ -30,6 +30,10 @@ export const API_COMMODITY = {
   GET_ALL: '/get-all-commodity',
 };
 
+export const API_TYPE_DECLARATION = {
+  GET_ALL: '/get-all-type-delaracrion',
+};
+
 export const API_BOOKING = {
   CREATE_BOOKING: '/create-sea-booking',
   CREATE_TRUCK_BOOKING: '/create-truck-booking',
