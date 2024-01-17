@@ -29,6 +29,9 @@ export default function Box({ data }: Props) {
       case TYPE_SERVICE.FTL:
         router.push(ROUTERS_DYNAMIC.FTL_DETAIL(data));
         break;
+      case TYPE_SERVICE.AIR:
+        router.push(ROUTERS_DYNAMIC.AIR_DETAIL(data));
+        break;
       default:
         router.push(ROUTERS.BOOKINGS_HISTORY);
         break;

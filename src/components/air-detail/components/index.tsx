@@ -14,15 +14,13 @@ import {
 import COLORS from '@/constants/color';
 import { MailOutlined, FilePdfOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
-import ROUTERS from '@/constants/router';
-import { IDataBookingProps } from '..';
-import { sendFilePdfBooking } from '@/components/lcl-ocean-freight/fetcher';
 import { useMutation } from '@tanstack/react-query';
 import { successToast } from '@/hook/toast';
-import { IRequireSendListEmail } from '@/components/fcl-ocean-freight/interface';
 import { sendListEmail } from '@/components/fcl-ocean-freight/fetcher';
-import FormBooking from '@/components/ftl-truck-freight/form-booking';
-import FormBookingPDF from '@/components/ftl-truck-freight/form-booking-pdf';
+import { IRequireSendListEmail } from '@/components/fcl-ocean-freight/interface';
+import { IDataBookingProps } from '..';
+import FormBooking from '@/components/air-freight/form-booking';
+import FormBookingPDF from '@/components/air-freight/form-booking-pdf';
 interface Props {
   dataPropsBooking: IDataBookingProps | undefined;
 }
@@ -88,8 +86,6 @@ export default function Step5({ dataPropsBooking }: Props) {
   };
 
   const handlePrint = async (send: boolean) => {
-    console.log(send);
-
     // Ensure html2pdf is available in the window object
     if (window.html2pdf) {
       // Get the HTML element to print
@@ -114,27 +110,12 @@ export default function Step5({ dataPropsBooking }: Props) {
         html2canvas: {
           scale: 6, // You can adjust the scale to fit more content into a single page
         },
-        pagebreak: {
-          mode: ['avoid-all', 'css'],
-          before: 'pageX',
-        },
+        // pagebreak: {
+        //   mode: ['avoid-all', 'css'],
+        //   before: 'pageX',
+        // },
       };
       const pdf = window.html2pdf(element, parameters);
-
-      // Output the PDF as a data URL
-      const dataUrl = await pdf.output('datauristring');
-
-      // Create a Blob from the data URL
-      const blob = await fetch(dataUrl).then((res) => res.blob());
-
-      // Create a FormData object to send the file
-      const formData = new FormData();
-      formData.append('bookingId', (id as string) || '');
-      formData.append('file', blob, 'Booking.pdf');
-
-      if (send) {
-        sendFilePdfBooking(formData).then((data) => console.log(data));
-      }
     } else {
       console.error('html2pdf is not available.');
     }

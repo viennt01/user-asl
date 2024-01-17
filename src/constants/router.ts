@@ -27,4 +27,5 @@ export const ROUTERS_DYNAMIC = {
   FCL_DETAIL: (id: string) => `/fcl-detail/${id}`,
   LTL_DETAIL: (id: string) => `/ltl-detail/${id}`,
   FTL_DETAIL: (id: string) => `/ftl-detail/${id}`,
+  AIR_DETAIL: (id: string) => `/air-detail/${id}`,
 };

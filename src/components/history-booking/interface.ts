@@ -19,6 +19,7 @@ export enum TYPE_SERVICE {
   'LCL' = 'LCL',
   'FTL' = 'FTL',
   'LTL' = 'LTL',
+  'AIR' = 'AIR',
 }
 
 export interface IDetailBooking {

@@ -6,7 +6,6 @@ import {
   Col,
   Flex,
   Row,
-  Image,
   Modal,
   Form,
   Select,
@@ -187,18 +186,6 @@ export default function Step5({ dataPropsBooking }: Props) {
                 />
               </div>
             </div>
-
-            <Col span={24} style={{ marginTop: '16px' }}>
-              <Flex justify="center">
-                <Button
-                  style={{ width: '190px', height: '40px' }}
-                  type="primary"
-                  onClick={() => router.push(ROUTERS.BOOKINGS_HISTORY)}
-                >
-                  Go to booking history
-                </Button>
-              </Flex>
-            </Col>
           </Row>
         </Card>
 
