@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Flex, ConfigProvider, Table } from 'antd';
+import { Flex, ConfigProvider, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
 import { formatDateYYYYMMDD } from '@/utils/format-number';
@@ -32,7 +32,6 @@ interface DataType {
   'Transit time'?: string;
   Note?: string;
   'Cargo ready'?: string;
-  'Cargo cutoff to'?: string;
   Quantity?: string;
   'Gross weight'?: string;
   CBM?: string;
@@ -50,14 +49,12 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     commodity,
     truckBookingLCLDetailDTO,
     bookingNo,
-    cargoCutOffDated,
     cargoReadyDated,
     placeOfRecipt,
     placeOfDelivery,
     effectDated,
     freqDate,
     transitTimeTruckingQuotation,
-    note,
   } = dataPropsBooking?.shipmentDetail || {};
 
   const columns: ColumnsType<DataType> = [
@@ -160,8 +157,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         right: 'Frequency',
         Frequency:
           DAY_WEEK.find((date) => date.value === freqDate)?.label || '',
-        left: 'Date Booking',
-        'Date Booking': formatDateYYYYMMDD(Number(bookingDated)) || '',
+        left: 'Cargo ready',
+        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
       },
       {
         key: '7',
@@ -169,13 +166,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         'Transit time': transitTimeTruckingQuotation || '',
         left: 'Commodity',
         Commodity: commodity || '',
-      },
-      {
-        key: '8',
-        right: 'Cargo ready',
-        'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
-        left: 'Cargo cutoff to',
-        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
       },
       {
         key: '9',
@@ -204,6 +194,10 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
         },
       }}
@@ -229,7 +223,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated))}
         </div>
         <Table
           style={{ width: '100%' }}

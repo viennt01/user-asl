@@ -178,7 +178,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       width: 80,
-      align: 'left',
+      align: 'right',
       dataIndex: 'vat',
       key: 'vat',
       render: (value) => {
@@ -202,6 +202,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
       ),
       width: 200,
       fixed: 'right',
+      align: 'right',
       dataIndex: 'total',
       key: 'total',
       render: (value) => {

@@ -32,7 +32,6 @@ interface DataType {
   'Transit time'?: string;
   Note?: string;
   'Cargo ready'?: string;
-  'Cargo cutoff to'?: string;
   Quantity?: string;
 }
 export default function ShipmentDetail({ dataPropsBooking }: Props) {
@@ -47,7 +46,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
     commodity,
     truckBookingFCLDetailDTOs,
     bookingNo,
-    cargoCutOffDated,
     cargoReadyDated,
     placeOfRecipt,
     placeOfDelivery,
@@ -171,13 +169,6 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
         key: '8',
         right: 'Cargo ready',
         'Cargo ready': formatDateYYYYMMDD(Number(cargoReadyDated)) || '',
-        left: 'Cargo cutoff to',
-        'Cargo cutoff to': formatDateYYYYMMDD(Number(cargoCutOffDated)) || '',
-      },
-      {
-        key: '9',
-        right: 'Note',
-        Note: note || '',
         left: 'Quantity',
         Quantity:
           truckBookingFCLDetailDTOs
@@ -197,6 +188,10 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             borderColor: 'rgba(0, 0, 0, 1)',
             borderRadius: 0,
             borderRadiusLG: 0,
+            padding: 8,
+            paddingLG: 8,
+            paddingSM: 8,
+            paddingXS: 8,
           },
         },
       }}
@@ -222,7 +217,8 @@ export default function ShipmentDetail({ dataPropsBooking }: Props) {
             alignItems: 'center',
           }}
         >
-          Booking details - {bookingNo}
+          Booking details - {bookingNo} -{' '}
+          {formatDateYYYYMMDD(Number(bookingDated))}
         </div>
         <Table
           style={{ width: '100%' }}

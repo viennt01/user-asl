@@ -176,7 +176,7 @@ export default function QuotationDetail({ dataPropsBooking }: Props) {
         </div>
       ),
       width: 80,
-      align: 'left',
+      align: 'right',
       dataIndex: 'vat',
       key: 'vat',
       render: (value) => {

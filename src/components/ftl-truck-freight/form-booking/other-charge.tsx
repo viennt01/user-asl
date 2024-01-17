@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, ConfigProvider, Table } from 'antd';
+import { ConfigProvider, Table } from 'antd';
 import COLORS from '@/constants/color';
 import { ColumnsType } from 'antd/lib/table';
 import style from '../index.module.scss';
@@ -87,6 +87,7 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       width: 95,
       key: 'quantity',
       render: (value) => {
@@ -131,6 +132,7 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'price',
+      align: 'right',
       width: 170,
       key: 'price',
       render: (value) => {
@@ -175,6 +177,7 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'vat',
+      align: 'right',
       width: 80,
       key: 'vat',
       render: (value) => {
@@ -198,6 +201,7 @@ export default function OtherCharges({ dataPropsBooking }: Props) {
       ),
       dataIndex: 'total',
       key: 'total',
+      align: 'right',
       width: 200,
       render: (value) => {
         return value ? formatNumber(value) : '-';
