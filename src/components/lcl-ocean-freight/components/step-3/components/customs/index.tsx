@@ -13,6 +13,7 @@ import {
   Col,
   Image,
   Input,
+  Select,
 } from 'antd';
 import COLORS from '@/constants/color';
 import {
@@ -20,7 +21,7 @@ import {
   IDataStep2Props,
 } from '@/components/lcl-ocean-freight';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING } from '@/fetcherAxios/endpoint';
+import { API_BOOKING, API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 import { getPriceCustom } from '@/components/lcl-ocean-freight/fetcher';
 import {
   IQuotationCustomsTable,
@@ -33,6 +34,7 @@ import FeeOfCustoms, {
   ISubmitFeeCustoms,
 } from './feeOfCustoms';
 import { TYPE_POL_POD } from '../../description';
+import { getListTypeDeclaration } from '@/components/fcl-ocean-freight/fetcher';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -169,6 +171,11 @@ export default function Customs({
       );
     },
   };
+  const getDeclaration = useQuery({
+    queryKey: [API_TYPE_DECLARATION.GET_ALL],
+    queryFn: () => getListTypeDeclaration(),
+  });
+
   return (
     <ConfigProvider
       theme={{
@@ -226,10 +233,29 @@ export default function Customs({
                   </Flex>
                   <div className={style.contentInput}>
                     <Form.Item name={'typeDeclarationName'}>
-                      <Input
-                        style={{ margin: '0px' }}
+                      <Select
+                        showSearch
                         placeholder={'Please enter type declaration'}
+                        style={{ margin: '0px' }}
                         size="large"
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').includes(input)
+                        }
+                        filterSort={(optionA, optionB) =>
+                          (optionA?.label ?? '')
+                            .toLowerCase()
+                            .localeCompare((optionB?.label ?? '').toLowerCase())
+                        }
+                        allowClear
+                        options={
+                          getDeclaration.data?.data.map((item) => {
+                            return {
+                              value: item.typeDelaracrionName,
+                              label: item.typeDelaracrionName,
+                            };
+                          }) || []
+                        }
                       />
                     </Form.Item>
                   </div>

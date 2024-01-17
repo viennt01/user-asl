@@ -13,10 +13,11 @@ import {
   Col,
   Image,
   Input,
+  Select,
 } from 'antd';
 import COLORS from '@/constants/color';
 import { useQuery } from '@tanstack/react-query';
-import { API_BOOKING } from '@/fetcherAxios/endpoint';
+import { API_BOOKING, API_TYPE_DECLARATION } from '@/fetcherAxios/endpoint';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { formatNumber } from '@/utils/format-number';
 import FeeOfCustoms, {
@@ -30,6 +31,7 @@ import {
   IRequireSearchCustoms,
 } from '@/components/air-freight/interface';
 import { getPriceCustom } from '@/components/air-freight/fetcher';
+import { getListTypeDeclaration } from '@/components/fcl-ocean-freight/fetcher';
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -165,6 +167,11 @@ export default function Customs({
       );
     },
   };
+
+  const getDeclaration = useQuery({
+    queryKey: [API_TYPE_DECLARATION.GET_ALL],
+    queryFn: () => getListTypeDeclaration(),
+  });
   return (
     <ConfigProvider
       theme={{
@@ -222,10 +229,29 @@ export default function Customs({
                   </Flex>
                   <div className={style.contentInput}>
                     <Form.Item name={'typeDeclarationName'}>
-                      <Input
-                        style={{ margin: '0px' }}
+                      <Select
+                        showSearch
                         placeholder={'Please enter type declaration'}
+                        style={{ margin: '0px' }}
                         size="large"
+                        optionFilterProp="children"
+                        filterOption={(input, option) =>
+                          (option?.label ?? '').includes(input)
+                        }
+                        filterSort={(optionA, optionB) =>
+                          (optionA?.label ?? '')
+                            .toLowerCase()
+                            .localeCompare((optionB?.label ?? '').toLowerCase())
+                        }
+                        allowClear
+                        options={
+                          getDeclaration.data?.data.map((item) => {
+                            return {
+                              value: item.typeDelaracrionName,
+                              label: item.typeDelaracrionName,
+                            };
+                          }) || []
+                        }
                       />
                     </Form.Item>
                   </div>
