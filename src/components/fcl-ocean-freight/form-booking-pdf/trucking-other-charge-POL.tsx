@@ -87,6 +87,7 @@ export default function TruckingOtherChargesPOL({ dataPropsBooking }: Props) {
         </div>
       ),
       dataIndex: 'quantity',
+      align: 'right',
       width: 95,
       key: 'quantity',
       render: (value) => {
