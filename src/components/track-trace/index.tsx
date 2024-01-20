@@ -35,8 +35,8 @@ export default function TraceTrace() {
   const onSubmit = (value: IRequestTrackTrade) => {
     const data = {
       hblNo: '',
-      bookingNo: value.hblNo === 'hblNo' ? value.containerNo : '',
-      containerNo: value.hblNo === 'containerNo' ? value.containerNo : '',
+      bookingNo: value.containerNo || '',
+      containerNo: '',
     };
     searchTrackTradeMutation.mutate(data, {
       onSuccess: (data) => {
@@ -73,52 +73,10 @@ export default function TraceTrace() {
               layout="horizontal"
             >
               <Row gutter={24}>
-                <Col span={12}>
-                  <div className={style.title1}>Track your shipment</div>{' '}
-                  <ConfigProvider
-                    theme={{
-                      components: {
-                        Radio: {
-                          fontSizeLG: 24,
-                          dotSize: 8,
-                          marginXS: 32,
-                          paddingXS: 16,
-                          lineWidth: 2,
-                          lineHeight: 3,
-                        },
-                      },
-                    }}
-                  >
-                    <Form.Item
-                      name="hblNo"
-                      rules={[
-                        {
-                          required: true,
-                          message: 'Please choose a type',
-                        },
-                      ]}
-                    >
-                      <Radio.Group>
-                        <Radio
-                          value="hblNo"
-                          style={{ fontSize: '16px', fontWeight: '600' }}
-                        >
-                          {' '}
-                          Booking No{' '}
-                        </Radio>
-                        {/* <Radio
-                          value="containerNo"
-                          style={{ fontSize: '16px', fontWeight: '600' }}
-                        >
-                          {' '}
-                          Container{' '}
-                        </Radio> */}
-                      </Radio.Group>
-                    </Form.Item>
-                  </ConfigProvider>
+                <Col span={4}>
+                  <div className={style.title1}>Booking No:</div>{' '}
                 </Col>
-                <Col span={12}>
-                  <div className={style.title2}></div>
+                <Col span={16}>
                   <Form.Item
                     name="containerNo"
                     rules={[
@@ -129,18 +87,19 @@ export default function TraceTrace() {
                     ]}
                   >
                     <Input
+                      style={{ width: ' 100%' }}
                       size="large"
                       placeholder="Please enter a number no"
                     />
                   </Form.Item>
                 </Col>
-                <Col span={24}>
+                <Col span={4}>
                   <Flex justify="center">
                     <Button
                       type="primary"
                       htmlType="submit"
                       size="large"
-                      style={{ width: '30%', height: '40px' }}
+                      style={{ width: '100%', height: '40px' }}
                       loading={searchTrackTradeMutation.isLoading}
                     >
                       Search
