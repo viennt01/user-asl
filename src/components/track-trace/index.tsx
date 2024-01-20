@@ -106,13 +106,13 @@ export default function TraceTrace() {
                           {' '}
                           Booking No{' '}
                         </Radio>
-                        <Radio
+                        {/* <Radio
                           value="containerNo"
                           style={{ fontSize: '16px', fontWeight: '600' }}
                         >
                           {' '}
                           Container{' '}
-                        </Radio>
+                        </Radio> */}
                       </Radio.Group>
                     </Form.Item>
                   </ConfigProvider>

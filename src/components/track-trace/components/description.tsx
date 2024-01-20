@@ -11,7 +11,6 @@ import {
 } from 'antd';
 import { IRequireTrackTrade } from '../interface';
 import { formatDate } from '@/utils/format-number';
-import COLORS from '@/constants/color';
 
 interface Props {
   data?: IRequireTrackTrade;
@@ -35,20 +34,19 @@ export default function Description({ data }: Props) {
       children: <>{data?.hwbno}</>,
     },
     {
+      key: '21',
+      label: <div className={style.titleDescription}>LOCAL VESSEL</div>,
+      children: <>{data?.estimatedVessel}</>,
+    },
+    {
       key: '7',
       label: <div className={style.titleDescription}>ETD PORT OF TRANSIT</div>,
-      children: <>{data?.etd}</>,
+      children: <>{formatDate(Number(data?.etd))}</>,
     },
     {
       key: '8',
       label: <div className={style.titleDescription}>ETA PORT OF TRANSIT</div>,
-      children: <>{data?.eta}</>,
-    },
-
-    {
-      key: '21',
-      label: <div className={style.titleDescription}>LOCAL VESSEL</div>,
-      children: <>{data?.estimatedVessel}</>,
+      children: <>{formatDate(Number(data?.eta))}</>,
     },
   ];
   return (
