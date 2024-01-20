@@ -24,6 +24,11 @@ export default function Description({ data }: Props) {
       children: <>{data?.refNo}</>,
     },
     {
+      key: '21',
+      label: <div className={style.titleDescription}>LOCAL VESSEL</div>,
+      children: <>{data?.estimatedVessel}</>,
+    },
+    {
       key: '4',
       label: <div className={style.titleDescription}>Conform Job No</div>,
       children: <>{data?.conformJobNo}</>,
@@ -32,11 +37,6 @@ export default function Description({ data }: Props) {
       key: '2',
       label: <div className={style.titleDescription}>HWB</div>,
       children: <>{data?.hwbno}</>,
-    },
-    {
-      key: '21',
-      label: <div className={style.titleDescription}>LOCAL VESSEL</div>,
-      children: <>{data?.estimatedVessel}</>,
     },
     {
       key: '7',
