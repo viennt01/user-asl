@@ -9,12 +9,14 @@ interface Props {
 }
 
 export default function Information({ data }: Props) {
+  const dateToday = new Date();
+
   return (
     <div className={style.information}>
       <Flex className={style.header} align="center">
         <div className={style.boxHeader} />
         <div className={style.title}>
-          {data?.pol} - {data?.pod}
+          {data?.polName} - {data?.podName}
         </div>
       </Flex>
       <div className={style.box}>
@@ -23,12 +25,12 @@ export default function Information({ data }: Props) {
             <Row>
               <Col sm={12} span={24} style={{ paddingBottom: '16px' }}>
                 <div>From</div>
-                <div className={style.nameFrom}>{data?.pol}</div>
+                <div className={style.nameFrom}>{data?.polName}</div>
                 <div>{formatDate(Number(data?.etd))}</div>
               </Col>
               <Col sm={12} span={24}>
                 <div>To</div>
-                <div className={style.nameFrom}>{data?.pod}</div>
+                <div className={style.nameFrom}>{data?.podName}</div>
                 <div>{formatDate(Number(data?.eta))}</div>
               </Col>
             </Row>
@@ -45,8 +47,14 @@ export default function Information({ data }: Props) {
                     />
                   </div>
                   <div>
-                    <div className={style.nameFrom}>Place of Receipt</div>
-                    <div>{data?.finalDestination}</div>
+                    <div className={style.nameFrom}>Status</div>
+                    <div>
+                      {data?.completedOn
+                        ? 'shipped'
+                        : data?.eta || 0 > dateToday.valueOf()
+                        ? 'Being transported'
+                        : 'Waiting for shipping'}
+                    </div>
                   </div>
                 </Flex>
               </Col>
@@ -60,8 +68,8 @@ export default function Information({ data }: Props) {
                     />
                   </div>
                   <div>
-                    <div className={style.nameFrom}>Place of Delivery</div>
-                    <div>{data?.placeOfDelivery}</div>
+                    <div className={style.nameFrom}>Finish day</div>
+                    <div>{formatDate(Number(data?.completedOn))}</div>
                   </div>
                 </Flex>
               </Col>
