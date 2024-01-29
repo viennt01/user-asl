@@ -39,8 +39,7 @@ export default function TruckingFreight() {
             >
               <div className={style.description}>
                 <div className={style.description_1}>
-                  For larger volumes, Full-Container Load (FTL) shipping is the
-                  right call.
+                  Full truckload (FTL) refers to the mode of transportation where a container truck carries only one dedicated shipment from one point to another, allowing to control over the handling of your cargo, as well as the costs and delivery dates associated with it.
                   <Flex
                     className={style.box}
                     justify={'center'}
@@ -48,10 +47,6 @@ export default function TruckingFreight() {
                   >
                     FTL
                   </Flex>
-                </div>
-                <div>
-                  With FTL shipping, you enjoy safe and cost-efficient
-                  door-to-door, port-to-port transportation for your goods.
                 </div>
               </div>
               <Flex
@@ -75,8 +70,7 @@ export default function TruckingFreight() {
             >
               <div className={style.description}>
                 <div className={style.description_1}>
-                  If you need to move small loads, Less-than-Container (LTL)
-                  shipping is the right choice for you.
+                  Less than truckload (LTL) means your total shipment does not take up an entire truck. The main benefit of the LTL shipment method is you only pay for the space on the truck that you need. LTL is commonly used when you have several pallets/pakages of cargo, LTL service can be a great option.
                   <Flex
                     className={style.box}
                     justify={'center'}
@@ -84,10 +78,6 @@ export default function TruckingFreight() {
                   >
                     LTL
                   </Flex>
-                </div>
-                <div>
-                  With LTL shipping, you only pay for the space you use while we
-                  guarantee allocation for your exact needs.
                 </div>
               </div>
               <Flex
